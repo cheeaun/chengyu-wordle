@@ -1,0 +1,23 @@
+{
+  "name": "chengyu-wordle",
+  "description": "Wordle, for Chinese idioms - 成语 (chéngyǔ)",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "data": "node ./scripts/gen-data.mjs"
+  },
+  "dependencies": {
+    "pinyin": "~2.10.2",
+    "preact": "~10.5.15"
+  },
+  "devDependencies": {
+    "@originjs/vite-plugin-content": "~1.0.1",
+    "@preact/preset-vite": "~2.1.5",
+    "csv-stringify": "~6.0.5",
+    "shorthash2": "~1.0.3",
+    "vite": "~2.7.2"
+  }
+}

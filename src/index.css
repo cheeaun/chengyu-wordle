@@ -1,0 +1,369 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #ffff;
+  font-family: 'Helvetica Neue', arial, sans-serif;
+  color: #111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+}
+
+body,
+button,
+textarea {
+  font-family: 'Nunito', sans-serif;
+}
+
+a {
+  color: green;
+  font-weight: bold;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ruby {
+  font-family: 'Ma Shan Zheng', cursive;
+}
+ruby rt {
+  font-family: 'Nunito', sans-serif;
+}
+
+header {
+  border-bottom: 1px solid #ccc;
+  padding: 0.5em;
+  margin-bottom: 2px;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5em;
+  align-items: center;
+}
+
+header button {
+  border: 0;
+  padding: 0.2em 1em;
+  margin: 0;
+  background-color: rgba(0, 128, 0, 0.178);
+  color: inherit;
+  font-size: inherit;
+  color: green;
+  font-weight: bold;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+header button:active {
+  background-color: rgba(0, 128, 0, 0.432);
+}
+
+h1 {
+  text-transform: uppercase;
+  font-size: 1.1em;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#board {
+  line-height: 1;
+  font-size: 1.75em;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+#board .row {
+  line-height: 1;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+#board .row.current ~ .row {
+  opacity: 0.5;
+}
+
+#board .row.error {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translateX(-1px);
+  }
+
+  20%,
+  80% {
+    transform: translateX(2px);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translateX(-4px);
+  }
+
+  40%,
+  60% {
+    transform: translateX(4px);
+  }
+}
+
+#board .letter {
+  border: 2px solid #ccc;
+  display: inline-block;
+  min-width: 2em;
+  min-height: 2em;
+  text-align: center;
+  line-height: 1.5em;
+  margin: 1px 2px;
+  aspect-ratio: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+#board .letter ruby,
+#board .letter ruby * {
+  line-height: 1em;
+}
+
+#board .letter.lettered {
+  animation: appear 0.2s ease-in-out;
+}
+@keyframes appear {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#board .letter.correct {
+  background-color: green;
+}
+#board .letter.present {
+  background-color: orange;
+}
+#board .letter.absent {
+  background-color: gray;
+}
+#board .letter.correct,
+#board .letter.present,
+#board .letter.absent {
+  color: #fff;
+  border-color: rgba(0, 0, 0, 0.2);
+  transition: all 0.3s 0.15s;
+  animation: flip 0.3s ease-in-out both;
+}
+@keyframes flip {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(180deg);
+  }
+}
+
+#board .letter.correct > *,
+#board .letter.present > *,
+#board .letter.absent > * {
+  animation: flip-back 0.3s ease-in-out both;
+}
+@keyframes flip-back {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(-180deg);
+  }
+}
+
+#board .letter + .letter,
+#board .letter + .letter > * {
+  animation-delay: 0.1s;
+}
+#board .letter + .letter + .letter,
+#board .letter + .letter + .letter > * {
+  animation-delay: 0.2s;
+}
+#board .letter + .letter + .letter + .letter,
+#board .letter + .letter + .letter + .letter > * {
+  animation-delay: 0.3s;
+}
+
+#keyboard {
+  border-top: 1px solid #ccc;
+  background-color: #fafafa;
+}
+
+#keyboard .inner {
+  max-width: 30em;
+  margin: auto;
+  padding: 2px;
+}
+
+#keyboard button {
+  font-size: 1.5em;
+  margin: 0.1em;
+  border: 0;
+  padding: 0.2em;
+  background-color: #d3d6da;
+  border-radius: 0.1em;
+  vertical-align: middle;
+}
+#keyboard button.absent {
+  background-color: gray;
+  color: #fff;
+}
+#keyboard button.present {
+  background-color: orange;
+  color: #fff;
+}
+#keyboard button.correct {
+  background-color: green;
+  color: #fff;
+}
+#keyboard button:active {
+  color: #fff;
+  background-color: #686868;
+}
+
+@media (max-height: 500px) {
+  #board {
+    font-size: 1.5em;
+  }
+  #keyboard button {
+    font-size: 1.25em;
+  }
+}
+
+@media (max-height: 480px) {
+  #board {
+    font-size: 1.25em;
+  }
+  #keyboard button {
+    font-size: 1.125em;
+  }
+}
+
+#keyboard .row {
+  display: flex;
+  justify-content: space-between;
+}
+#keyboard .row button {
+  padding: 0.3em 1em;
+  font-size: 1em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+#keyboard .row button svg {
+  vertical-align: middle;
+}
+
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s;
+}
+#modal.appear {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+#modal h2 {
+  margin: 0;
+  padding: 0;
+}
+
+#modal .content {
+  border-radius: 8px;
+  box-shadow: 0 4px 23px 0 rgb(0 0 0 / 20%);
+  background-color: #fff;
+  margin: 1em;
+  padding: 2em;
+  position: relative;
+  max-width: 90vw;
+  transform: translateY(80vh);
+  transition: transform 0.3s ease-in-out;
+  overflow: auto;
+}
+#modal.appear .content {
+  transition-delay: 0.3s;
+  transform: translateY(0vh);
+}
+
+#modal .content .close {
+  position: absolute;
+  top: 0.25em;
+  right: 0.25em;
+  cursor: pointer;
+}
+
+#modal .answer {
+  font-size: 3em;
+}
+
+#modal .results {
+  white-space: pre-wrap;
+  padding: 1em;
+  margin-bottom: 0.5em;
+  background-color: #eee;
+  border-radius: 0.2em;
+  line-height: 1.05em;
+  text-align: left;
+  font-size: 0.8em;
+}
+
+#modal button {
+  color: green;
+  background-color: rgba(0, 128, 0, 0.178);
+  font-size: 1.5em;
+  margin: 0;
+  border-radius: 0.5em;
+  vertical-align: middle;
+  padding: 0.5em 1.5em;
+  font-size: 1em;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  border: 0;
+  font-size: 0.8em;
+}
+#modal button:active {
+  background-color: rgba(0, 128, 0, 0.432);
+}
+#modal button svg {
+  vertical-align: middle;
+}
+
+#modal button#share {
+  color: #fff;
+  background-color: green;
+}
