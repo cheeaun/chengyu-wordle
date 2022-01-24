@@ -610,10 +610,10 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
             close your guess was to the idiom.
           </p>
           <ul>
-            <li>🟩⬜⬜⬜⬜ Green = correct spot</li>
-            <li>⬜🟨⬜⬜⬜ Yellow = wrong spot</li>
+            <li>🟩⬜⬜⬜ Green = correct spot</li>
+            <li>⬜🟨⬜⬜ Yellow = wrong spot</li>
             <li>
-              ⬜⬜⬜<span style={{ opacity: 0.5 }}>⬛</span>⬜ Gray = not in any
+              ⬜⬜<span style={{ opacity: 0.5 }}>⬛</span>⬜ Gray = not in any
               spot
             </li>
           </ul>
