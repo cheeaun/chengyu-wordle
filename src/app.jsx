@@ -12,6 +12,7 @@ const games = gameIdioms.slice(1).map((row) => ({
   idiom: row[1],
 }));
 
+const MAX_LETTERS = 4;
 const MAX_KEYS = 20;
 const MAX_STEPS = 6;
 
@@ -57,8 +58,89 @@ const getBoardGameState = (board) => {
 
 const blankBoard = () =>
   Array.from({ length: MAX_STEPS }, () =>
-    Array.from({ length: 4 }, () => ({ v: '', s: null }))
+    Array.from({ length: MAX_LETTERS }, () => ({ v: '', s: null }))
   );
+
+const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
+  let passedIdioms = prevPassedIdioms || new Set();
+  passedIdioms.add(idiom);
+  let keys = prevKeys || new Set();
+  const idiomLetters = idiom.split('');
+  idiomLetters.forEach((letter) => keys.add(letter));
+  let consecutiveFailures = 0;
+  lettersCycle: for (let i = 0; i < games.length; i++) {
+    const letter = idiomLetters[(i + 1) % MAX_LETTERS];
+    const anotherIdiom = games.find(
+      ({ idiom }) => !passedIdioms.has(idiom) && idiom.includes(letter)
+    );
+    if (anotherIdiom) {
+      for (let j = 0; j < anotherIdiom.idiom.length; j++) {
+        keys.add(anotherIdiom.idiom[j]);
+
+        if (keys.size >= MAX_KEYS) {
+          break lettersCycle;
+        }
+      }
+      passedIdioms.add(anotherIdiom.idiom);
+      consecutiveFailures = 0;
+    } else {
+      if (consecutiveFailures >= MAX_LETTERS + 1) {
+        // Too many failures, stop
+        break lettersCycle;
+      }
+      consecutiveFailures += 1;
+    }
+  }
+
+  // DEBUG
+  if (keys.size < MAX_KEYS || passedIdioms.size < MAX_STEPS) {
+    const nextIdiom = [...passedIdioms][++depth];
+    if (nextIdiom) {
+      const { passedIdioms: _passedIdioms, keys: _keys } = getIdiomsKeys(
+        nextIdiom,
+        passedIdioms,
+        keys,
+        depth
+      );
+      passedIdioms = _passedIdioms;
+      keys = _keys;
+    }
+  }
+
+  // Still not enough keys?
+  if (keys.size < MAX_KEYS || passedIdioms.size < MAX_STEPS) {
+    const randomIdiom = games[Math.floor(Math.random() * games.length)].idiom;
+    if (randomIdiom) {
+      const { passedIdioms: _passedIdioms, keys: _keys } = getIdiomsKeys(
+        randomIdiom,
+        passedIdioms,
+        keys,
+        0
+      );
+      passedIdioms = _passedIdioms;
+      keys = _keys;
+    }
+  }
+
+  if (keys.size < MAX_KEYS || passedIdioms.size < MAX_STEPS) {
+    const gameID = games.find((g) => g.idiom === idiom)?.id;
+    console.log(gameID, {
+      possibleIdioms: passedIdioms.size,
+      keySize: keys.size,
+      consecutiveFailures,
+    });
+  }
+
+  return {
+    passedIdioms,
+    keys,
+  };
+};
+
+// Check if all idioms have enough keys/idioms
+// games.forEach((game) => {
+//   getIdiomsKeys(game.idiom);
+// });
 
 const PlayIcon = (props) => (
   <svg viewBox="0 0 20 20" fill="currentColor" {...props}>
@@ -135,42 +217,24 @@ export function App() {
   const [showModal, setShowModal] = useState(false); // false | won | lost
   const [showInfoModal, setShowInfoModal] = useState(false);
 
-  const passedIdioms = [currentGame.idiom];
+  // const passedIdioms = [currentGame.idiom];
   const currentGameKeys = useMemo(() => {
-    const _currentGameKeys = new Set();
-    const currentIdiomLetters = currentGame.idiom.split('');
-    lettersCycle: for (let i = 0; i < games.length; i++) {
-      const letter = currentIdiomLetters[(i + 1) % currentIdiomLetters.length];
-      const anotherIdiom = games.find(
-        ({ idiom: id }) => !passedIdioms.includes(id) && id.includes(letter)
-      );
-      if (anotherIdiom) {
-        for (let j = 0; j < anotherIdiom.idiom.length; j++) {
-          _currentGameKeys.add(anotherIdiom.idiom[j]);
+    const { passedIdioms, keys } = getIdiomsKeys(currentGame.idiom);
 
-          if (_currentGameKeys.size >= MAX_KEYS) {
-            break lettersCycle;
-          }
-        }
-        passedIdioms.push(anotherIdiom.idiom);
-      }
-    }
-    return Array.from(_currentGameKeys);
-  }, [currentGame.idiom]);
-
-  useEffect(() => {
     // SPOILER inside console.log!
-    const possibleIdioms = passedIdioms
+    const possibleIdioms = [...passedIdioms]
       .map((idiom) => {
         return `${idiom} (${py(idiom)})`;
       })
-      .sort();
-    console.log(`POSSIBLE IDOMS (${currentGame.id}):
+      .sort((a, b) => a.localeCompare(b, 'zh'));
+    console.log(`POSSIBLE IDOMS [${currentGame.id}] (${keys.size} keys):
 ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
 
 🚨SPOILER🚨 Type 'ANSWER' to see the answer.
 `);
     window.ANSWER = `${currentGame.idiom} (${py(currentGame.idiom)})`;
+
+    return [...keys].sort((a, b) => a.localeCompare(b, 'zh'));
   }, [currentGame.idiom]);
 
   const handleLetter = (letter, overwrite = false) => {
