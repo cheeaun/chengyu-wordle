@@ -1,6 +1,8 @@
 # Chengyu Wordle
 
 > Wordle, for Chinese idioms - 成语 (chéngyǔ)
+>
+> Guess the idiom in 6 tries. 
 
 This is my attempt at recreating [Wordle](https://www.powerlanguage.co.uk/wordle/), made by [Josh Wardle](https://twitter.com/powerlanguish), from scratch.
 
