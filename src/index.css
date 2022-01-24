@@ -179,18 +179,18 @@ h1 sup {
   }
 }
 
-#board .letter.correct {
+#board .letter.🟩 {
   background-color: green;
 }
-#board .letter.present {
+#board .letter.🟧 {
   background-color: orange;
 }
-#board .letter.absent {
+#board .letter.⬜ {
   background-color: gray;
 }
-#board .letter.correct,
-#board .letter.present,
-#board .letter.absent {
+#board .letter.🟩,
+#board .letter.🟧,
+#board .letter.⬜ {
   color: #fff;
   border-color: rgba(0, 0, 0, 0.2);
   transition: all 0.3s 0.15s;
@@ -205,9 +205,9 @@ h1 sup {
   }
 }
 
-#board .letter.correct > *,
-#board .letter.present > *,
-#board .letter.absent > * {
+#board .letter.🟩 > *,
+#board .letter.🟧 > *,
+#board .letter.⬜ > * {
   animation: flip-back 0.3s ease-in-out both;
 }
 @keyframes flip-back {
@@ -251,15 +251,15 @@ h1 sup {
   background-color: #d3d6da;
   border-radius: 0.1em;
 }
-#keyboard button.absent {
+#keyboard button.⬜ {
   background-color: gray;
   color: #fff;
 }
-#keyboard button.present {
+#keyboard button.🟧 {
   background-color: orange;
   color: #fff;
 }
-#keyboard button.correct {
+#keyboard button.🟩 {
   background-color: green;
   color: #fff;
 }

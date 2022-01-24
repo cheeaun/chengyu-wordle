@@ -38,28 +38,64 @@ window.allGames = () => {
   return allGames;
 };
 
-const getBoardGameState = (board) => {
-  const reversedBoard = [...board].reverse();
-  const lastRowsWithValuesIndex = reversedBoard.findIndex((row) =>
-    row.some((item) => item.v)
-  );
-  const lastRowWithValues = reversedBoard[lastRowsWithValuesIndex];
-  if (lastRowWithValues) {
-    const won = lastRowWithValues.every((item) => item.s === 'correct');
-    if (won) return 'won';
-    const rowHasStates = lastRowWithValues.every((item) => !!item.s);
-    // Since board is reversed, index 0 = last row
-    if (lastRowsWithValuesIndex === 0 && !won && rowHasStates) {
-      return 'lost';
+const getIdiomStates = (hiddenIdiom, testIdiom) => {
+  const letters1 =
+    typeof testIdiom === 'string' ? testIdiom.split('') : testIdiom;
+  const letters2 =
+    typeof hiddenIdiom === 'string' ? hiddenIdiom.split('') : hiddenIdiom;
+  const lettersLength = letters1.length;
+  const states = Array.from({ length: lettersLength }, () => '⬜');
+  if (lettersLength !== letters2.length) {
+    throw new Error('idioms must have the same length');
+  }
+  const correctLetterIndices = [];
+  for (let i = 0; i < lettersLength; i++) {
+    const l1 = letters1[i];
+    const l2 = letters2[i];
+    if (l1 === l2) {
+      states[i] = '🟩';
+      correctLetterIndices.push(i);
     }
   }
+  const presentLetterIndices = [];
+  for (let i = 0; i < lettersLength; i++) {
+    const l1 = letters1[i];
+    const l2 = letters2[i];
+    if (l1 !== l2) {
+      const l1Index = letters2.indexOf(l1);
+      if (
+        l1Index !== -1 &&
+        !correctLetterIndices.includes(l1Index) &&
+        !presentLetterIndices.includes(l1Index)
+      ) {
+        states[i] = '🟧';
+        presentLetterIndices.push(l1Index);
+      }
+    }
+  }
+  return states;
+};
+
+window.getIdiomStates = getIdiomStates;
+
+const getBoardGameState = (boardStates) => {
+  const won = boardStates.some(
+    (row) => !!row.length && row.every((s) => s === '🟩')
+  );
+  if (won) return 'won';
+  const lastRow = boardStates[boardStates.length - 1];
+  const lost = !!lastRow.length && lastRow.every((s) => s !== '🟩');
+  if (lost) return 'lost';
   return null;
 };
 
+// v = letter values of the row
+// s = submitted state of the row (after user press enter)
 const blankBoard = () =>
-  Array.from({ length: MAX_STEPS }, () =>
-    Array.from({ length: MAX_LETTERS }, () => ({ v: '', s: null }))
-  );
+  Array.from({ length: MAX_STEPS }, () => ({
+    v: Array.from({ length: MAX_LETTERS }, () => ''),
+    s: false,
+  }));
 
 const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
   let passedIdioms = prevPassedIdioms || new Set();
@@ -92,7 +128,7 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
     }
   }
 
-  // DEBUG
+  // Try the next idiom
   if (keys.size < MAX_KEYS || passedIdioms.size < MAX_STEPS) {
     const nextIdiom = [...passedIdioms][++depth];
     if (nextIdiom) {
@@ -107,7 +143,7 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
     }
   }
 
-  // Still not enough keys?
+  // Still not enough keys, choose a random idiom
   if (keys.size < MAX_KEYS || passedIdioms.size < MAX_STEPS) {
     const randomIdiom = games[Math.floor(Math.random() * games.length)].idiom;
     if (randomIdiom) {
@@ -122,9 +158,10 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
     }
   }
 
+  // Something very wrong happened
   if (keys.size < MAX_KEYS || passedIdioms.size < MAX_STEPS) {
     const gameID = games.find((g) => g.idiom === idiom)?.id;
-    console.log(gameID, {
+    console.error(gameID, {
       possibleIdioms: passedIdioms.size,
       keySize: keys.size,
       consecutiveFailures,
@@ -175,11 +212,6 @@ export function App() {
     });
   }, []);
 
-  // v = value, s = state
-  // States (default "null"):
-  // - correct: letter is in the idiom adnd in the correct spot (green)
-  // - present: letter is in the idiom but in the wrong spot (yellow)
-  // - absent: letter is NOT in the idiom in any spot (gray)
   const [board, setBoard] = useState(
     JSON.parse(localStorage.getItem(`cywd-${currentGame.id}`))?.board ||
       blankBoard()
@@ -193,31 +225,36 @@ export function App() {
     }
   }, [currentGame.id]);
 
+  const boardStates = useMemo(() => {
+    return board.map((row, i) => {
+      if (row.s) {
+        return getIdiomStates(currentGame.idiom, row.v);
+      }
+      return [];
+    });
+  }, [board]);
+
   // Save to localStorage every time board changes
   useEffect(() => {
     // Only store in localStorage if board has some values
-    if (board && board.some((row) => row.some((cell) => cell.v))) {
+    if (board && board.some((row) => row.v.some((v) => v))) {
       localStorage.setItem(
         `cywd-${currentGame.id}`,
         JSON.stringify({
           board,
-          gameState: getBoardGameState(board),
+          gameState: getBoardGameState(boardStates),
         })
       );
     }
-  }, [board]);
+  }, [boardStates]);
 
-  // const [currentStep, setCurrentStep] = useState(0);
-  const currentStep =
-    board?.findIndex((row) => row.some((cell) => !cell.s)) || 0;
-  // console.log({ currentStep, board });
+  const currentStep = board?.findIndex((row) => row.s === false) || 0;
 
   // Set current step to first empty item in board
   const [showError, setShowError] = useState(false);
   const [showModal, setShowModal] = useState(false); // false | won | lost
   const [showInfoModal, setShowInfoModal] = useState(false);
 
-  // const passedIdioms = [currentGame.idiom];
   const currentGameKeys = useMemo(() => {
     const { passedIdioms, keys } = getIdiomsKeys(currentGame.idiom);
 
@@ -241,7 +278,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
     if (!board[currentStep]) return;
     if (gameState) return;
     const newBoard = [...board];
-    let columnIndex = newBoard[currentStep].findIndex((item) => item.v === '');
+    let columnIndex = newBoard[currentStep].v.findIndex((v) => v === '');
     if (overwrite) {
       if (columnIndex === -1) {
         columnIndex = 3;
@@ -249,25 +286,27 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
         columnIndex--;
       }
     }
-    const column = newBoard[currentStep][columnIndex];
-    if (column) {
-      column.v = letter;
+    if (columnIndex !== -1) {
+      newBoard[currentStep].v[columnIndex] = letter;
       setBoard(newBoard);
     }
   };
 
-  const flatBoard = board.flat();
-  const correctKeys = [];
-  const presentKeys = [];
-  const absentKeys = [];
-  flatBoard.forEach((item) => {
-    if (item.s === 'correct') {
-      correctKeys.push(item.v);
-    } else if (item.s === 'present') {
-      presentKeys.push(item.v);
-    } else if (item.s === 'absent') {
-      absentKeys.push(item.v);
-    }
+  const correctKeys = new Set();
+  const presentKeys = new Set();
+  const absentKeys = new Set();
+  board.forEach((row, i) => {
+    if (!row.s) return;
+    row.v.forEach((letter, j) => {
+      const state = boardStates[i][j];
+      if (state === '🟩') {
+        correctKeys.add(letter);
+      } else if (state === '🟧') {
+        presentKeys.add(letter);
+      } else if (state === '⬜') {
+        absentKeys.add(letter);
+      }
+    });
   });
 
   const handleEnter = () => {
@@ -275,27 +314,12 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
     console.log('handleEnter');
     setShowError(false);
 
-    // if (currentStep === MAX_STEPS - 1 || !board[currentStep]) {
-    //   renderModal();
-    //   return;
-    // }
-
-    const currentIdiom = board[currentStep].map((item) => item.v).join('');
+    const row = board[currentStep];
+    const currentIdiom = row.v.join('');
     const valid = idioms.includes(currentIdiom);
     if (valid) {
-      board[currentStep].forEach((item, i) => {
-        if (currentGame.idiom[i] === item.v) {
-          item.s = 'correct';
-        } else if (currentGame.idiom.split('').includes(item.v)) {
-          item.s = 'present';
-        } else {
-          item.s = 'absent';
-        }
-      });
+      row.s = true;
       setBoard([...board]);
-
-      // Go next step
-      // setCurrentStep(currentStep + 1);
     } else {
       setTimeout(() => {
         setShowError(true);
@@ -305,8 +329,8 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
   };
 
   const gameState = useMemo(() => {
-    return getBoardGameState(board);
-  }, [board]);
+    return getBoardGameState(boardStates);
+  }, [boardStates]);
 
   useEffect(() => {
     if (gameState === 'won') {
@@ -322,12 +346,17 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
     if (gameState) return;
     const newBoard = [...board];
     // Get last column with value
-    if (!newBoard[currentStep]) return;
-    const column = [...newBoard[currentStep]]
-      .reverse()
-      .find((item) => item.v !== '' && item.s === null);
-    if (column) {
-      column.v = '';
+    const row = newBoard[currentStep];
+    if (!row || row.s) return;
+    let columnIndex = -1;
+    for (let i = row.v.length - 1; i >= 0; i--) {
+      if (row.v[i] !== '') {
+        columnIndex = i;
+        break;
+      }
+    }
+    if (columnIndex !== -1) {
+      row.v[columnIndex] = '';
       setBoard(newBoard);
     }
   };
@@ -358,10 +387,8 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
         handleBackspace();
       } else if (/^arrow(left|right)/i.test(key)) {
         // This will cycle through all letters with same starting pinyin letter
-        const lastColumnWithValue = [...board[currentStep]]
-          .reverse()
-          .find((item) => item.v !== '');
-        const value = lastColumnWithValue?.v;
+        const row = board[currentStep];
+        const value = [...row.v].reverse().find((v) => v !== '');
         if (value) {
           const pinyinLetter = py(value)[0];
           const possibleLetters = currentGameKeys.filter(
@@ -403,22 +430,9 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
   }, [currentGameKeys, currentStep, gameState]);
 
   const permalink = location.origin + location.pathname + '#' + currentGame.id;
-  const emojiResults = board
-    .map((rows) =>
-      rows.some((item) => !!item.v)
-        ? `\n${rows
-            .map(
-              ({ s }) =>
-                ({
-                  correct: '🟩',
-                  present: '🟨',
-                  absent: '⬜',
-                }[s])
-            )
-            .join('')}`
-        : ''
-    )
-    .join('')
+  const emojiResults = boardStates
+    .map((row) => row.join(''))
+    .join('\n')
     .trim();
   const attempts = gameState === 'won' ? emojiResults.split('\n').length : 'X';
   const shareText = `Chengyu Wordle [${currentGame.id}] ${attempts}/6\n\n${emojiResults}\n\n${permalink}`;
@@ -448,9 +462,6 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
             />
           </svg>
         </button>
-        {/* <a href="https://github.com/cheeaun/chengyu-wordle" target="_blank">
-          Source
-        </a> */}
         <h1>
           Chengyu Wordle <sup>beta</sup>
         </h1>
@@ -464,7 +475,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
         </button>
       </header>
       <div id="board">
-        {board.map((letters, index) => {
+        {board.map((row, index) => {
           return (
             <div
               className={`row ${
@@ -472,17 +483,17 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               } ${currentStep === index ? 'current' : ''}`}
               key={index}
             >
-              {letters.map((letter, i) => (
+              {row.v.map((letter, i) => (
                 <div
-                  className={`letter ${letter.v ? 'lettered' : ''} ${
-                    letter.s ?? ''
+                  className={`letter ${letter ?? 'lettered'} ${
+                    boardStates[index][i] ?? ''
                   }`}
                   key={i}
                 >
                   <ruby>
-                    {letter.v || <span style={{ opacity: 0 }}>一</span>}
+                    {letter || <span style={{ opacity: 0 }}>一</span>}
                     <rp>(</rp>
-                    <rt>{py(letter.v) || <>&nbsp;</>}</rt>
+                    <rt>{py(letter) || <>&nbsp;</>}</rt>
                     <rp>)</rp>
                   </ruby>
                 </div>
@@ -496,9 +507,9 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
           <div class="keys">
             {currentGameKeys.map((key, i) => (
               <button
-                class={`${correctKeys.includes(key) ? 'correct' : ''} ${
-                  presentKeys.includes(key) ? 'present' : ''
-                } ${absentKeys.includes(key) ? 'absent' : ''}`}
+                class={`${correctKeys.has(key) ? '🟩' : ''} ${
+                  presentKeys.has(key) ? '🟧' : ''
+                } ${absentKeys.has(key) ? '⬜' : ''}`}
                 type="button"
                 tabIndex={-1}
                 onClick={() => {
@@ -659,7 +670,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
           </p>
           <ul>
             <li>🟩⬜⬜⬜ Green = correct spot</li>
-            <li>⬜🟨⬜⬜ Yellow = wrong spot</li>
+            <li>⬜🟧⬜⬜ Yellow = wrong spot</li>
             <li>
               ⬜⬜<span style={{ opacity: 0.5 }}>⬛</span>⬜ Gray = not in any
               spot
