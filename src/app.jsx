@@ -607,14 +607,21 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               href="https://github.com/cheeaun/chengyu-wordle/"
               target="_blank"
             >
-              Project repository
+              Built
+            </a>{' '}
+            by{' '}
+            <a href="https://cheeaun.com" target="_blank">
+              Chee Aun
             </a>
-          </p>
-          <p>
+            .{' '}
             <a href="https://www.powerlanguage.co.uk/wordle/" target="_blank">
               Wordle
             </a>{' '}
-            ©️ Josh Wardle
+            ©️{' '}
+            <a href="https://powerlanguage.co.uk/" target="_blank">
+              Josh Wardle
+            </a>
+            .
           </p>
           <h2>Feedback channels</h2>
           <ul>
