@@ -1,10 +1,6 @@
 import { readFile, writeFile } from 'fs/promises';
 import { stringify } from 'csv-stringify/sync';
-import numericHash from 'numeric-hash';
-import shortHash from 'shorthash2';
-
-const hashLength = 10;
-const hash = shortHash; //(str) => numericHash(str, hashLength, hashLength);
+import hash from 'shorthash2';
 
 const idioms = JSON.parse(
   await readFile(new URL('../data/idioms.json', import.meta.url))
