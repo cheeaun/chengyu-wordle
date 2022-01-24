@@ -333,7 +333,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
   const attempts = gameState === 'won' ? emojiResults.split('\n').length : 'X';
   const shareText = `Chengyu Wordle [${
     currentGame.id
-  }] ${attempts}/6\n\n${emojiResults}\n\n#chengyu ${
+  }] ${attempts}/6\n\n${emojiResults}\n\n${
     location.protocol + '//' + location.host + '/#' + currentGame.id
   }`;
 
