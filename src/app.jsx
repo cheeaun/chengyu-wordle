@@ -186,10 +186,10 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
     console.log('handleEnter');
     setShowError(false);
 
-    if (currentStep === MAX_STEPS - 1 || !board[currentStep]) {
-      renderModal();
-      return;
-    }
+    // if (currentStep === MAX_STEPS - 1 || !board[currentStep]) {
+    //   renderModal();
+    //   return;
+    // }
 
     const currentIdiom = board[currentStep].map((item) => item.v).join('');
     const valid = idioms.includes(currentIdiom);
