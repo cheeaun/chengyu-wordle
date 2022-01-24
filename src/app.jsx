@@ -335,6 +335,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
     };
   }, [currentGameKeys, currentStep, gameState]);
 
+  const permalink = location.origin + location.pathname + '#' + currentGame.id;
   const emojiResults = board
     .map((rows) =>
       rows.some((item) => !!item.v)
@@ -353,11 +354,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
     .join('')
     .trim();
   const attempts = gameState === 'won' ? emojiResults.split('\n').length : 'X';
-  const shareText = `Chengyu Wordle [${
-    currentGame.id
-  }] ${attempts}/6\n\n${emojiResults}\n\n${
-    location.protocol + '//' + location.host + '/#' + currentGame.id
-  }`;
+  const shareText = `Chengyu Wordle [${currentGame.id}] ${attempts}/6\n\n${emojiResults}\n\n${permalink}`;
 
   return (
     <>
@@ -486,13 +483,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               : '👾👾👾'}
           </h2>
           {showModal === 'play' && (
-            <a
-              href={
-                location.protocol + '//' + location.host + '/#' + currentGame.id
-              }
-            >
-              🔗 {location.host + '/#' + currentGame.id}
-            </a>
+            <a href={permalink}>🔗 {location.host + '/#' + currentGame.id}</a>
           )}
           {/(won|lost)/i.test(showModal) && (
             <>
@@ -507,17 +498,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
                 </b>
                 <br />{' '}
                 <small>
-                  <a
-                    href={
-                      location.protocol +
-                      '//' +
-                      location.host +
-                      '/#' +
-                      currentGame.id
-                    }
-                  >
-                    🔗 {currentGame.id}
-                  </a>
+                  <a href={permalink}>🔗 {currentGame.id}</a>
                   &nbsp;&nbsp;
                   <a
                     href={`https://cc-cedict.org/editor/editor.php?handler=QueryDictionary&querydictionary_search=${currentGame.idiom}`}
