@@ -10,6 +10,7 @@
     "data": "node ./scripts/gen-data.mjs"
   },
   "dependencies": {
+    "autoprefixer": "~10.4.2",
     "pinyin": "~2.10.2",
     "preact": "~10.6.4"
   },
