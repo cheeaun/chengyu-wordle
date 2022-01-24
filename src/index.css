@@ -32,6 +32,11 @@ ruby rt {
   font-family: 'Nunito', sans-serif;
 }
 
+button {
+  touch-action: manipulation;
+  color: inherit;
+}
+
 button,
 button svg {
   vertical-align: middle;
