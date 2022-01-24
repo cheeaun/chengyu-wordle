@@ -23,6 +23,12 @@ Commands:
 - `npm i` - install dependencies
 - `npm run dev` - start a development server
 
+Notes:
+
+- "Unique" IDs are generated for every idiom. They are not 100% unique and are generated with [shorthash2](https://github.com/jecsham/shorthash2). I've tested using this and it's definitely possible to get the same hash for different idioms, if it's used to generate hashes for ALL idioms. Now it's only used for high-frequency idioms (smaller list).
+- Generated "keys" for the keyboard are not guaranteed to be persistent for every idiom. They are dynamically generated based on the list of idioms. So if the list of idioms or the order of the idioms changes, the keys will change. This will affect the shared results with emojis (🟩🟨⬜).
+- It's possible to fork this and change all idioms.
+
 ### Data
 
 ⚠️ If you don't want to be spoiled, avoid reading the data marked with 🚨**SPOILERS**🚨.
