@@ -37,6 +37,24 @@ window.allGames = () => {
   return allGames;
 };
 
+const getBoardGameState = (board) => {
+  const reversedBoard = [...board].reverse();
+  const lastRowsWithValuesIndex = reversedBoard.findIndex((row) =>
+    row.some((item) => item.v)
+  );
+  const lastRowWithValues = reversedBoard[lastRowsWithValuesIndex];
+  if (lastRowWithValues) {
+    const won = lastRowWithValues.every((item) => item.s === 'correct');
+    if (won) return 'won';
+    const rowHasStates = lastRowWithValues.every((item) => !!item.s);
+    // Since board is reversed, index 0 = last row
+    if (lastRowsWithValuesIndex === 0 && !won && rowHasStates) {
+      return 'lost';
+    }
+  }
+  return null;
+};
+
 const blankBoard = () =>
   Array.from({ length: MAX_STEPS }, () =>
     Array.from({ length: 4 }, () => ({ v: '', s: null }))
@@ -60,12 +78,13 @@ export function App() {
   // - present: letter is in the idiom but in the wrong spot (yellow)
   // - absent: letter is NOT in the idiom in any spot (gray)
   const [board, setBoard] = useState(
-    JSON.parse(localStorage.getItem(`cywd-${currentGame.id}`)) || blankBoard()
+    JSON.parse(localStorage.getItem(`cywd-${currentGame.id}`))?.board ||
+      blankBoard()
   );
   useEffect(() => {
     const cachedGame = localStorage.getItem(`cywd-${currentGame.id}`);
     if (cachedGame) {
-      setBoard(JSON.parse(cachedGame));
+      setBoard(JSON.parse(cachedGame).board);
     } else {
       setBoard(blankBoard());
     }
@@ -75,7 +94,13 @@ export function App() {
   useEffect(() => {
     // Only store in localStorage if board has some values
     if (board && board.some((row) => row.some((cell) => cell.v))) {
-      localStorage.setItem(`cywd-${currentGame.id}`, JSON.stringify(board));
+      localStorage.setItem(
+        `cywd-${currentGame.id}`,
+        JSON.stringify({
+          board,
+          gameState: getBoardGameState(board),
+        })
+      );
     }
   }, [board]);
 
@@ -191,20 +216,10 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
   };
 
   const gameState = useMemo(() => {
-    const rowsWithValues = board.filter((row) => row.every((item) => !!item.v));
-    if (rowsWithValues.length) {
-      const lastRow = rowsWithValues[rowsWithValues.length - 1];
-      const won = lastRow.every((item) => item.s === 'correct');
-      if (won) return 'won';
-      const rowHasStates = lastRow.every((item) => !!item.s);
-      if (rowsWithValues.length === MAX_STEPS && !won && rowHasStates) {
-        return 'lost';
-      }
-    }
-    return null;
+    return getBoardGameState(board);
   }, [board]);
 
-  function renderModal() {
+  useEffect(() => {
     if (gameState === 'won') {
       setShowModal('won');
     } else if (gameState === 'lost') {
@@ -212,8 +227,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
     } else {
       setShowModal(false);
     }
-  }
-  useEffect(renderModal, [gameState]);
+  }, [gameState]);
 
   const handleBackspace = () => {
     if (gameState) return;
