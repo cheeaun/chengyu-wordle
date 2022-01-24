@@ -377,7 +377,8 @@ h1 sup {
   font-size: 0.8em;
 }
 
-#modal button {
+#modal button,
+#info-modal button {
   color: green;
   background-color: rgba(0, 128, 0, 0.178);
   font-size: 1.5em;
@@ -391,7 +392,8 @@ h1 sup {
   border: 0;
   font-size: 0.8em;
 }
-#modal button:active {
+#modal button:active,
+#info-modal button:active {
   background-color: rgba(0, 128, 0, 0.432);
 }
 

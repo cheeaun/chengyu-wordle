@@ -15,12 +15,12 @@ const games = gameIdioms.slice(1).map((row) => ({
 const MAX_LETTERS = 4;
 const MAX_KEYS = 20;
 const MAX_STEPS = 6;
+const KEY_PREFIX = 'cywd-';
 
 window.clearGames = () => {
-  // loop all keys in localStorage, if the key starts with 'cywd-', delete it
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    if (key.startsWith('cywd-')) {
+    if (key.startsWith(KEY_PREFIX)) {
       localStorage.removeItem(key);
     }
   }
@@ -30,9 +30,9 @@ window.allGames = () => {
   const allGames = new Map();
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    if (key.startsWith('cywd-')) {
+    if (key.startsWith(KEY_PREFIX)) {
       const game = JSON.parse(localStorage.getItem(key));
-      allGames.set(key.replace('cywd-', ''), game);
+      allGames.set(key.replace(KEY_PREFIX, ''), game);
     }
   }
   return allGames;
@@ -213,11 +213,11 @@ export function App() {
   }, []);
 
   const [board, setBoard] = useState(
-    JSON.parse(localStorage.getItem(`cywd-${currentGame.id}`))?.board ||
+    JSON.parse(localStorage.getItem(`${KEY_PREFIX}${currentGame.id}`))?.board ||
       blankBoard()
   );
   useEffect(() => {
-    const cachedGame = localStorage.getItem(`cywd-${currentGame.id}`);
+    const cachedGame = localStorage.getItem(`${KEY_PREFIX}${currentGame.id}`);
     if (cachedGame) {
       setBoard(JSON.parse(cachedGame).board);
     } else {
@@ -239,7 +239,7 @@ export function App() {
     // Only store in localStorage if board has some values
     if (board && board.some((row) => row.v.some((v) => v))) {
       localStorage.setItem(
-        `cywd-${currentGame.id}`,
+        `${KEY_PREFIX}${currentGame.id}`,
         JSON.stringify({
           board,
           gameState: getBoardGameState(boardStates),
@@ -734,6 +734,30 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               </a>
             </li>
           </ul>
+          <h2>Debugging</h2>
+          <button
+            type="button"
+            onClick={() => {
+              if (confirm('Are you sure?')) {
+                localStorage.removeItem(KEY_PREFIX + currentGame.id);
+                location.reload();
+              }
+            }}
+          >
+            Reset current idiom game
+          </button>
+          &nbsp;
+          <button
+            type="button"
+            onClick={() => {
+              if (confirm('Are you sure?')) {
+                clearGames();
+                location.reload();
+              }
+            }}
+          >
+            Clear database
+          </button>
         </div>
       </div>
     </>
