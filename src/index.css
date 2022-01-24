@@ -89,6 +89,7 @@ h1 sup {
   display: flex;
   flex-direction: column;
   overflow: auto;
+  justify-content: center;
 }
 
 #board .row {
@@ -96,6 +97,7 @@ h1 sup {
   flex-grow: 1;
   display: flex;
   justify-content: center;
+  max-height: 3em;
 }
 #board .row.current ~ .row {
   opacity: 0.5;
@@ -252,24 +254,6 @@ h1 sup {
   background-color: #686868;
 }
 
-@media (max-height: 500px) {
-  #board {
-    font-size: 1.5em;
-  }
-  #keyboard button {
-    font-size: 1.25em;
-  }
-}
-
-@media (max-height: 480px) {
-  #board {
-    font-size: 1.25em;
-  }
-  #keyboard button {
-    font-size: 1.125em;
-  }
-}
-
 #keyboard .row {
   display: flex;
   justify-content: space-between;
@@ -282,6 +266,40 @@ h1 sup {
 }
 #keyboard .row button svg {
   vertical-align: middle;
+}
+
+@media (max-height: 500px) {
+  #board {
+    font-size: 1.5em;
+  }
+  #keyboard button {
+    font-size: 1.25em;
+    padding: 0.15em;
+  }
+  #keyboard .row button {
+    font-size: 0.9em;
+    padding: 0.2em 1em;
+  }
+  #keyboard .row button svg {
+    transform: scale(0.9);
+  }
+}
+
+@media (max-height: 480px) {
+  #board {
+    font-size: 1.25em;
+  }
+  #keyboard button {
+    font-size: 1.125em;
+    padding: 0.1em;
+  }
+  #keyboard .row button {
+    font-size: 0.8em;
+    padding: 0.1em 1em;
+  }
+  #keyboard .row button svg {
+    transform: scale(0.8);
+  }
 }
 
 #modal {
