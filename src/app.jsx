@@ -193,15 +193,18 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
   };
 
   const flatBoard = board.flat();
-  const correctKeys = flatBoard
-    .filter((item) => item.s === 'correct')
-    .map((item) => item.v);
-  const presentKeys = flatBoard
-    .filter((item) => item.s === 'present')
-    .map((item) => item.v);
-  const absentKeys = flatBoard
-    .filter((item) => item.s === 'absent')
-    .map((item) => item.v);
+  const correctKeys = [];
+  const presentKeys = [];
+  const absentKeys = [];
+  flatBoard.forEach((item) => {
+    if (item.s === 'correct') {
+      correctKeys.push(item.v);
+    } else if (item.s === 'present') {
+      presentKeys.push(item.v);
+    } else if (item.s === 'absent') {
+      absentKeys.push(item.v);
+    }
+  });
 
   const handleEnter = () => {
     if (gameState) return;
