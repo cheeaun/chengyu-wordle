@@ -6,6 +6,9 @@ import content from '@originjs/vite-plugin-content';
 export default defineConfig({
   base: './',
   plugins: [preact(), content()],
+  server: {
+    port: 3030,
+  },
   build: {
     sourcemap: true,
     rollupOptions: {
