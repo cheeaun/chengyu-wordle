@@ -8,5 +8,14 @@ export default defineConfig({
   plugins: [preact(), content()],
   build: {
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('all-idioms')) return 'all-idioms';
+          if (id.includes('game-idioms')) return 'game-idioms';
+          if (id.includes('node_modules')) return 'vendor';
+        },
+      },
+    },
   },
 });
