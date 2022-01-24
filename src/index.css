@@ -295,9 +295,9 @@ h1 sup {
   #board {
     font-size: 1.25em;
   }
-  #keyboard button {
-    font-size: 1.125em;
-    padding: 0.1em;
+  #keyboard .keys {
+    white-space: nowrap;
+    overflow-x: auto;
   }
   #keyboard .row button {
     font-size: 0.8em;

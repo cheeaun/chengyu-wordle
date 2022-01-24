@@ -429,25 +429,27 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
       </div>
       <div id="keyboard">
         <div class="inner">
-          {currentGameKeys.map((key, i) => (
-            <button
-              class={`${correctKeys.includes(key) ? 'correct' : ''} ${
-                presentKeys.includes(key) ? 'present' : ''
-              } ${absentKeys.includes(key) ? 'absent' : ''}`}
-              type="button"
-              tabIndex={-1}
-              onClick={() => {
-                handleLetter(key);
-              }}
-            >
-              <ruby>
-                {key}
-                <rp>(</rp>
-                <rt>{py(key)}</rt>
-                <rp>)</rp>
-              </ruby>
-            </button>
-          ))}
+          <div class="keys">
+            {currentGameKeys.map((key, i) => (
+              <button
+                class={`${correctKeys.includes(key) ? 'correct' : ''} ${
+                  presentKeys.includes(key) ? 'present' : ''
+                } ${absentKeys.includes(key) ? 'absent' : ''}`}
+                type="button"
+                tabIndex={-1}
+                onClick={() => {
+                  handleLetter(key);
+                }}
+              >
+                <ruby>
+                  {key}
+                  <rp>(</rp>
+                  <rt>{py(key)}</rt>
+                  <rp>)</rp>
+                </ruby>
+              </button>
+            ))}
+          </div>
           <div class="row">
             <button type="button" onClick={handleEnter} tabIndex={-1}>
               Enter
