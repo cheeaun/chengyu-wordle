@@ -659,7 +659,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
         />
         <div class="content">
           <h2>How to play</h2>
-          <p>Guess the idiom in ${MAX_STEPS} tries.</p>
+          <p>Guess the idiom in {MAX_STEPS} tries.</p>
           <p>
             Each guess must be a valid 4-letter idiom. Hit the enter button to
             submit.
