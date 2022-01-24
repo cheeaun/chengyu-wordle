@@ -123,7 +123,6 @@ export function App() {
         ({ idiom: id }) => !passedIdioms.includes(id) && id.includes(letter)
       );
       if (anotherIdiom) {
-        passedIdioms.push(anotherIdiom.idiom);
         for (let j = 0; j < anotherIdiom.idiom.length; j++) {
           _currentGameKeys.add(anotherIdiom.idiom[j]);
 
@@ -131,6 +130,7 @@ export function App() {
             break lettersCycle;
           }
         }
+        passedIdioms.push(anotherIdiom.idiom);
       }
     }
     return Array.from(_currentGameKeys);
