@@ -98,6 +98,7 @@ h1 sup {
   display: flex;
   justify-content: center;
   max-height: 3em;
+  perspective: 1000px;
 }
 #board .row.current ~ .row {
   opacity: 0.5;
