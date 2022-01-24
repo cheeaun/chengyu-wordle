@@ -89,7 +89,11 @@ h1 sup {
   display: flex;
   flex-direction: column;
   overflow: auto;
-  justify-content: center;
+}
+@media (min-height: 700px) {
+  #board {
+    justify-content: center;
+  }
 }
 
 #board .row {
