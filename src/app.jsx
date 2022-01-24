@@ -62,11 +62,22 @@ const blankBoard = () =>
 
 const PlayIcon = (props) => (
   <svg viewBox="0 0 20 20" fill="currentColor" {...props}>
+    <title>▶️</title>
     <path
       fill-rule="evenodd"
       d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
       clip-rule="evenodd"
     />
+  </svg>
+);
+
+const CloseIcon = (props) => (
+  <svg viewBox="0 0 24 24" {...props}>
+    <title>✖️</title>
+    <path
+      fill="currentColor"
+      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+    ></path>
   </svg>
 );
 
@@ -122,6 +133,7 @@ export function App() {
   // Set current step to first empty item in board
   const [showError, setShowError] = useState(false);
   const [showModal, setShowModal] = useState(false); // false | won | lost
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   const passedIdioms = [currentGame.idiom];
   const currentGameKeys = useMemo(() => {
@@ -350,9 +362,31 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
   return (
     <>
       <header>
-        <a href="https://github.com/cheeaun/chengyu-wordle" target="_blank">
+        <button
+          type="button"
+          onClick={() => {
+            setShowInfoModal(true);
+          }}
+        >
+          <svg
+            width="16"
+            height="16"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <title>ℹ️</title>
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </button>
+        {/* <a href="https://github.com/cheeaun/chengyu-wordle" target="_blank">
           Source
-        </a>
+        </a> */}
         <h1>
           Chengyu Wordle <sup>beta</sup>
         </h1>
@@ -433,21 +467,15 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
           if (e.target === e.currentTarget) setShowModal(null);
         }}
       >
+        <CloseIcon
+          height="24"
+          width="24"
+          class="close"
+          onClick={() => {
+            setShowModal(null);
+          }}
+        />
         <div class="content">
-          <svg
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            class="close"
-            onClick={() => {
-              setShowModal(null);
-            }}
-          >
-            <path
-              fill="currentColor"
-              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-            ></path>
-          </svg>
           <h2>
             {showModal === 'won'
               ? '🎉🎉🎉'
@@ -557,6 +585,87 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               <PlayIcon width={20} height={20} /> Choose
             </button>
           </p>
+        </div>
+      </div>
+      <div id="info-modal" class={showInfoModal ? 'appear' : ''}>
+        <CloseIcon
+          height="24"
+          width="24"
+          class="close"
+          onClick={() => {
+            setShowInfoModal(false);
+          }}
+        />
+        <div class="content">
+          <h2>How to play</h2>
+          <p>Guess the idiom in 6 tries.</p>
+          <p>
+            Each guess must be a valid 4-letter idiom. Hit the enter button to
+            submit.
+          </p>
+          <p>
+            After each guess, the color of the tiles will change to show how
+            close your guess was to the idiom.
+          </p>
+          <ul>
+            <li>🟩⬜⬜⬜⬜ Green = correct spot</li>
+            <li>⬜🟨⬜⬜⬜ Yellow = wrong spot</li>
+            <li>
+              ⬜⬜⬜<span style={{ opacity: 0.5 }}>⬛</span>⬜ Gray = not in any
+              spot
+            </li>
+          </ul>
+          <h2>About</h2>
+          <p>
+            <a
+              href="https://github.com/cheeaun/chengyu-wordle/"
+              target="_blank"
+            >
+              Project repository
+            </a>
+          </p>
+          <p>
+            <a href="https://www.powerlanguage.co.uk/wordle/" target="_blank">
+              Wordle
+            </a>{' '}
+            ©️ Josh Wardle
+          </p>
+          <h2>Feedback channels</h2>
+          <ul>
+            <li>
+              <a href="https://t.me/+ykuhfiImLd1kNjk1" target="_blank">
+                Telegram group
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/cheeaun/chengyu-wordle/discussions"
+                target="_blank"
+              >
+                GitHub Discussions
+              </a>
+              (for developers)
+            </li>
+            <li>
+              <a
+                href="https://github.com/cheeaun/chengyu-wordle/issues"
+                target="_blank"
+              >
+                GitHub Issues
+              </a>{' '}
+              (for bugs)
+            </li>
+            <li>
+              <a href="https://twitter.com/cheeaun" target="_blank">
+                @cheeaun on Twitter
+              </a>
+            </li>
+            <li>
+              <a href="https://t.me/cheeaun" target="_blank">
+                @cheeaun on Telegram
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </>

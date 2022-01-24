@@ -32,6 +32,11 @@ ruby rt {
   font-family: 'Nunito', sans-serif;
 }
 
+button,
+button svg {
+  vertical-align: middle;
+}
+
 header {
   border-bottom: 1px solid #ccc;
   padding: 0.5em;
@@ -240,7 +245,6 @@ h1 sup {
   padding: 0.2em;
   background-color: #d3d6da;
   border-radius: 0.1em;
-  vertical-align: middle;
 }
 #keyboard button.absent {
   background-color: gray;
@@ -268,9 +272,6 @@ h1 sup {
   font-size: 1em;
   text-transform: uppercase;
   font-weight: bold;
-}
-#keyboard .row button svg {
-  vertical-align: middle;
 }
 
 @media (max-height: 500px) {
@@ -349,7 +350,7 @@ h1 sup {
   transform: translateY(0vh);
 }
 
-#modal .content .close {
+#modal .close {
   position: absolute;
   top: 0.25em;
   right: 0.25em;
@@ -375,10 +376,9 @@ h1 sup {
   color: green;
   background-color: rgba(0, 128, 0, 0.178);
   font-size: 1.5em;
-  margin: 0;
+  margin: 0.2em 0;
   border-radius: 0.5em;
-  vertical-align: middle;
-  padding: 0.5em 1.5em;
+  padding: 0.5em 1em;
   font-size: 1em;
   text-transform: uppercase;
   font-weight: bold;
@@ -389,11 +389,49 @@ h1 sup {
 #modal button:active {
   background-color: rgba(0, 128, 0, 0.432);
 }
-#modal button svg {
-  vertical-align: middle;
-}
 
 #modal button#share {
   color: #fff;
   background-color: green;
+}
+
+#info-modal {
+  pointer-events: none;
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px) saturate(180%);
+  transition: opacity 0.3s;
+  z-index: 100;
+  overflow: auto;
+}
+#info-modal.appear {
+  pointer-events: auto;
+  opacity: 1;
+}
+#info-modal .content {
+  max-width: 30em;
+  margin: auto;
+  padding: 1em;
+  text-align: left;
+  font-size: 0.9em;
+}
+#info-modal h2 {
+  margin-top: 0;
+  padding-top: 0;
+  font-size: 1em;
+}
+#info-modal ul {
+  margin-left: 0;
+  padding-left: 1.2em;
+}
+#info-modal .close {
+  position: absolute;
+  top: 0.25em;
+  right: 0.25em;
+  cursor: pointer;
 }
