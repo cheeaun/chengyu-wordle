@@ -329,7 +329,9 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
         <a href="https://github.com/cheeaun/chengyu-wordle" target="_blank">
           Source
         </a>
-        <h1>Chengyu Wordle</h1>
+        <h1>
+          Chengyu Wordle <sup>beta</sup>
+        </h1>
         <button
           type="button"
           onClick={() => {

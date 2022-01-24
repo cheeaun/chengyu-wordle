@@ -48,7 +48,6 @@ header button {
   margin: 0;
   background-color: rgba(0, 128, 0, 0.178);
   color: inherit;
-  font-size: inherit;
   color: green;
   font-weight: bold;
   border-radius: 0.5em;
@@ -57,12 +56,20 @@ header button {
 header button:active {
   background-color: rgba(0, 128, 0, 0.432);
 }
+header a,
+header button {
+  font-size: 0.8em;
+}
 
 h1 {
   text-transform: uppercase;
-  font-size: 1.1em;
+  font-size: 1em;
   margin: 0;
   padding: 0;
+}
+h1 sup {
+  font-size: 0.6em;
+  color: red;
 }
 
 #app {
