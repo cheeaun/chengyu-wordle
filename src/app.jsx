@@ -200,14 +200,67 @@ const CloseIcon = (props) => (
   </svg>
 );
 
+const startDate = new Date(2022, 1, 1); // 2022-02-01 (CNY)
+const getTodayGame = () => {
+  const today = new Date().setHours(0, 0, 0, 0);
+  const diff = today - startDate;
+  const dayCount = Math.floor(diff / (1000 * 60 * 60 * 24));
+  return games[Math.max(0, dayCount % games.length)];
+};
+
+// Component that shows hours, minutes and seconds counting down to start of next day
+const Countdown = () => {
+  const nextDay = new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000;
+  if (nextDay < startDate) {
+    const daysUntilsStartDate = Math.ceil(
+      (startDate - nextDay) / (1000 * 60 * 60 * 24)
+    );
+    return (
+      <time dateTime={startDate}>
+        {daysUntilsStartDate} {daysUntilsStartDate === 1 ? 'day' : 'days'}
+      </time>
+    );
+  }
+  const [hours, setHours] = useState('00');
+  const [minutes, setMinutes] = useState('00');
+  const [seconds, setSeconds] = useState('00');
+  // update countdown every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const diff = nextDay - new Date();
+      setHours(
+        Math.floor(diff / (1000 * 60 * 60))
+          .toString()
+          .padStart(2, '0')
+      );
+      setMinutes(
+        Math.floor((diff / (1000 * 60)) % 60)
+          .toString()
+          .padStart(2, '0')
+      );
+      setSeconds(
+        Math.floor((diff / 1000) % 60)
+          .toString()
+          .padStart(2, '0')
+      );
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+  return (
+    <time class="countdown">
+      {hours}:{minutes}:{seconds}
+    </time>
+  );
+};
+
 export function App() {
   const [currentGame, setCurrentGame] = useState(
-    games.find((g) => g.id === location.hash.slice(1)) || games[0]
+    games.find((g) => g.id === location.hash.slice(1)) || getTodayGame()
   );
   useEffect(() => {
     window.addEventListener('hashchange', () => {
       setCurrentGame(
-        games.find((g) => g.id === location.hash.slice(1)) || games[0]
+        games.find((g) => g.id === location.hash.slice(1)) || getTodayGame()
       );
     });
   }, []);
@@ -610,42 +663,62 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               </button>
             </>
           )}
-          <p>
-            <button
-              type="button"
-              onClick={() => {
-                const yes = confirm(
-                  'Are you sure you want to start a new random game?'
-                );
-                if (yes) {
-                  const rand = Math.round(Math.random() * (games.length - 1));
-                  const randGame = games[rand];
-                  location.hash = `#${randGame.id}`;
-                  setShowModal(null);
-                }
-              }}
-            >
-              <PlayIcon width={20} height={20} /> Random
-            </button>{' '}
-            <button
-              type="button"
-              onClick={() => {
-                // Ask user for idiom ID, load game if ID is valid
-                const id = prompt('Enter idiom ID:');
-                if (id) {
-                  const game = games.find((g) => g.id === id);
-                  if (game) {
-                    location.hash = `#${game.id}`;
+          <div class="footer">
+            {/won|lost/i.test(gameState) && (
+              <p>
+                <big>
+                  Next idiom:{' '}
+                  <b>
+                    <Countdown />
+                  </b>
+                </big>
+              </p>
+            )}
+            <div>
+              {getTodayGame().id !== currentGame.id && (
+                <>
+                  <a href="/" class="button">
+                    <PlayIcon width={20} height={20} /> Play today's game!
+                  </a>
+                  <br />
+                </>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  const yes = confirm(
+                    'Are you sure you want to start a new random game?'
+                  );
+                  if (yes) {
+                    const rand = Math.round(Math.random() * (games.length - 1));
+                    const randGame = games[rand];
+                    location.hash = `#${randGame.id}`;
                     setShowModal(null);
-                  } else {
-                    alert('Invalid idiom ID');
                   }
-                }
-              }}
-            >
-              <PlayIcon width={20} height={20} /> Choose
-            </button>
-          </p>
+                }}
+              >
+                <PlayIcon width={20} height={20} /> Random
+              </button>{' '}
+              <button
+                type="button"
+                onClick={() => {
+                  // Ask user for idiom ID, load game if ID is valid
+                  const id = prompt('Enter idiom ID:');
+                  if (id) {
+                    const game = games.find((g) => g.id === id);
+                    if (game) {
+                      location.hash = `#${game.id}`;
+                      setShowModal(null);
+                    } else {
+                      alert('Invalid idiom ID');
+                    }
+                  }
+                }}
+              >
+                <PlayIcon width={20} height={20} /> Choose
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <div id="info-modal" class={showInfoModal ? 'appear' : ''}>

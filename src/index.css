@@ -38,7 +38,7 @@ button {
 }
 
 button,
-button svg {
+svg {
   vertical-align: middle;
 }
 
@@ -360,6 +360,7 @@ h1 sup {
   top: 0.25em;
   right: 0.25em;
   cursor: pointer;
+  z-index: 1;
 }
 
 #modal .answer {
@@ -377,6 +378,7 @@ h1 sup {
   font-size: 0.8em;
 }
 
+#modal a.button,
 #modal button,
 #info-modal button {
   color: green;
@@ -400,6 +402,16 @@ h1 sup {
 #modal button#share {
   color: #fff;
   background-color: green;
+}
+
+#modal .footer {
+  margin-top: 1em;
+}
+
+.countdown {
+  font-feature-settings: 'tnum';
+  font-variant-numeric: tabular-nums;
+  font-weight: bold;
 }
 
 #info-modal {
@@ -442,4 +454,10 @@ h1 sup {
   top: 0.25em;
   right: 0.25em;
   cursor: pointer;
+  z-index: 1;
+}
+
+a.button {
+  display: inline-block;
+  text-decoration: none;
 }
