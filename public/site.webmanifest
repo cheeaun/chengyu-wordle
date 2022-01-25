@@ -1,0 +1,17 @@
+{
+  "name": "Chengyu Wordle",
+  "short_name": "Chengyu Wordle",
+  "description": " Wordle, for Chinese idioms - 成语 (chéngyǔ)",
+  "background_color": "green",
+  "theme_color": "green",
+  "start_url": "./",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["chengyu", "chinese", "idiom", "wordle", "game"]
+}
