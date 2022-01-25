@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'preact/hooks';
+import { useState, useEffect, useMemo, useRef } from 'preact/hooks';
 import pinyin from 'pinyin';
 const py = (str) =>
   pinyin(str, { segment: true, group: true }).flat().join(' ').trim();
@@ -490,6 +490,52 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
   const attempts = gameState === 'won' ? emojiResults.split('\n').length : 'X';
   const shareText = `Chengyu Wordle [${currentGame.id}] ${attempts}/6\n\n${emojiResults}\n\n${permalink}`;
 
+  const hints = useMemo(() => {
+    const hints = [];
+    const letters = currentGame.idiom.split('');
+
+    // 1. Absent letters hints
+    const absentHints = currentGameKeys
+      .filter((k) => {
+        return !letters.includes(k) && !absentKeys.has(k);
+      })
+      .slice(0, -1) // Don't reveal at least one letter
+      .slice(0, 3) // But still max 3 letters
+      .map((letter) => {
+        return `❌ The letter ${letter} (${py(letter)}) is NOT in the idiom.`;
+      })
+      .sort(() => Math.random() - 0.5);
+    hints.push(...absentHints);
+
+    // 2. Letter hints
+    const letterHints = letters
+      .filter((c) => !correctKeys.has(c))
+      .slice(0, -1) // Don't reveal at least one letter
+      .map((letter) => {
+        return `✅ The letter ${letter} (${py(letter)}) is in the idiom.`;
+      })
+      .sort(() => Math.random() - 0.5);
+    hints.push(...letterHints);
+
+    // 3. Pinyin hints
+    const pinyinHint = letters
+      .map((c) => py(c)[0])
+      .join('')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+    // https://stackoverflow.com/a/37511463/20838
+    hints.push(`✨ Abbreviated pinyin: ${pinyinHint}`);
+
+    return hints;
+  }, [correctKeys, currentGame.idiom]);
+  const hintIndex = useRef(0);
+  const showHint = () => {
+    if (gameState) return;
+    const hint = hints[hintIndex.current];
+    hintIndex.current = (hintIndex.current + 1) % hints.length;
+    alert(hint);
+  };
+
   return (
     <>
       <header>
@@ -581,6 +627,9 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
           <div class="row">
             <button type="button" onClick={handleEnter} tabIndex={-1}>
               Enter
+            </button>
+            <button type="button" class="stuck" onClick={showHint}>
+              I'm stuck
             </button>
             <button type="button" onClick={handleBackspace} tabIndex={-1}>
               <svg height="24" viewBox="0 0 24 24" width="24">

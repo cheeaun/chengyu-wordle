@@ -250,6 +250,7 @@ h1 sup {
   padding: 0.2em;
   background-color: #d3d6da;
   border-radius: 0.1em;
+  cursor: pointer;
 }
 #keyboard button.⬜ {
   background-color: gray;
@@ -277,6 +278,19 @@ h1 sup {
   font-size: 1em;
   text-transform: uppercase;
   font-weight: bold;
+}
+#keyboard .row button.stuck {
+  background-color: transparent;
+  opacity: 0.6;
+  font-size: 0.8em;
+  margin-top: 1em;
+  padding: 0;
+}
+#keyboard .row button.stuck:hover {
+  opacity: 1;
+}
+#keyboard .row button.stuck:active {
+  color: inherit;
 }
 
 @media (max-height: 500px) {
