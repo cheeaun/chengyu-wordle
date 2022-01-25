@@ -511,7 +511,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
 
     // 2. Letter hints
     const letterHints = letters
-      .filter((c) => !correctKeys.has(c))
+      .filter((c) => !correctKeys.has(c) && !presentKeys.has(c))
       .slice(0, -1) // Don't reveal at least one letter
       .map((letter) => {
         return `✅ The letter ${letter} (${py(letter)}) is in the idiom.`;
