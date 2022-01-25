@@ -210,24 +210,23 @@ const getTodayGame = () => {
 
 // Component that shows hours, minutes and seconds counting down to start of next day
 const Countdown = () => {
-  const nextDay = new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000;
+  let nextDay = new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000;
   if (nextDay < startDate) {
-    const daysUntilsStartDate = Math.ceil(
-      (startDate - nextDay) / (1000 * 60 * 60 * 24),
-    );
-    return (
-      <time dateTime={startDate}>
-        {daysUntilsStartDate} {daysUntilsStartDate === 1 ? 'day' : 'days'}
-      </time>
-    );
+    nextDay = startDate;
   }
   const [hours, setHours] = useState('00');
   const [minutes, setMinutes] = useState('00');
   const [seconds, setSeconds] = useState('00');
+  const [isNow, setIsNow] = useState(false);
   // update countdown every second
   useEffect(() => {
     const timer = setInterval(() => {
       const diff = nextDay - new Date();
+      if (diff <= 0) {
+        setIsNow(true);
+        clearInterval(timer);
+        return;
+      }
       setHours(
         Math.floor(diff / (1000 * 60 * 60))
           .toString()
@@ -246,6 +245,9 @@ const Countdown = () => {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+  if (isNow) {
+    return <a href="/">Now!</a>;
+  }
   return (
     <time class="countdown">
       {hours}:{minutes}:{seconds}
