@@ -125,23 +125,23 @@ h1 sup {
 @keyframes shake {
   10%,
   90% {
-    transform: translateX(-1px);
+    transform: translateX(-2px);
   }
 
   20%,
   80% {
-    transform: translateX(2px);
+    transform: translateX(4px);
   }
 
   30%,
   50%,
   70% {
-    transform: translateX(-4px);
+    transform: translateX(-8px);
   }
 
   40%,
   60% {
-    transform: translateX(4px);
+    transform: translateX(8px);
   }
 }
 
@@ -157,6 +157,23 @@ h1 sup {
   justify-content: center;
   align-items: center;
   display: flex;
+}
+
+#board .row.error .letter {
+  animation: red 0.5s;
+  animation-delay: 0s !important;
+}
+
+@keyframes red {
+  0% {
+    border-color: #ccc;
+  }
+  50% {
+    border-color: lightcoral;
+  }
+  100% {
+    border-color: #ccc;
+  }
 }
 
 #board .letter ruby,
