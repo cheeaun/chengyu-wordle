@@ -632,10 +632,10 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
                   <a href={permalink}>🔗 {currentGame.id}</a>
                   &nbsp;&nbsp;
                   <a
-                    href={`https://cc-cedict.org/editor/editor.php?handler=QueryDictionary&querydictionary_search=${currentGame.idiom}`}
+                    href={`https://hanyu.baidu.com/s?wd=${currentGame.idiom}&from=zici`}
                     target="_blank"
                   >
-                    📖 CC-CEDICT
+                    📖 Baidu
                   </a>
                 </small>
               </p>
