@@ -241,6 +241,7 @@ h1 sup {
   max-width: 30em;
   margin: auto;
   padding: 2px;
+  margin-bottom: env(safe-area-inset-bottom);
 }
 
 #keyboard button {
