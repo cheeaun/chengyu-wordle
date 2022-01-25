@@ -80,7 +80,7 @@ window.getIdiomStates = getIdiomStates;
 
 const getBoardGameState = (boardStates) => {
   const won = boardStates.some(
-    (row) => !!row.length && row.every((s) => s === '🟩')
+    (row) => !!row.length && row.every((s) => s === '🟩'),
   );
   if (won) return 'won';
   const lastRow = boardStates[boardStates.length - 1];
@@ -107,7 +107,7 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
   lettersCycle: for (let i = 0; i < games.length; i++) {
     const letter = idiomLetters[(i + 1) % MAX_LETTERS];
     const anotherIdiom = games.find(
-      ({ idiom }) => !passedIdioms.has(idiom) && idiom.includes(letter)
+      ({ idiom }) => !passedIdioms.has(idiom) && idiom.includes(letter),
     );
     if (anotherIdiom) {
       for (let j = 0; j < anotherIdiom.idiom.length; j++) {
@@ -136,7 +136,7 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
         nextIdiom,
         passedIdioms,
         keys,
-        depth
+        depth,
       );
       passedIdioms = _passedIdioms;
       keys = _keys;
@@ -151,7 +151,7 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
         randomIdiom,
         passedIdioms,
         keys,
-        0
+        0,
       );
       passedIdioms = _passedIdioms;
       keys = _keys;
@@ -213,7 +213,7 @@ const Countdown = () => {
   const nextDay = new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000;
   if (nextDay < startDate) {
     const daysUntilsStartDate = Math.ceil(
-      (startDate - nextDay) / (1000 * 60 * 60 * 24)
+      (startDate - nextDay) / (1000 * 60 * 60 * 24),
     );
     return (
       <time dateTime={startDate}>
@@ -231,17 +231,17 @@ const Countdown = () => {
       setHours(
         Math.floor(diff / (1000 * 60 * 60))
           .toString()
-          .padStart(2, '0')
+          .padStart(2, '0'),
       );
       setMinutes(
         Math.floor((diff / (1000 * 60)) % 60)
           .toString()
-          .padStart(2, '0')
+          .padStart(2, '0'),
       );
       setSeconds(
         Math.floor((diff / 1000) % 60)
           .toString()
-          .padStart(2, '0')
+          .padStart(2, '0'),
       );
     }, 1000);
     return () => clearInterval(timer);
@@ -255,19 +255,19 @@ const Countdown = () => {
 
 export function App() {
   const [currentGame, setCurrentGame] = useState(
-    games.find((g) => g.id === location.hash.slice(1)) || getTodayGame()
+    games.find((g) => g.id === location.hash.slice(1)) || getTodayGame(),
   );
   useEffect(() => {
     window.addEventListener('hashchange', () => {
       setCurrentGame(
-        games.find((g) => g.id === location.hash.slice(1)) || getTodayGame()
+        games.find((g) => g.id === location.hash.slice(1)) || getTodayGame(),
       );
     });
   }, []);
 
   const [board, setBoard] = useState(
     JSON.parse(localStorage.getItem(`${KEY_PREFIX}${currentGame.id}`))?.board ||
-      blankBoard()
+      blankBoard(),
   );
   useEffect(() => {
     const cachedGame = localStorage.getItem(`${KEY_PREFIX}${currentGame.id}`);
@@ -296,7 +296,7 @@ export function App() {
         JSON.stringify({
           board,
           gameState: getBoardGameState(boardStates),
-        })
+        }),
       );
     }
   }, [boardStates]);
@@ -445,7 +445,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
         if (value) {
           const pinyinLetter = py(value)[0];
           const possibleLetters = currentGameKeys.filter(
-            (k) => py(k)[0] === pinyinLetter
+            (k) => py(k)[0] === pinyinLetter,
           );
           if (possibleLetters.length <= 1) return;
           const letterIndex = possibleLetters.indexOf(value);
@@ -687,7 +687,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
                 type="button"
                 onClick={() => {
                   const yes = confirm(
-                    'Are you sure you want to start a new random game?'
+                    'Are you sure you want to start a new random game?',
                   );
                   if (yes) {
                     const rand = Math.round(Math.random() * (games.length - 1));
