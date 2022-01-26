@@ -28,7 +28,7 @@ Commands:
 Notes:
 
 - "Unique" IDs are generated for every idiom. They are not 100% unique and are generated with [shorthash2](https://github.com/jecsham/shorthash2). I've tested using this and it's definitely possible to get the same hash for different idioms, if it's used to generate hashes for ALL idioms. Now it's only used for high-frequency idioms (smaller list).
-- Generated "keys" for the keyboard are not guaranteed to be persistent for every idiom. They are dynamically generated based on the list of idioms. So if the list of idioms or the order of the idioms changes, the keys will change. This will affect the shared results with emojis (🟩🟨⬜).
+- Generated "keys" for the keyboard are not guaranteed to be persistent for every idiom. They are dynamically generated based on the list of idioms. So if the list of idioms or the order of the idioms changes, the keys will change. This will affect the shared results with emojis (🟩🟧⬜).
 - It's possible to fork this and change all idioms.
 
 ### Data
@@ -72,6 +72,13 @@ I looked up some data from the Googleverse and realised this is kind of doable. 
 - [猜成语 (Cāi chéngyǔ)](https://bryony.dev/chengyu/chengyu.html) by [@nurupo_dev](https://twitter.com/nurupo_dev) by - Guess the idiom
 - [拼音猜成语 (Pīnyīn cāi chéngyǔ)](https://pinyincaichengyu.com/) by [limboy](https://limboy.me/)
 - [疯狂猜成语安卓版 (Fēngkuáng cāi chéngyǔ ānzhuō bǎn)](http://www.ddooo.com/softdown/44315.htm) - Android game called "Crazy Guess Idioms".
+
+🟩🟨🟩🟨🟩🟨🟩🟨🟩🟨🟩🟨🟩
+
+**A lot more Wordle clones at [🔗 puzzlet/awesome-wordle](https://github.com/puzzlet/awesome-wordle)!**
+
+🟩🟨🟩🟨🟩🟨🟩🟨🟩🟨🟩🟨🟩
+
 
 ## Copyright and license
 
