@@ -720,9 +720,9 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               &nbsp;&nbsp;
               <a
                 class="button tweet"
-                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-                  permalink,
-                )}&text=${encodeURIComponent(shareText)}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                  shareTextWithLink,
+                )}`}
                 target="_blank"
               >
                 <svg
