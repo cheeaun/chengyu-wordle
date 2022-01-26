@@ -10,7 +10,8 @@ body {
 }
 
 body,
-button {
+button,
+input {
   font-family: 'Nunito', 'Helvetica Neue', 'Helvetica', 'Arial', 'PingFang SC',
     'Microsoft YaHei', sans-serif;
 }
@@ -31,9 +32,15 @@ ruby rt {
   font-family: 'Nunito', sans-serif;
 } */
 
-button {
+button,
+input {
   touch-action: manipulation;
   color: inherit;
+  appearance: none;
+}
+
+button {
+  user-select: none;
 }
 
 button,
@@ -377,6 +384,7 @@ h1 sup {
   margin: 1em;
   padding: 2em;
   position: relative;
+  width: calc(100% - 2em);
   max-width: 30em;
   transform: translateY(80vh);
   transition: transform 0.3s ease-in-out;
@@ -434,6 +442,22 @@ h1 sup {
 #modal button#share {
   color: #fff;
   background-color: green;
+}
+
+#modal a.tweet {
+  color: #fff;
+  background-color: #1da1f2;
+}
+
+#modal .idiom-code {
+  border: 0;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  width: 12ex;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid rgba(0, 128, 0, 0.432);
+  font-weight: bold;
 }
 
 #modal .footer {
