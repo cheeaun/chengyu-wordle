@@ -376,7 +376,7 @@ h1 sup {
   margin: 1em;
   padding: 2em;
   position: relative;
-  max-width: 90vw;
+  max-width: 30em;
   transform: translateY(80vh);
   transition: transform 0.3s ease-in-out;
   overflow: auto;
