@@ -304,6 +304,20 @@ export function App() {
     }
   }, [boardStates]);
 
+  const [definition, setDefinition] = useState(null);
+  useEffect(() => {
+    setDefinition(null);
+    fetch(
+      `https://baidu-hanyu-idiom.cheeaun.workers.dev/?wd=${currentGame.idiom}`,
+    )
+      .then((r) => r.json())
+      .then((r) => {
+        if (r.definition) {
+          setDefinition(r.definition);
+        }
+      });
+  }, [currentGame.idiom]);
+
   const currentStep = board?.findIndex((row) => row.s === false) || 0;
 
   // Set current step to first empty item in board
@@ -511,7 +525,18 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
       .sort(() => Math.random() - 0.5);
     hints.push(...absentHints);
 
-    // 2. Letter hints
+    // 2. Definition hints
+    if (
+      definition?.zh &&
+      letters.filter((c) => definition.zh.includes(c)).length <= 2
+      // Only show hint if definition contains 2 or less of the characters in the idiom
+      // Else, the definition basically revealed the answer
+    ) {
+      hints.push(`ℹ️ ${definition.zh}`);
+    }
+    if (definition?.en) hints.push(`ℹ️ ${definition.en}`);
+
+    // 3. Letter hints
     const letterHints = letters
       .filter((c) => !correctKeys.has(c) && !presentKeys.has(c))
       .slice(0, -1) // Don't reveal at least one letter
@@ -521,7 +546,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
       .sort(() => Math.random() - 0.5);
     hints.push(...letterHints);
 
-    // 3. Pinyin hints
+    // 4. Pinyin hints
     const pinyinHint = letters
       .map((c) => py(c)[0])
       .join('')
@@ -531,7 +556,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
     hints.push(`✨ Abbreviated pinyin: ${pinyinHint}`);
 
     return hints;
-  }, [correctKeys, currentGame.idiom]);
+  }, [correctKeys, currentGame.idiom, definition]);
   const hintIndex = useState(0);
   useEffect(() => {
     hintIndex.current = 0;
@@ -683,15 +708,18 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
                     <rp>)</rp>
                   </ruby>
                 </b>
-                <br />{' '}
+                <div class="definition">
+                  {definition?.zh}
+                  {definition?.zh && definition?.en && <br />}
+                  {definition?.en}
+                </div>
                 <small>
-                  <a href={permalink}>🔗 {currentGame.id}</a>
-                  &nbsp;&nbsp;
+                  {definition?.zh || definition?.en ? 'Source:' : '📖'}{' '}
                   <a
                     href={`https://hanyu.baidu.com/s?wd=${currentGame.idiom}&from=zici`}
                     target="_blank"
                   >
-                    📖 Baidu
+                    Baidu
                   </a>
                 </small>
               </p>

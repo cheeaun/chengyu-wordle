@@ -404,7 +404,11 @@ h1 sup {
 }
 
 #modal .answer {
-  font-size: 3em;
+  font-size: 2em;
+}
+
+#modal .definition {
+  font-size: 0.8em;
 }
 
 #modal .results {
