@@ -3,7 +3,6 @@ body {
   padding: 0;
   margin: 0;
   background-color: #ffff;
-  font-family: 'Helvetica Neue', arial, sans-serif;
   color: #111;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -11,9 +10,9 @@ body {
 }
 
 body,
-button,
-textarea {
-  font-family: 'Nunito', sans-serif;
+button {
+  font-family: 'Nunito', 'Helvetica Neue', 'Helvetica', 'Arial', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
 }
 
 a {
@@ -25,12 +24,12 @@ a {
   box-sizing: border-box;
 }
 
-ruby {
+/* ruby {
   font-family: 'Ma Shan Zheng', cursive;
 }
 ruby rt {
   font-family: 'Nunito', sans-serif;
-}
+} */
 
 button {
   touch-action: manipulation;
