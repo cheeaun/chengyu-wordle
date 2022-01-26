@@ -256,6 +256,25 @@ const Countdown = () => {
   );
 };
 
+const CodeInput = ({ code, url }) =>
+  code && (
+    <input
+      readOnly
+      value={code}
+      class="idiom-code"
+      onClick={(e) => {
+        e.target.focus();
+        e.target.select();
+        navigator.clipboard
+          .writeText(url || code)
+          .then(() => {
+            alert('Copied URL to clipboard');
+          })
+          .catch((e) => {});
+      }}
+    />
+  );
+
 export function App() {
   const [currentGame, setCurrentGame] = useState(
     games.find((g) => g.id === location.hash.slice(1)) || getTodayGame(),
@@ -695,7 +714,9 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               : '👾👾👾'}
           </h2>
           {showModal === 'play' && (
-            <a href={permalink}>🔗 {location.host + '/#' + currentGame.id}</a>
+            <p>
+              <CodeInput code={currentGame.id} url={permalink} />
+            </p>
           )}
           {/(won|lost)/i.test(showModal) && (
             <>
@@ -767,21 +788,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
                 </svg>
               </a>
               &nbsp;&nbsp;
-              <input
-                readOnly
-                value={currentGame.id}
-                class="idiom-code"
-                onClick={(e) => {
-                  e.target.focus();
-                  e.target.select();
-                  navigator.clipboard
-                    .writeText(permalink)
-                    .then(() => {
-                      alert('Copied URL to clipboard');
-                    })
-                    .catch((e) => {});
-                }}
-              />
+              <CodeInput code={currentGame.id} url={permalink} />
             </>
           )}
           <div class="footer">
