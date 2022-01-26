@@ -211,8 +211,9 @@ const getTodayGame = () => {
 // Component that shows hours, minutes and seconds counting down to start of next day
 const Countdown = () => {
   let nextDay = new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000;
-  if (nextDay < startDate) {
-    nextDay = startDate;
+  const nextStartDate = new Date(+startDate + 24 * 60 * 60 * 1000);
+  if (nextDay < nextStartDate) {
+    nextDay = nextStartDate;
   }
   const [hours, setHours] = useState('00');
   const [minutes, setMinutes] = useState('00');
