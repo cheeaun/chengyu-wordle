@@ -1,0 +1,60 @@
+{
+  "about": {
+    "about1": "<0>Built</0> by <1>Chee Aun</1>. <2>Wordle</2> ©️ <3>Josh Wardle</3>.",
+    "heading": "About"
+  },
+  "app": {
+    "description": "Wordle, for Chinese idioms - 成语 (chéngyǔ). Guess the idiom in 6 tries.",
+    "title": "Chengyu Wordle"
+  },
+  "common": {
+    "beta": "beta",
+    "choose": "Choose",
+    "enter": "Enter",
+    "play": "Play",
+    "random": "Random",
+    "share": "Share",
+    "tweet": "Tweet"
+  },
+  "debugging": {
+    "clearDB": "Clear database",
+    "confirmClearDB": "Are you sure?",
+    "confirmResetGame": "Are you sure?",
+    "heading": "Debugging",
+    "resetGame": "Reset current idiom game"
+  },
+  "feedback": {
+    "githubDiscussions": "<0>GitHub Discussions</0> (for developers",
+    "githubIssues": "<0>GitHub Issues</0> (for bugs)",
+    "heading": "Feedback",
+    "telegram": "@cheeaun on Telegram",
+    "telegramGroup": "Telegram Group",
+    "twitter": "@cheeaun on Twitter"
+  },
+  "hints": {
+    "abbreviatedPinyin": "✨ Abbreviated pinyin: {{pinyinHint}}",
+    "absentLetter": "❌ The letter {{letter}} ({{pinyin}}) is NOT in the idiom.",
+    "presentLetter": "✅ The letter {{letter}} ({{pinyin}}) is in the idiom."
+  },
+  "howToPlay": {
+    "heading": "How to play",
+    "how1": "Guess the idiom in 6 tries.",
+    "how2": "Each guess must be a valid 4-letter idiom. Hit the enter button to submit.",
+    "how3": "After each guess, the color of the tiles will change to show how close your guess was to the idiom.",
+    "how4": "A new idiom will be available every day.",
+    "spotAbsent": "Gray = not in any spot",
+    "spotCorrect": "Green = correct spot",
+    "spotPresent": "Yellow = wrong spot"
+  },
+  "ui": {
+    "confirmRandom": "Are you sure you want to start a new random game?",
+    "copiedResults": "Copied results to clipboard",
+    "copiedURL": "Copied URL to clipboard",
+    "countdownNow": "Now!",
+    "hint": "I'm stuck",
+    "nextIdiom": "Next Idiom: <0/>",
+    "playTodayGame": "Play today's game!",
+    "promptIdiom": "Enter idiom ID/URL:",
+    "startPlay": "Let's play!"
+  }
+}

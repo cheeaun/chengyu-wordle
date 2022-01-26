@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useRef } from 'preact/hooks';
 import pinyin from 'pinyin';
 const py = (str) =>
   pinyin(str, { segment: true, group: true }).flat().join(' ').trim();
+import { useTranslation, Trans } from 'react-i18next';
 
 // Data
 import idiomsTxt from '../game-data/all-idioms.txt?raw';
@@ -210,6 +211,7 @@ const getTodayGame = () => {
 
 // Component that shows hours, minutes and seconds counting down to start of next day
 const Countdown = () => {
+  const { t } = useTranslation();
   let nextDay = new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000;
   const nextStartDate = new Date(+startDate + 24 * 60 * 60 * 1000);
   if (nextDay < nextStartDate) {
@@ -247,7 +249,7 @@ const Countdown = () => {
     return () => clearInterval(timer);
   }, []);
   if (isNow) {
-    return <a href="./">Now!</a>;
+    return <a href="./">{t('ui.countdownNow')}</a>;
   }
   return (
     <time class="countdown">
@@ -256,26 +258,32 @@ const Countdown = () => {
   );
 };
 
-const CodeInput = ({ code, url }) =>
-  code && (
-    <input
-      readOnly
-      value={code}
-      class="idiom-code"
-      onClick={(e) => {
-        e.target.focus();
-        e.target.select();
-        navigator.clipboard
-          .writeText(url || code)
-          .then(() => {
-            alert('Copied URL to clipboard');
-          })
-          .catch((e) => {});
-      }}
-    />
+const CodeInput = ({ code, url }) => {
+  const { t } = useTranslation();
+  return (
+    code && (
+      <input
+        readOnly
+        value={code}
+        class="idiom-code"
+        onClick={(e) => {
+          e.target.focus();
+          e.target.select();
+          navigator.clipboard
+            .writeText(url || code)
+            .then(() => {
+              alert(t('ui.copiedURL'));
+            })
+            .catch((e) => {});
+        }}
+      />
+    )
   );
+};
 
 export function App() {
+  const { t } = useTranslation();
+
   const [skipFirstTime, setSkipFirstTime] = useState(
     localStorage.getItem(`${KEY_PREFIX}skipFirstTime`) || false,
   );
@@ -528,7 +536,9 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
     .join('\n')
     .trim();
   const attempts = gameState === 'won' ? emojiResults.split('\n').length : 'X';
-  const shareText = `Chengyu Wordle [${currentGame.id}] ${attempts}/6\n\n${emojiResults}`;
+  const shareText = `${t('app.title')} [${
+    currentGame.id
+  }] ${attempts}/6\n\n${emojiResults}`;
   const shareTextWithLink = `${shareText}\n\n${permalink}`;
 
   const hints = useMemo(() => {
@@ -543,7 +553,10 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
       .slice(0, -1) // Don't reveal at least one letter
       .slice(0, 3) // But still max 3 letters
       .map((letter) => {
-        return `❌ The letter ${letter} (${py(letter)}) is NOT in the idiom.`;
+        return t('hints.absentLetter', {
+          letter,
+          pinyin: py(letter),
+        });
       })
       .sort(() => Math.random() - 0.5);
     hints.push(...absentHints);
@@ -564,7 +577,10 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
       .filter((c) => !correctKeys.has(c) && !presentKeys.has(c))
       .slice(0, -1) // Don't reveal at least one letter
       .map((letter) => {
-        return `✅ The letter ${letter} (${py(letter)}) is in the idiom.`;
+        return t('hints.presentLetter', {
+          letter,
+          pinyin: py(letter),
+        });
       })
       .sort(() => Math.random() - 0.5);
     hints.push(...letterHints);
@@ -576,7 +592,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
     // https://stackoverflow.com/a/37511463/20838
-    hints.push(`✨ Abbreviated pinyin: ${pinyinHint}`);
+    hints.push(t('hints.abbreviatedPinyin', { pinyinHint }));
 
     return hints;
   }, [correctKeys, currentGame.idiom, definition]);
@@ -617,7 +633,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
           </svg>
         </button>
         <h1>
-          Chengyu Wordle <sup>beta</sup>
+          {t('app.title')} <sup>{t('common.beta')}</sup>
         </h1>
         <button
           type="button"
@@ -625,7 +641,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
             setShowModal(gameState || 'play');
           }}
         >
-          Play
+          {t('common.play')}
         </button>
       </header>
       <div id="board">
@@ -681,10 +697,10 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
           </div>
           <div class="row">
             <button type="button" onClick={handleEnter} tabIndex={-1}>
-              Enter
+              {t('common.enter')}
             </button>
             <button type="button" class="stuck" onClick={showHint}>
-              I'm stuck
+              {t('ui.hint')}
             </button>
             <button type="button" onClick={handleBackspace} tabIndex={-1}>
               <svg height="24" viewBox="0 0 24 24" width="24">
@@ -739,12 +755,11 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
                   {definition?.en}
                 </div>
                 <small>
-                  {definition?.zh || definition?.en ? 'Source:' : '📖'}{' '}
                   <a
                     href={`https://hanyu.baidu.com/s?wd=${currentGame.idiom}&from=zici`}
                     target="_blank"
                   >
-                    Baidu
+                    📖 Baidu
                   </a>
                 </small>
               </p>
@@ -757,12 +772,12 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
                   } catch (e) {
                     try {
                       await navigator.clipboard.writeText(shareTextWithLink);
-                      alert('Copied results to clipboard');
+                      alert(t('ui.copiedResults'));
                     } catch (e2) {}
                   }
                 }}
               >
-                Share{' '}
+                {t('common.share')}{' '}
                 <svg height="16" width="16" viewBox="0 0 24 24">
                   <path
                     fill="currentColor"
@@ -784,7 +799,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <title>Tweet</title>
+                  <title>{t('common.tweet')}</title>
                   <path
                     fill="currentColor"
                     d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
@@ -800,10 +815,10 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               getTodayGame().id === currentGame.id && (
                 <p>
                   <big>
-                    Next idiom:{' '}
-                    <b>
-                      <Countdown />
-                    </b>
+                    <Trans
+                      i18nKey="ui.nextIdiom"
+                      components={[<Countdown />]}
+                    />
                   </big>
                 </p>
               )}
@@ -811,7 +826,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               {getTodayGame().id !== currentGame.id && (
                 <>
                   <a href="./" class="button">
-                    <PlayIcon width={20} height={20} /> Play today's game!
+                    <PlayIcon width={20} height={20} /> {t('ui.playTodayGame')}
                   </a>
                   <br />
                 </>
@@ -819,9 +834,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               <button
                 type="button"
                 onClick={() => {
-                  const yes = confirm(
-                    'Are you sure you want to start a new random game?',
-                  );
+                  const yes = confirm(t('ui.confirmRandom'));
                   if (yes) {
                     const rand = Math.round(Math.random() * (games.length - 1));
                     const randGame = games[rand];
@@ -830,13 +843,13 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
                   }
                 }}
               >
-                <PlayIcon width={20} height={20} /> Random
+                <PlayIcon width={20} height={20} /> {t('common.random')}
               </button>{' '}
               <button
                 type="button"
                 onClick={() => {
                   // Ask user for idiom ID, load game if ID is valid
-                  let id = prompt('Enter idiom ID/URL:');
+                  let id = prompt(t('ui.promptIdiom'));
                   try {
                     id = new URL(id).hash.slice(1);
                   } catch (e) {}
@@ -851,7 +864,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
                   }
                 }}
               >
-                <PlayIcon width={20} height={20} /> Choose
+                <PlayIcon width={20} height={20} /> {t('common.choose')}
               </button>
             </div>
           </div>
@@ -872,111 +885,102 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
           />
         )}
         <div class="content">
-          <h2>How to play</h2>
-          <p>Guess the idiom in {MAX_STEPS} tries.</p>
-          <p>
-            Each guess must be a valid 4-letter idiom. Hit the enter button to
-            submit.
-          </p>
-          <p>
-            After each guess, the color of the tiles will change to show how
-            close your guess was to the idiom.
-          </p>
+          <h2>{t('howToPlay.heading')}</h2>
+          <p>{t('howToPlay.how1')}</p>
+          <p>{t('howToPlay.how2')}</p>
+          <p>{t('howToPlay.how3')}</p>
           <ul>
-            <li>🟩⬜⬜⬜ Green = correct spot</li>
-            <li>⬜🟧⬜⬜ Yellow = wrong spot</li>
+            <li>🟩⬜⬜⬜ {t('howToPlay.spotCorrect')}</li>
+            <li>⬜🟧⬜⬜ {t('howToPlay.spotPresent')}</li>
             <li>
-              ⬜⬜<span style={{ opacity: 0.5 }}>⬛</span>⬜ Gray = not in any
-              spot
+              ⬜⬜<span style={{ opacity: 0.5 }}>⬛</span>⬜{' '}
+              {t('howToPlay.spotAbsent')}
             </li>
           </ul>
-          <p>A new idiom will be available every day.</p>
+          <p>{t('howToPlay.how4')}</p>
           {skipFirstTime ? (
             <>
-              <h2>About</h2>
+              <h2>{t('about.heading')}</h2>
               <p>
-                <a
-                  href="https://github.com/cheeaun/chengyu-wordle/"
-                  target="_blank"
-                >
-                  Built
-                </a>{' '}
-                by{' '}
-                <a href="https://cheeaun.com" target="_blank">
-                  Chee Aun
-                </a>
-                .{' '}
-                <a
-                  href="https://www.powerlanguage.co.uk/wordle/"
-                  target="_blank"
-                >
-                  Wordle
-                </a>{' '}
-                ©️{' '}
-                <a href="https://powerlanguage.co.uk/" target="_blank">
-                  Josh Wardle
-                </a>
-                .
+                <Trans
+                  i18nKey="about.about1"
+                  components={[
+                    <a
+                      href="https://github.com/cheeaun/chengyu-wordle/"
+                      target="_blank"
+                    />,
+                    <a href="https://cheeaun.com" target="_blank" />,
+                    <a
+                      href="https://www.powerlanguage.co.uk/wordle/"
+                      target="_blank"
+                    />,
+                    <a href="https://powerlanguage.co.uk/" target="_blank" />,
+                  ]}
+                />
               </p>
-              <h2>Feedback channels</h2>
+              <h2>{t('feedback.heading')}</h2>
               <ul>
                 <li>
                   <a href="https://t.me/+ykuhfiImLd1kNjk1" target="_blank">
-                    Telegram group
+                    {t('feedback.telegramGroup')}
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="https://github.com/cheeaun/chengyu-wordle/discussions"
-                    target="_blank"
-                  >
-                    GitHub Discussions
-                  </a>
-                  (for developers)
+                  <Trans
+                    i18nKey="feedback.githubDiscussions"
+                    components={[
+                      <a
+                        href="https://github.com/cheeaun/chengyu-wordle/discussions"
+                        target="_blank"
+                      />,
+                    ]}
+                  />
                 </li>
                 <li>
-                  <a
-                    href="https://github.com/cheeaun/chengyu-wordle/issues"
-                    target="_blank"
-                  >
-                    GitHub Issues
-                  </a>{' '}
-                  (for bugs)
+                  <Trans
+                    i18nKey="feedback.githubIssues"
+                    components={[
+                      <a
+                        href="https://github.com/cheeaun/chengyu-wordle/issues"
+                        target="_blank"
+                      />,
+                    ]}
+                  />
                 </li>
                 <li>
                   <a href="https://twitter.com/cheeaun" target="_blank">
-                    @cheeaun on Twitter
+                    {t('feedback.twitter')}
                   </a>
                 </li>
                 <li>
                   <a href="https://t.me/cheeaun" target="_blank">
-                    @cheeaun on Telegram
+                    {t('feedback.telegram')}
                   </a>
                 </li>
               </ul>
-              <h2>Debugging</h2>
+              <h2>{t('debugging.heading')}</h2>
               <button
                 type="button"
                 onClick={() => {
-                  if (confirm('Are you sure?')) {
+                  if (confirm(t('debugging.confirmResetGame'))) {
                     localStorage.removeItem(KEY_PREFIX + currentGame.id);
                     location.reload();
                   }
                 }}
               >
-                Reset current idiom game
+                {t('debugging.resetGame')}
               </button>
               &nbsp;
               <button
                 type="button"
                 onClick={() => {
-                  if (confirm('Are you sure?')) {
+                  if (confirm(t('debugging.confirmClearDB'))) {
                     clearGames();
                     location.reload();
                   }
                 }}
               >
-                Clear database
+                {t('debugging.clearDB')}
               </button>
             </>
           ) : (
@@ -990,7 +994,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
                   setSkipFirstTime(true);
                 }}
               >
-                <PlayIcon width="20" height="20" /> Let's play!
+                <PlayIcon width="20" height="20" /> {t('ui.startPlay')}
               </button>
             </p>
           )}
