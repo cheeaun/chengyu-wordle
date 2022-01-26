@@ -200,7 +200,7 @@ const CloseIcon = (props) => (
   </svg>
 );
 
-const startDate = new Date(2022, 1, 1); // 2022-02-01 (CNY)
+const startDate = new Date(2022, 0, 27); // 27 January 2022
 const getTodayGame = () => {
   const today = new Date().setHours(0, 0, 0, 0);
   const diff = today - startDate;
