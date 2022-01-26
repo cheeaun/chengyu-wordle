@@ -529,8 +529,11 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
     hints.push(`✨ Abbreviated pinyin: ${pinyinHint}`);
 
     return hints;
-  }, [correctKeys, currentGame.idiom]);
-  const hintIndex = useRef(0);
+  }, [correctKeys, currentGame.idiom, definition]);
+  const hintIndex = useState(0);
+  useEffect(() => {
+    hintIndex.current = 0;
+  }, [currentGame.idiom]);
   const showHint = () => {
     if (gameState) return;
     const hint = hints[hintIndex.current];
