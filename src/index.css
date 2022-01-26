@@ -517,6 +517,9 @@ h1 sup {
   cursor: pointer;
   z-index: 1;
 }
+#info-modal button.large {
+  font-size: 1.2em;
+}
 
 a.button {
   display: inline-block;

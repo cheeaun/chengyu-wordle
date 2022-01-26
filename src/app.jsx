@@ -276,6 +276,10 @@ const CodeInput = ({ code, url }) =>
   );
 
 export function App() {
+  const [skipFirstTime, setSkipFirstTime] = useState(
+    localStorage.getItem(`${KEY_PREFIX}skipFirstTime`) || false,
+  );
+
   const [currentGame, setCurrentGame] = useState(
     games.find((g) => g.id === location.hash.slice(1)) || getTodayGame(),
   );
@@ -853,15 +857,20 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
           </div>
         </div>
       </div>
-      <div id="info-modal" class={showInfoModal ? 'appear' : ''}>
-        <CloseIcon
-          height="24"
-          width="24"
-          class="close"
-          onClick={() => {
-            setShowInfoModal(false);
-          }}
-        />
+      <div
+        id="info-modal"
+        class={showInfoModal || !skipFirstTime ? 'appear' : ''}
+      >
+        {skipFirstTime && (
+          <CloseIcon
+            height="24"
+            width="24"
+            class="close"
+            onClick={() => {
+              setShowInfoModal(false);
+            }}
+          />
+        )}
         <div class="content">
           <h2>How to play</h2>
           <p>Guess the idiom in {MAX_STEPS} tries.</p>
@@ -881,88 +890,110 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               spot
             </li>
           </ul>
-          <h2>About</h2>
-          <p>
-            <a
-              href="https://github.com/cheeaun/chengyu-wordle/"
-              target="_blank"
-            >
-              Built
-            </a>{' '}
-            by{' '}
-            <a href="https://cheeaun.com" target="_blank">
-              Chee Aun
-            </a>
-            .{' '}
-            <a href="https://www.powerlanguage.co.uk/wordle/" target="_blank">
-              Wordle
-            </a>{' '}
-            ©️{' '}
-            <a href="https://powerlanguage.co.uk/" target="_blank">
-              Josh Wardle
-            </a>
-            .
-          </p>
-          <h2>Feedback channels</h2>
-          <ul>
-            <li>
-              <a href="https://t.me/+ykuhfiImLd1kNjk1" target="_blank">
-                Telegram group
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://github.com/cheeaun/chengyu-wordle/discussions"
-                target="_blank"
+          <p>A new idiom will be available every day.</p>
+          {skipFirstTime ? (
+            <>
+              <h2>About</h2>
+              <p>
+                <a
+                  href="https://github.com/cheeaun/chengyu-wordle/"
+                  target="_blank"
+                >
+                  Built
+                </a>{' '}
+                by{' '}
+                <a href="https://cheeaun.com" target="_blank">
+                  Chee Aun
+                </a>
+                .{' '}
+                <a
+                  href="https://www.powerlanguage.co.uk/wordle/"
+                  target="_blank"
+                >
+                  Wordle
+                </a>{' '}
+                ©️{' '}
+                <a href="https://powerlanguage.co.uk/" target="_blank">
+                  Josh Wardle
+                </a>
+                .
+              </p>
+              <h2>Feedback channels</h2>
+              <ul>
+                <li>
+                  <a href="https://t.me/+ykuhfiImLd1kNjk1" target="_blank">
+                    Telegram group
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/cheeaun/chengyu-wordle/discussions"
+                    target="_blank"
+                  >
+                    GitHub Discussions
+                  </a>
+                  (for developers)
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/cheeaun/chengyu-wordle/issues"
+                    target="_blank"
+                  >
+                    GitHub Issues
+                  </a>{' '}
+                  (for bugs)
+                </li>
+                <li>
+                  <a href="https://twitter.com/cheeaun" target="_blank">
+                    @cheeaun on Twitter
+                  </a>
+                </li>
+                <li>
+                  <a href="https://t.me/cheeaun" target="_blank">
+                    @cheeaun on Telegram
+                  </a>
+                </li>
+              </ul>
+              <h2>Debugging</h2>
+              <button
+                type="button"
+                onClick={() => {
+                  if (confirm('Are you sure?')) {
+                    localStorage.removeItem(KEY_PREFIX + currentGame.id);
+                    location.reload();
+                  }
+                }}
               >
-                GitHub Discussions
-              </a>
-              (for developers)
-            </li>
-            <li>
-              <a
-                href="https://github.com/cheeaun/chengyu-wordle/issues"
-                target="_blank"
+                Reset current idiom game
+              </button>
+              &nbsp;
+              <button
+                type="button"
+                onClick={() => {
+                  if (confirm('Are you sure?')) {
+                    clearGames();
+                    location.reload();
+                  }
+                }}
               >
-                GitHub Issues
-              </a>{' '}
-              (for bugs)
-            </li>
-            <li>
-              <a href="https://twitter.com/cheeaun" target="_blank">
-                @cheeaun on Twitter
-              </a>
-            </li>
-            <li>
-              <a href="https://t.me/cheeaun" target="_blank">
-                @cheeaun on Telegram
-              </a>
-            </li>
-          </ul>
-          <h2>Debugging</h2>
-          <button
-            type="button"
-            onClick={() => {
-              if (confirm('Are you sure?')) {
-                localStorage.removeItem(KEY_PREFIX + currentGame.id);
-                location.reload();
-              }
-            }}
-          >
-            Reset current idiom game
-          </button>
-          &nbsp;
-          <button
-            type="button"
-            onClick={() => {
-              if (confirm('Are you sure?')) {
-                clearGames();
-                location.reload();
-              }
-            }}
-          >
-            Clear database
-          </button>
+                Clear database
+              </button>
+            </>
+          ) : (
+            <p>
+              <button
+                type="button"
+                class="large"
+                onClick={() => {
+                  setShowInfoModal(false);
+                  localStorage.setItem(KEY_PREFIX + 'skipFirstTime', 1);
+                  setSkipFirstTime(true);
+                }}
+              >
+                <PlayIcon width="20" height="20" /> Let's play!
+              </button>
+            </p>
+          )}
         </div>
       </div>
     </>
