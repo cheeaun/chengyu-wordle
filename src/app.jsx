@@ -246,7 +246,7 @@ const Countdown = () => {
     return () => clearInterval(timer);
   }, []);
   if (isNow) {
-    return <a href="/">Now!</a>;
+    return <a href="./">Now!</a>;
   }
   return (
     <time class="countdown">
@@ -728,7 +728,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
             <div>
               {getTodayGame().id !== currentGame.id && (
                 <>
-                  <a href="/" class="button">
+                  <a href="./" class="button">
                     <PlayIcon width={20} height={20} /> Play today's game!
                   </a>
                   <br />
