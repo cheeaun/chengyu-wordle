@@ -31,7 +31,6 @@ i18n
     },
   })
   .then((t) => {
-    console.log(i18n);
     const updateLocale = () => {
       document.documentElement.lang = i18n.resolvedLanguage;
       document.title = document.querySelector('meta[name="title"]').content =
