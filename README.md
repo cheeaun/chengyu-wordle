@@ -77,7 +77,7 @@ I looked up some data from the Googleverse and realised this is kind of doable. 
 
 ## Other similar attempts
 
-### [猜成语 (Cāi chéngyǔ)](https://bryony.dev/chengyu/chengyu.html) by [@nurupo_dev](https://twitter.com/nurupo_dev) by - Guess the idiom
+### [猜成语 (Cāi chéngyǔ)](https://bryony.dev/chengyu/chengyu.html) by [@nurupo_dev](https://twitter.com/nurupo_dev) - Guess the idiom
 
 <img src="screenshots/bryony-chengyu-screenshot.jpg" width="240" alt="">
 
