@@ -529,7 +529,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
     return () => {
       document.removeEventListener('keydown', handleKey);
     };
-  }, [currentGameKeys, currentStep, gameState]);
+  }, [currentGameKeys, board, currentStep, gameState]);
 
   const permalink = location.origin + location.pathname + '#' + currentGame.id;
   const emojiResults = boardStates
