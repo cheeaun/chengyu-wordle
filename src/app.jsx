@@ -16,6 +16,7 @@ const games = gameIdioms.slice(1).map((row) => ({
 const MAX_LETTERS = 4;
 const MAX_KEYS = 20;
 const MAX_STEPS = 6;
+const MIN_IDIOMS = 6;
 const KEY_PREFIX = 'cywd-';
 
 window.clearGames = () => {
@@ -130,7 +131,7 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
   }
 
   // Try the next idiom
-  if (keys.size < MAX_KEYS || passedIdioms.size < MAX_STEPS) {
+  if (keys.size < MAX_KEYS || passedIdioms.size < MIN_IDIOMS) {
     const nextIdiom = [...passedIdioms][++depth];
     if (nextIdiom) {
       const { passedIdioms: _passedIdioms, keys: _keys } = getIdiomsKeys(
@@ -145,7 +146,7 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
   }
 
   // Still not enough keys, choose a random idiom
-  if (keys.size < MAX_KEYS || passedIdioms.size < MAX_STEPS) {
+  if (keys.size < MAX_KEYS || passedIdioms.size < MIN_IDIOMS) {
     const randomIdiom = games[Math.floor(Math.random() * games.length)].idiom;
     if (randomIdiom) {
       const { passedIdioms: _passedIdioms, keys: _keys } = getIdiomsKeys(
@@ -160,7 +161,7 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
   }
 
   // Something very wrong happened
-  if (keys.size < MAX_KEYS || passedIdioms.size < MAX_STEPS) {
+  if (keys.size < MAX_KEYS || passedIdioms.size < MIN_IDIOMS) {
     const gameID = games.find((g) => g.idiom === idiom)?.id;
     console.error(gameID, {
       possibleIdioms: passedIdioms.size,
