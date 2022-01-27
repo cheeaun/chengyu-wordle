@@ -8,7 +8,7 @@ This is my attempt at recreating [Wordle](https://www.powerlanguage.co.uk/wordle
 
 ## Screenshot
 
-<img src="screenshot.jpg" width="320" alt="">
+<img src="screenshots/screenshot.jpg" width="320" alt="">
 
 ## Technicalities
 
@@ -77,9 +77,21 @@ I looked up some data from the Googleverse and realised this is kind of doable. 
 
 ## Other similar attempts
 
-- [猜成语 (Cāi chéngyǔ)](https://bryony.dev/chengyu/chengyu.html) by [@nurupo_dev](https://twitter.com/nurupo_dev) by - Guess the idiom
-- [拼音猜成语 (Pīnyīn cāi chéngyǔ)](https://pinyincaichengyu.com/) by [limboy](https://limboy.me/)
-- [疯狂猜成语安卓版 (Fēngkuáng cāi chéngyǔ ānzhuō bǎn)](http://www.ddooo.com/softdown/44315.htm) - Android game called "Crazy Guess Idioms".
+### [猜成语 (Cāi chéngyǔ)](https://bryony.dev/chengyu/chengyu.html) by [@nurupo_dev](https://twitter.com/nurupo_dev) by - Guess the idiom
+
+<img src="screenshots/bryony-chengyu-screenshot.jpg" width="240" alt="">
+
+### [拼成语 | Chinese Wordle](https://allanchain.github.io/chinese-wordle/) by [Allan Chain](https://allanchain.github.io/blog/)
+
+<img src="screenshots/allanchain-chinese-wordle-screenshot.jpg" width="240" alt="">
+
+### [拼音猜成语 (Pīnyīn cāi chéngyǔ)](https://pinyincaichengyu.com/) by [limboy](https://limboy.me/)
+
+<img src="screenshots/pinyincaichengyu-screenshot.jpg" width="240" alt="">
+
+### [疯狂猜成语安卓版 (Fēngkuáng cāi chéngyǔ ānzhuō bǎn)](http://www.ddooo.com/softdown/44315.htm) - Android game called "Crazy Guess Idioms".
+
+<img src="screenshots/crazy-guess-idioms-android-screenshot.jpg" width="240" alt="">
 
 🟩🟨🟩🟨🟩🟨🟩🟨🟩🟨🟩🟨🟩
 
