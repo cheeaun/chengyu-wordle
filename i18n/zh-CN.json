@@ -1,0 +1,63 @@
+{
+  "about": {
+    "about1": "由 <1>志安</1> <0>建造</0>。 <2>Wordle</2> ©️ <3>Josh Wardle</3>。",
+    "heading": "关于"
+  },
+  "app": {
+    "description": "Wordle，用于汉语成语——成语（chéngyǔ）。在 6 次尝试中猜出成语。",
+    "title": "成语Wordle"
+  },
+  "common": {
+    "beta": "测试版",
+    "choose": "选择",
+    "enter": "Enter",
+    "play": "玩",
+    "random": "随机的",
+    "share": "分享",
+    "tweet": "鸣叫"
+  },
+  "debugging": {
+    "clearDB": "清除数据库",
+    "confirmClearDB": "你确定吗？",
+    "confirmResetGame": "你确定吗？",
+    "heading": "调试",
+    "resetGame": "重置当前的成语游戏"
+  },
+  "feedback": {
+    "githubDiscussions": "<0>GitHub 讨论</0>（针对开发者）",
+    "githubIssues": "<0>GitHub 问题</0>（针对错误）",
+    "heading": "回馈",
+    "telegram": "电报上的 @cheeaun",
+    "telegramGroup": "电报群",
+    "twitter": "推特上的 @cheeaun"
+  },
+  "glossary": {
+    "baidu": "百度"
+  },
+  "hints": {
+    "abbreviatedPinyin": "✨ 缩写拼音：{{pinyinHint}}",
+    "absentLetter": "❌ 成语中没有字母 {{letter}} ({{pinyin}})。",
+    "presentLetter": "✅ 字母 {{letter}} ({{pinyin}}) 在成语中。"
+  },
+  "howToPlay": {
+    "heading": "怎么玩",
+    "how1": "在 6 次尝试中猜出成语。",
+    "how2": "每个猜测都必须是有效的 4 字母习语。点击回车按钮提交。",
+    "how3": "每次猜测后，图块的颜色会发生变化，以显示您的猜测与成语的接近程度。",
+    "how4": "每天都会有一个新的成语出现。",
+    "spotAbsent": "灰色 = 不在任何地方",
+    "spotCorrect": "绿色 = 正确位置",
+    "spotPresent": "黄色 = 错误的位置"
+  },
+  "ui": {
+    "confirmRandom": "您确定要开始新的随机游戏吗？",
+    "copiedResults": "将结果复制到剪贴板",
+    "copiedURL": "将 URL 复制到剪贴板",
+    "countdownNow": "现在！",
+    "hint": "我被困住了",
+    "nextIdiom": "下一个成语：<0/>",
+    "playTodayGame": "玩今天的游戏！",
+    "promptIdiom": "输入成语 ID/URL：",
+    "startPlay": "让我们玩！"
+  }
+}

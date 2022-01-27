@@ -282,7 +282,7 @@ const CodeInput = ({ code, url }) => {
 };
 
 export function App() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [skipFirstTime, setSkipFirstTime] = useState(
     localStorage.getItem(`${KEY_PREFIX}skipFirstTime`) || false,
@@ -759,7 +759,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
                     href={`https://hanyu.baidu.com/s?wd=${currentGame.idiom}&from=zici`}
                     target="_blank"
                   >
-                    📖 Baidu
+                    📖 {t('glossary.baidu')}
                   </a>
                 </small>
               </p>
@@ -876,8 +876,8 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
       >
         {skipFirstTime && (
           <CloseIcon
-            height="24"
-            width="24"
+            height="32"
+            width="32"
             class="close"
             onClick={() => {
               setShowInfoModal(false);
@@ -885,6 +885,34 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
           />
         )}
         <div class="content">
+          <p class="locale-selector">
+            🌐{' '}
+            <a
+              href="./?lng=en"
+              hreflang="en"
+              rel={i18n.resolvedLanguage === 'en' ? undefined : 'alternate'}
+              class={`${i18n.resolvedLanguage === 'en' ? 'selected' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                i18n.changeLanguage('en');
+              }}
+            >
+              English
+            </a>{' '}
+            &#8901;{' '}
+            <a
+              href="./?lng=zh-CN"
+              hreflang="zh-CN"
+              rel={i18n.resolvedLanguage === 'zh-CN' ? undefined : 'alternate'}
+              class={`${i18n.resolvedLanguage === 'zh-CN' ? 'selected' : ''}`}
+              onClick={(e) => {
+                e.preventDefault();
+                i18n.changeLanguage('zh-CN');
+              }}
+            >
+              中文
+            </a>
+          </p>
           <h2>{t('howToPlay.heading')}</h2>
           <p>{t('howToPlay.how1')}</p>
           <p>{t('howToPlay.how2')}</p>

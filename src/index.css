@@ -19,6 +19,7 @@ input {
 a {
   color: green;
   font-weight: bold;
+  text-underline-offset: 0.15em;
 }
 
 * {
@@ -86,6 +87,15 @@ h1 {
 h1 sup {
   font-size: 0.6em;
   color: red;
+}
+
+.locale-selector a:not(.selected) {
+  font-weight: normal;
+}
+.locale-selector a.selected {
+  color: #000;
+  font-weight: bold;
+  text-decoration-color: rgba(0, 0, 0, 0.2);
 }
 
 #app {

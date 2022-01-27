@@ -45,6 +45,13 @@ Notes:
 - `all-idioms.txt` - list of *all* idioms, one per line.
 - 🚨**SPOILERS**🚨 `game-idioms.csv` - list of idioms to be used in the game, with assigned *"unique"* `id`. This list is mainly from THUOCL's high-frequency idioms.
 
+### Localization
+
+- English: `./i18n/en.json`
+- 中文: `./i18n/zh-CN.json`
+
+As of now, 中文 is very roughly translated from English via Google Translate, which may not be great. **Help is needed for translations!**
+
 ## Story
 
 I play Wordle sometimes and thought that it's pretty cool. Personally I don't find the Wordle *braggings* useful. They kind of pollute the social media timelines (Facebook, Twitter) but at least they're better than ads 🔥🤷‍♂️.

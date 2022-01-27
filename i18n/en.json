@@ -31,6 +31,9 @@
     "telegramGroup": "Telegram Group",
     "twitter": "@cheeaun on Twitter"
   },
+  "glossary": {
+    "baidu": "Baidu"
+  },
   "hints": {
     "abbreviatedPinyin": "✨ Abbreviated pinyin: {{pinyinHint}}",
     "absentLetter": "❌ The letter {{letter}} ({{pinyin}}) is NOT in the idiom.",
