@@ -3,6 +3,7 @@ import pinyin from 'pinyin';
 const py = (str) =>
   pinyin(str, { segment: true, group: true }).flat().join(' ').trim();
 import { useTranslation, Trans } from 'react-i18next';
+import copy from 'copy-text-to-clipboard';
 
 // Data
 import idiomsTxt from '../game-data/all-idioms.txt?raw';
@@ -270,12 +271,17 @@ const CodeInput = ({ code, url }) => {
         onClick={(e) => {
           e.target.focus();
           e.target.select();
-          navigator.clipboard
-            .writeText(url || code)
-            .then(() => {
-              alert(t('ui.copiedURL'));
-            })
-            .catch((e) => {});
+          if (navigator.clipboard?.writeText) {
+            navigator.clipboard
+              .writeText(url || code)
+              .then(() => {
+                alert(t('ui.copiedURL'));
+              })
+              .catch((e) => {});
+          } else {
+            copy(url || code);
+            alert(t('ui.copiedURL'));
+          }
         }}
       />
     )
@@ -792,7 +798,10 @@ export function App() {
                     try {
                       await navigator.clipboard.writeText(shareTextWithLink);
                       alert(t('ui.copiedResults'));
-                    } catch (e2) {}
+                    } catch (e2) {
+                      copy(shareTextWithLink);
+                      alert(t('ui.copiedResults'));
+                    }
                   }
                 }}
               >

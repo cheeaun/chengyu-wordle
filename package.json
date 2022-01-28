@@ -10,8 +10,9 @@
     "data": "node ./scripts/gen-data.mjs"
   },
   "dependencies": {
-    "@vitejs/plugin-legacy": "^1.6.4",
+    "@vitejs/plugin-legacy": "~1.6.4",
     "autoprefixer": "~10.4.2",
+    "copy-text-to-clipboard": "~3.0.1",
     "i18next": "~21.6.10",
     "i18next-browser-languagedetector": "~6.1.3",
     "pinyin": "~2.10.2",
