@@ -775,6 +775,14 @@ export function App() {
                 id="share"
                 onClick={async () => {
                   try {
+                    if (
+                      // Edge/ or Edg/
+                      /edge?\//i.test(navigator.userAgent) ||
+                      // Windows
+                      /windows/.test(navigator.userAgent)
+                    ) {
+                      throw new Error('Web Share API not working well here');
+                    }
                     await navigator.share({ text: shareTextWithLink });
                   } catch (e) {
                     try {
