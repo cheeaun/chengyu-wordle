@@ -1001,30 +1001,32 @@ export function App() {
                   </a>
                 </li>
               </ul>
-              <h2>{t('debugging.heading')}</h2>
-              <button
-                type="button"
-                onClick={() => {
-                  if (confirm(t('debugging.confirmResetGame'))) {
-                    localStorage.removeItem(KEY_PREFIX + currentGame.id);
-                    location.reload();
-                  }
-                }}
-              >
-                {t('debugging.resetGame')}
-              </button>
-              &nbsp;
-              <button
-                type="button"
-                onClick={() => {
-                  if (confirm(t('debugging.confirmClearDB'))) {
-                    clearGames();
-                    location.reload();
-                  }
-                }}
-              >
-                {t('debugging.clearDB')}
-              </button>
+              <details id="debugging-container">
+                <summary>{t('debugging.heading')}</summary>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (confirm(t('debugging.confirmResetGame'))) {
+                      localStorage.removeItem(KEY_PREFIX + currentGame.id);
+                      location.reload();
+                    }
+                  }}
+                >
+                  {t('debugging.resetGame')}
+                </button>
+                &nbsp;
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (confirm(t('debugging.confirmClearDB'))) {
+                      clearGames();
+                      location.reload();
+                    }
+                  }}
+                >
+                  {t('debugging.clearDB')}
+                </button>
+              </details>
             </>
           ) : (
             <p>

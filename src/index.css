@@ -594,7 +594,17 @@ header h1 sup {
   font-size: 1.2em;
 }
 
-a.button {
+#info-modal a.button {
   display: inline-block;
   text-decoration: none;
+}
+
+#debugging-container {
+  margin-top: 2em;
+}
+#debugging-container summary {
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  margin-bottom: 0.5em;
 }
