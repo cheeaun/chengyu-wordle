@@ -634,9 +634,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
               />
             </svg>
           </button>
-          <h1>
-            {t('app.title')} <sup>{t('common.beta')}</sup>
-          </h1>
+          <h1>{t('app.title')}</h1>
           <button
             type="button"
             onClick={() => {
