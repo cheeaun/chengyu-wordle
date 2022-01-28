@@ -378,6 +378,13 @@ header h1 sup {
   header h1 {
     font-size: 1.2em;
   }
+}
+@media (min-height: 750px) {
+  #board {
+    font-size: 1.95em;
+  }
+}
+@media (min-height: 800px) {
   #keyboard .inner {
     padding-top: 5px;
     padding-bottom: 5px;
@@ -387,10 +394,7 @@ header h1 sup {
     padding-bottom: 0.3em;
   }
 }
-@media (min-height: 750px) {
-  #board {
-    font-size: 1.95em;
-  }
+@media (min-height: 850px) {
   #keyboard .inner {
     padding-top: 10px;
     padding-bottom: 10px;
