@@ -358,10 +358,14 @@ export function App() {
   const [showInfoModal, setShowInfoModal] = useState(false);
 
   const currentGameKeys = useMemo(() => {
-    const { passedIdioms, keys } = getIdiomsKeys(currentGame.idiom);
+    const { keys } = getIdiomsKeys(currentGame.idiom);
 
     // SPOILER inside console.log!
-    const possibleIdioms = [...passedIdioms]
+    const allPossibleIdioms = idioms.filter((idiom) => {
+      // check if idiom contains 4 letters from keys
+      return idiom.split('').every((letter) => keys.has(letter));
+    });
+    const possibleIdioms = allPossibleIdioms
       .map((idiom) => {
         return `${idiom} (${py(idiom)})`;
       })
