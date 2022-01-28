@@ -366,11 +366,17 @@ export function App() {
         return `${idiom} (${py(idiom)})`;
       })
       .sort((a, b) => a.localeCompare(b, 'zh'));
-    console.log(`POSSIBLE IDOMS [${currentGame.id}] (${keys.size} keys):
-${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
+    if (console.groupCollapsed) {
+      console.groupCollapsed(
+        `${possibleIdioms.length} Possible Idioms [${currentGame.id}] (${keys.size} keys):`,
+      );
+      console.log(`${possibleIdioms
+        .map((idiom, i) => `${i + 1}. ${idiom}`)
+        .join('\n')}
 
-🚨SPOILER🚨 Type 'ANSWER' to see the answer.
-`);
+🚨SPOILER🚨 Type 'ANSWER' to see the answer.`);
+      console.groupEnd();
+    }
     window.ANSWER = `${currentGame.idiom} (${py(currentGame.idiom)})`;
 
     return [...keys].sort((a, b) => a.localeCompare(b, 'zh'));
