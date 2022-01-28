@@ -611,39 +611,41 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
   return (
     <>
       <header>
-        <button
-          type="button"
-          onClick={() => {
-            setShowInfoModal(true);
-          }}
-        >
-          <svg
-            width="16"
-            height="16"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        <div class="inner">
+          <button
+            type="button"
+            onClick={() => {
+              setShowInfoModal(true);
+            }}
           >
-            <title>ℹ️</title>
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </button>
-        <h1>
-          {t('app.title')} <sup>{t('common.beta')}</sup>
-        </h1>
-        <button
-          type="button"
-          onClick={() => {
-            setShowModal(gameState || 'play');
-          }}
-        >
-          {t('common.play')}
-        </button>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <title>ℹ️</title>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </button>
+          <h1>
+            {t('app.title')} <sup>{t('common.beta')}</sup>
+          </h1>
+          <button
+            type="button"
+            onClick={() => {
+              setShowModal(gameState || 'play');
+            }}
+          >
+            {t('common.play')}
+          </button>
+        </div>
       </header>
       <div id="board">
         {board.map((row, index) => {

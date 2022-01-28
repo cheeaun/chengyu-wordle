@@ -53,6 +53,13 @@ header {
   border-bottom: 1px solid #ccc;
   padding: 0.5em;
   margin-bottom: 2px;
+}
+header .inner {
+  margin-top: env(safe-area-inset-top);
+  margin-left: env(safe-area-inset-left);
+  margin-right: env(safe-area-inset-right);
+  max-width: 30em;
+  margin: auto;
   display: flex;
   justify-content: space-between;
   gap: 0.5em;
@@ -78,13 +85,13 @@ header button {
   font-size: 0.8em;
 }
 
-h1 {
+header h1 {
   text-transform: uppercase;
   font-size: 1em;
   margin: 0;
   padding: 0;
 }
-h1 sup {
+header h1 sup {
   font-size: 0.6em;
   color: red;
 }
@@ -115,11 +122,6 @@ h1 sup {
   display: flex;
   flex-direction: column;
   overflow: auto;
-}
-@media (min-height: 700px) {
-  #board {
-    justify-content: center;
-  }
 }
 
 #board .row {
@@ -271,10 +273,10 @@ h1 sup {
 }
 
 #keyboard .inner {
-  max-width: 30em;
-  margin: auto;
   padding: 2px;
   margin-bottom: env(safe-area-inset-bottom);
+  margin-left: env(safe-area-inset-left);
+  margin-right: env(safe-area-inset-right);
 }
 
 #keyboard button {
@@ -307,6 +309,8 @@ h1 sup {
 #keyboard .row {
   display: flex;
   justify-content: space-between;
+  max-width: 30em;
+  margin: auto;
 }
 #keyboard .row button {
   padding: 0.3em 1em;
@@ -359,6 +363,61 @@ h1 sup {
   }
   #keyboard .row button svg {
     transform: scale(0.8);
+  }
+}
+
+@media (min-height: 700px) {
+  #board {
+    justify-content: center;
+    font-size: 1.85em;
+  }
+  header a,
+  header button {
+    font-size: 1em;
+  }
+  header h1 {
+    font-size: 1.2em;
+  }
+  #keyboard .inner {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  #keyboard button {
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+  }
+}
+@media (min-height: 750px) {
+  #board {
+    font-size: 1.95em;
+  }
+  #keyboard .inner {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  #keyboard button {
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+  }
+}
+@media (min-width: 500px) {
+  #keyboard .inner {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  #keyboard button {
+    padding-left: 0.35em;
+    padding-right: 0.35em;
+  }
+}
+@media (min-width: 600px) {
+  #keyboard .inner {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  #keyboard button {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
   }
 }
 
