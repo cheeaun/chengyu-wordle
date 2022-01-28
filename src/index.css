@@ -594,7 +594,7 @@ header h1 sup {
   font-size: 1.2em;
 }
 
-#info-modal a.button {
+a.button {
   display: inline-block;
   text-decoration: none;
 }
