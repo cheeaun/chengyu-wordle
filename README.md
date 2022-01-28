@@ -8,7 +8,7 @@ This is my attempt at recreating [Wordle](https://www.powerlanguage.co.uk/wordle
 
 ## Screenshot
 
-<img src="screenshots/screenshot.jpg" width="320" alt="">
+<img src="screenshots/screenshot-3d.jpg" width="512" alt="">
 
 ## Technicalities
 
