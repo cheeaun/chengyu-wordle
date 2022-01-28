@@ -1,11 +1,18 @@
 import { defineConfig } from 'vite';
 import preact from '@preact/preset-vite';
 import content from '@originjs/vite-plugin-content';
+import legacy from '@vitejs/plugin-legacy';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
-  plugins: [preact(), content()],
+  plugins: [
+    preact(),
+    content(),
+    legacy({
+      targets: ['defaults', 'not IE 11'],
+    }),
+  ],
   server: {
     port: 3030,
   },
