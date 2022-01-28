@@ -53,7 +53,19 @@ header {
   border-bottom: 1px solid #ccc;
   padding: 0.5em;
   margin-bottom: 2px;
+  animation: header-appear 0.5s ease-in-out both;
 }
+@keyframes header-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 header .inner {
   margin-top: env(safe-area-inset-top);
   margin-left: env(safe-area-inset-left);
@@ -122,6 +134,17 @@ header h1 sup {
   display: flex;
   flex-direction: column;
   overflow: auto;
+  animation: board-appear 0.5s ease-in-out both;
+}
+@keyframes board-appear {
+  0% {
+    opacity: 0;
+    transform: scale(1.2) translateY(5%);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 #board .row {
@@ -270,6 +293,17 @@ header h1 sup {
 #keyboard {
   border-top: 1px solid #ccc;
   background-color: #fafafa;
+  animation: keyboard-appear 0.5s ease-in-out both;
+}
+@keyframes keyboard-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 #keyboard .inner {
