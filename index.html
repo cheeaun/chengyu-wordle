@@ -60,5 +60,18 @@
         };
       panelbear('config', { site: '50uguGYehjp', includeURLFragment: true });
     </script>
+    <script>
+      window.goatcounter = {};
+      window.addEventListener('hashchange', function (e) {
+        window.goatcounter.count({
+          path: location.pathname + location.search + location.hash,
+        });
+      });
+    </script>
+    <script
+      data-goatcounter="https://chengyu-wordle.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"
+    ></script>
   </body>
 </html>
