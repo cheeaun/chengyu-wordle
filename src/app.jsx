@@ -658,7 +658,7 @@ ${possibleIdioms.map((idiom, i) => `${i + 1}. ${idiom}`).join('\n')}
             >
               {row.v.map((letter, i) => (
                 <div
-                  className={`letter ${letter ?? 'lettered'} ${
+                  className={`letter ${letter ? 'lettered' : ''} ${
                     boardStates[index][i] ?? ''
                   }`}
                   key={i}
