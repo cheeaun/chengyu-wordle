@@ -23,7 +23,7 @@
     "resetGame": "Reset current idiom game"
   },
   "feedback": {
-    "githubDiscussions": "<0>GitHub Discussions</0> (for developers",
+    "githubDiscussions": "<0>GitHub Discussions</0> (for developers)",
     "githubIssues": "<0>GitHub Issues</0> (for bugs)",
     "heading": "Feedback",
     "telegram": "@cheeaun on Telegram",
