@@ -668,7 +668,7 @@ export function App() {
                 <div
                   className={`letter ${letter ? 'lettered' : ''} ${
                     boardStates[index][i] ?? ''
-                  }`}
+                  } ${boardStates[index][i] ? '🌈' : ''}`}
                   key={i}
                 >
                   <ruby>

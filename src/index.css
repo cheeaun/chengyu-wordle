@@ -277,16 +277,16 @@ header h1 sup {
   }
 }
 
-#board .letter + .letter,
-#board .letter + .letter > * {
+#board .letter.🌈 + .letter.🌈,
+#board .letter.🌈 + .letter.🌈 > * {
   animation-delay: 0.1s;
 }
-#board .letter + .letter + .letter,
-#board .letter + .letter + .letter > * {
+#board .letter.🌈 + .letter.🌈 + .letter.🌈,
+#board .letter.🌈 + .letter.🌈 + .letter.🌈 > * {
   animation-delay: 0.2s;
 }
-#board .letter + .letter + .letter + .letter,
-#board .letter + .letter + .letter + .letter > * {
+#board .letter.🌈 + .letter.🌈 + .letter.🌈 + .letter.🌈,
+#board .letter.🌈 + .letter.🌈 + .letter.🌈 + .letter.🌈 > * {
   animation-delay: 0.3s;
 }
 
