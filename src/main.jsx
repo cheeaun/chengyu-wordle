@@ -15,7 +15,7 @@ i18n
       en: {
         translation: en,
       },
-      'zh-CN': {
+      zh: {
         translation: zhCN,
       },
     },
