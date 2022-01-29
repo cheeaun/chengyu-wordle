@@ -95,7 +95,10 @@ I looked up some data from the Googleverse and realised this is kind of doable. 
 
 🟩🟨🟩🟨🟩🟨🟩🟨🟩🟨🟩🟨🟩
 
-**A lot more Wordle clones at [🔗 puzzlet/awesome-wordle](https://github.com/puzzlet/awesome-wordle)!**
+**A lot more Wordle clones here**
+
+- [Wordles of the World](https://rwmpelstilzchen.gitlab.io/wordles/)
+- [puzzlet/awesome-wordle](https://github.com/puzzlet/awesome-wordle)
 
 🟩🟨🟩🟨🟩🟨🟩🟨🟩🟨🟩🟨🟩
 
