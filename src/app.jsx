@@ -353,7 +353,8 @@ export function App() {
         if (r.definition) {
           setDefinition(r.definition);
         }
-      });
+      })
+      .catch(() => {});
   }, [currentGame.idiom]);
 
   const currentStep = board?.findIndex((row) => row.s === false) || 0;
