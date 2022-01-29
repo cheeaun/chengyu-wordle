@@ -433,6 +433,7 @@ export function App() {
     setShowError(false);
 
     const row = board[currentStep];
+    if (!row) return;
     const currentIdiom = row.v.join('');
     const valid = idioms.includes(currentIdiom);
     if (valid) {
