@@ -366,99 +366,6 @@ header h1 sup {
   color: inherit;
 }
 
-@media (max-height: 500px) {
-  #board {
-    font-size: 1.5em;
-  }
-  #keyboard button {
-    font-size: 1.25em;
-    padding: 0.15em;
-  }
-  #keyboard .row button {
-    font-size: 0.9em;
-    padding: 0.2em 1em;
-  }
-  #keyboard .row button svg {
-    transform: scale(0.9);
-  }
-}
-
-@media (max-height: 480px) {
-  #board {
-    font-size: 1.25em;
-  }
-  #keyboard .keys {
-    white-space: nowrap;
-    overflow-x: auto;
-  }
-  #keyboard .row button {
-    font-size: 0.8em;
-    padding: 0.1em 1em;
-  }
-  #keyboard .row button svg {
-    transform: scale(0.8);
-  }
-}
-
-@media (min-height: 700px) {
-  #board {
-    justify-content: center;
-    font-size: 1.85em;
-  }
-  header a,
-  header button {
-    font-size: 1em;
-  }
-  header h1 {
-    font-size: 1.2em;
-  }
-}
-@media (min-height: 750px) {
-  #board {
-    font-size: 1.95em;
-  }
-}
-@media (min-height: 800px) {
-  #keyboard .inner {
-    padding-top: 5px;
-    padding-bottom: 5px;
-  }
-  #keyboard button {
-    padding-top: 0.3em;
-    padding-bottom: 0.3em;
-  }
-}
-@media (min-height: 850px) {
-  #keyboard .inner {
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  #keyboard button {
-    padding-top: 0.4em;
-    padding-bottom: 0.4em;
-  }
-}
-@media (min-width: 500px) {
-  #keyboard .inner {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-  #keyboard button {
-    padding-left: 0.35em;
-    padding-right: 0.35em;
-  }
-}
-@media (min-width: 600px) {
-  #keyboard .inner {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  #keyboard button {
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-  }
-}
-
 #modal {
   position: fixed;
   top: 0;
@@ -489,7 +396,7 @@ header h1 sup {
   box-shadow: 0 4px 23px 0 rgb(0 0 0 / 20%);
   background-color: #fff;
   margin: 1em;
-  padding: 2em;
+  padding: 1em;
   position: relative;
   width: calc(100% - 2em);
   max-width: 30em;
@@ -632,6 +539,9 @@ a.button {
   display: inline-block;
   text-decoration: none;
 }
+a.button.strong {
+  font-size: 1em !important;
+}
 
 #debugging-container {
   margin-top: 2em;
@@ -641,4 +551,99 @@ a.button {
   color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
   margin-bottom: 0.5em;
+}
+
+@media (max-height: 480px) {
+  #board {
+    font-size: 1.25em;
+  }
+  #keyboard .keys {
+    white-space: nowrap;
+    overflow-x: auto;
+  }
+  #keyboard .row button {
+    font-size: 0.8em;
+    padding: 0.1em 1em;
+  }
+  #keyboard .row button svg {
+    transform: scale(0.8);
+  }
+}
+@media (max-height: 500px) {
+  #board {
+    font-size: 1.5em;
+  }
+  #keyboard button {
+    font-size: 1.25em;
+    padding: 0.15em;
+  }
+  #keyboard .row button {
+    font-size: 0.9em;
+    padding: 0.2em 1em;
+  }
+  #keyboard .row button svg {
+    transform: scale(0.9);
+  }
+}
+
+@media (min-height: 700px) {
+  #board {
+    justify-content: center;
+    font-size: 1.85em;
+  }
+  header a,
+  header button {
+    font-size: 1em;
+  }
+  header h1 {
+    font-size: 1.2em;
+  }
+}
+@media (min-height: 750px) {
+  #board {
+    font-size: 1.95em;
+  }
+}
+@media (min-height: 800px) {
+  #keyboard .inner {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  #keyboard button {
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+  }
+}
+@media (min-height: 850px) {
+  #keyboard .inner {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  #keyboard button {
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+  }
+}
+@media (min-width: 500px) {
+  #modal .content {
+    padding: 2em;
+  }
+  #keyboard .inner {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  #keyboard button {
+    padding-left: 0.35em;
+    padding-right: 0.35em;
+  }
+}
+@media (min-width: 600px) {
+  #keyboard .inner {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  #keyboard button {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
 }

@@ -854,7 +854,7 @@ export function App() {
             <div>
               {getTodayGame().id !== currentGame.id && (
                 <>
-                  <a href="./" class="button">
+                  <a href="./" class="button strong">
                     <PlayIcon width={20} height={20} /> {t('ui.playTodayGame')}
                   </a>
                   <br />
