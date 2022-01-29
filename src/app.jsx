@@ -5,6 +5,32 @@ const py = (str) =>
 import { useTranslation, Trans } from 'react-i18next';
 import copy from 'copy-text-to-clipboard';
 
+// Always need to wrap localStorage in a try/catch block because
+// it can throw an exception in some browsers (e.g. Safari)
+const LS = {
+  getItem: (key) => {
+    try {
+      return localStorage.getItem(key);
+    } catch (e) {
+      return null;
+    }
+  },
+  setItem: (key, value) => {
+    try {
+      return localStorage.setItem(key, value);
+    } catch (e) {
+      return null;
+    }
+  },
+  removeItem: (key) => {
+    try {
+      return localStorage.removeItem(key);
+    } catch (e) {
+      return null;
+    }
+  },
+};
+
 // Data
 import idiomsTxt from '../game-data/all-idioms.txt?raw';
 const idioms = idiomsTxt.split('\n');
@@ -292,7 +318,7 @@ export function App() {
   const { t, i18n } = useTranslation();
 
   const [skipFirstTime, setSkipFirstTime] = useState(
-    localStorage.getItem(`${KEY_PREFIX}skipFirstTime`) || false,
+    LS.getItem(`${KEY_PREFIX}skipFirstTime`) || false,
   );
 
   const [currentGame, setCurrentGame] = useState(
@@ -307,11 +333,11 @@ export function App() {
   }, []);
 
   const [board, setBoard] = useState(
-    JSON.parse(localStorage.getItem(`${KEY_PREFIX}${currentGame.id}`))?.board ||
+    JSON.parse(LS.getItem(`${KEY_PREFIX}${currentGame.id}`))?.board ||
       blankBoard(),
   );
   useEffect(() => {
-    const cachedGame = localStorage.getItem(`${KEY_PREFIX}${currentGame.id}`);
+    const cachedGame = LS.getItem(`${KEY_PREFIX}${currentGame.id}`);
     if (cachedGame) {
       setBoard(JSON.parse(cachedGame).board);
     } else {
@@ -332,7 +358,7 @@ export function App() {
   useEffect(() => {
     // Only store in localStorage if board has some values
     if (board && board.some((row) => row.v.some((v) => v))) {
-      localStorage.setItem(
+      LS.setItem(
         `${KEY_PREFIX}${currentGame.id}`,
         JSON.stringify({
           board,
@@ -1022,7 +1048,7 @@ export function App() {
                   type="button"
                   onClick={() => {
                     if (confirm(t('debugging.confirmResetGame'))) {
-                      localStorage.removeItem(KEY_PREFIX + currentGame.id);
+                      LS.removeItem(KEY_PREFIX + currentGame.id);
                       location.reload();
                     }
                   }}
@@ -1050,7 +1076,7 @@ export function App() {
                 class="large"
                 onClick={() => {
                   setShowInfoModal(false);
-                  localStorage.setItem(KEY_PREFIX + 'skipFirstTime', 1);
+                  LS.setItem(KEY_PREFIX + 'skipFirstTime', 1);
                   setSkipFirstTime(true);
                 }}
               >
