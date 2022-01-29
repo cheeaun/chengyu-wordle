@@ -6,13 +6,7 @@ import legacy from '@vitejs/plugin-legacy';
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
-  plugins: [
-    preact(),
-    content(),
-    legacy({
-      targets: ['defaults', 'not IE 11'],
-    }),
-  ],
+  plugins: [preact(), content(), legacy()],
   server: {
     port: 3030,
   },
