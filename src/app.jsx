@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'preact/hooks';
+import { useState, useEffect, useMemo } from 'preact/hooks';
 import pinyin from 'pinyin';
 const py = (str) =>
   pinyin(str, { segment: true, group: true }).flat().join(' ').trim();
