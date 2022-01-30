@@ -10,6 +10,7 @@ export default defineConfig({
     preact(),
     content(),
     legacy({
+      targets: ['defaults', 'samsung >= 9'],
       additionalLegacyPolyfills: ['unorm'],
     }),
   ],
