@@ -3,7 +3,8 @@ import pinyin from 'pinyin';
 const py = (str) =>
   pinyin(str, { segment: true, group: true }).flat().join(' ').trim();
 import { useTranslation, Trans } from 'react-i18next';
-import copy from 'copy-text-to-clipboard';
+import { toClipboard } from 'copee';
+const copy = toClipboard;
 
 // Always need to wrap localStorage in a try/catch block because
 // it can throw an exception in some browsers (e.g. Safari)
