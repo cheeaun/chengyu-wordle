@@ -581,7 +581,7 @@ header h1 {
 #info-modal .content {
   max-width: 30em;
   margin: auto;
-  padding: 1em;
+  padding: 1.5em 1em 1em;
   text-align: left;
   font-size: 0.9em;
 }
