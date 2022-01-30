@@ -962,8 +962,8 @@ export function App() {
             <a
               href="./?lng=zh-CN"
               hreflang="zh-CN"
-              rel={i18n.resolvedLanguage === 'zh-CN' ? undefined : 'alternate'}
-              class={`${i18n.resolvedLanguage === 'zh-CN' ? 'selected' : ''}`}
+              rel={i18n.resolvedLanguage === 'zh' ? undefined : 'alternate'}
+              class={`${i18n.resolvedLanguage === 'zh' ? 'selected' : ''}`}
               onClick={(e) => {
                 e.preventDefault();
                 i18n.changeLanguage('zh-CN');
