@@ -3,9 +3,17 @@ import preact from '@preact/preset-vite';
 import content from '@originjs/vite-plugin-content';
 import legacy from '@vitejs/plugin-legacy';
 
+const commitHash = require('child_process')
+  .execSync('git rev-parse --short HEAD')
+  .toString()
+  .trim();
+
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
+  define: {
+    __COMMIT_HASH__: JSON.stringify(commitHash),
+  },
   plugins: [
     preact(),
     content(),

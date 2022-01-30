@@ -1101,7 +1101,9 @@ export function App() {
                 </li>
               </ul>
               <details id="debugging-container">
-                <summary>{t('debugging.heading')}</summary>
+                <summary>
+                  {t('debugging.heading')} ({__COMMIT_HASH__})
+                </summary>
                 <button
                   type="button"
                   onClick={() => {
