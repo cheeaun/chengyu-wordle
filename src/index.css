@@ -1,12 +1,75 @@
+:root {
+  --text-color: #111;
+  --inverse-text-color: #fff;
+  --bg-color: #fff;
+  --border-color: #ccc;
+  --green-color: green;
+  --primary-color: var(--green-color);
+  --primary-bg-color: rgba(0, 128, 0, 0.178);
+  --primary-active-bg-color: rgba(0, 128, 0, 0.432);
+  --text-strong-color: #000;
+  --text-strong-decoration-color: rgba(0, 0, 0, 0.2);
+  --letter-border-color: var(--border-color);
+  --letter-error-border-color: lightcoral;
+  --correct-color: var(--green-color);
+  --present-color: orange;
+  --absent-color: gray;
+  --letter-state-text-color: var(--inverse-text-color);
+  --letter-state-border-color: rgba(0, 0, 0, 0.2);
+  --keyboard-bg-color: #fafafa;
+  --keyboard-border-color: var(--border-color);
+  --key-bg-color: #d3d6da;
+  --key-shadow-color: rgba(0, 0, 0, 0.25);
+  --key-state-text-color: var(--inverse-text-color);
+  --key-active-text-color: var(--inverse-text-color);
+  --key-active-bg-color: #686868;
+  --modal-backdrop-color: rgba(255, 255, 255, 0.7);
+  --modal-bg-color: var(--bg-color);
+  --modal-shadow-color: rgba(0, 0, 0, 0.2);
+  --results-bg-color: #eee;
+  --button-text-color: var(--primary-color);
+  --button-bg-color: var(--primary-bg-color);
+  --button-active-bg-color: var(--primary-active-bg-color);
+  --button-strong-text-color: var(--inverse-text-color);
+  --button-strong-bg-color: var(--green-color);
+  --twitter-color: #1da1f2;
+  --text-field-bg-color: var(--bg-color);
+  --text-field-border-color: var(--primary-active-bg-color);
+  --text-insignificant-color: rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #eee;
+    --bg-color: #121213;
+    --border-color: #555;
+    --primary-color: lightgreen;
+    --text-strong-color: #fff;
+    --text-strong-decoration-color: rgba(255, 255, 255, 0.2);
+    --letter-border-color: #555;
+    --keyboard-bg-color: #222;
+    --key-bg-color: #707375;
+    --key-shadow-color: #000;
+    --key-active-bg-color: #444;
+    --modal-backdrop-color: rgba(37, 37, 37, 0.7);
+    --modal-shadow-color: var(--primary-bg-color);
+    --results-bg-color: #333;
+    --text-field-bg-color: #222;
+    --text-field-border-color: #999;
+    --text-insignificant-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  background-color: #ffff;
-  color: #111;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  transition: background-color 0.2s ease-in-out;
 }
 
 body,
@@ -17,7 +80,7 @@ input {
 }
 
 a {
-  color: green;
+  color: var(--primary-color);
   font-weight: bold;
   text-underline-offset: 0.15em;
 }
@@ -50,7 +113,7 @@ svg {
 }
 
 header {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--border-color);
   padding: 0.5em;
   margin-bottom: 2px;
   animation: header-appear 0.5s ease-in-out both;
@@ -82,15 +145,14 @@ header button {
   border: 0;
   padding: 0.2em 1em;
   margin: 0;
-  background-color: rgba(0, 128, 0, 0.178);
-  color: inherit;
-  color: green;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-color);
   font-weight: bold;
   border-radius: 0.5em;
   cursor: pointer;
 }
 header button:active {
-  background-color: rgba(0, 128, 0, 0.432);
+  background-color: var(--primary-active-bg-color);
 }
 header a,
 header button {
@@ -103,18 +165,26 @@ header h1 {
   margin: 0;
   padding: 0;
 }
-header h1 sup {
-  font-size: 0.6em;
-  color: red;
-}
 
 .locale-selector a:not(.selected) {
   font-weight: normal;
 }
 .locale-selector a.selected {
-  color: #000;
+  color: var(--text-strong-color);
   font-weight: bold;
-  text-decoration-color: rgba(0, 0, 0, 0.2);
+  text-decoration-color: var(--text-strong-decoration-color);
+}
+
+.color-scheme-selector {
+  float: right;
+}
+.color-scheme-selector button {
+  padding: 0.25em 0.5em !important;
+  border: 2px solid var(--border-color) !important;
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}
+.color-scheme-selector button.active {
+  border-color: var(--primary-color) !important;
 }
 
 #app {
@@ -187,7 +257,7 @@ header h1 sup {
 }
 
 #board .letter {
-  border: 2px solid #ccc;
+  border: 2px solid var(--letter-border-color);
   display: inline-block;
   min-width: 2em;
   min-height: 2em;
@@ -201,19 +271,19 @@ header h1 sup {
 }
 
 #board .row.error .letter {
-  animation: red 0.5s;
+  animation: erroring 0.5s;
   animation-delay: 0s !important;
 }
 
-@keyframes red {
+@keyframes erroring {
   0% {
-    border-color: #ccc;
+    border-color: var(--letter-border-color);
   }
   50% {
-    border-color: lightcoral;
+    border-color: var(--letter-error-border-color);
   }
   100% {
-    border-color: #ccc;
+    border-color: var(--letter-border-color);
   }
 }
 
@@ -238,19 +308,19 @@ header h1 sup {
 }
 
 #board .letter.🟩 {
-  background-color: green;
+  background-color: var(--correct-color);
 }
 #board .letter.🟧 {
-  background-color: orange;
+  background-color: var(--present-color);
 }
 #board .letter.⬜ {
-  background-color: gray;
+  background-color: var(--absent-color);
 }
 #board .letter.🟩,
 #board .letter.🟧,
 #board .letter.⬜ {
-  color: #fff;
-  border-color: rgba(0, 0, 0, 0.2);
+  color: var(--letter-state-text-color);
+  border-color: var(--letter-state-border-color);
   transition: all 0.3s 0.15s;
   animation: flip 0.3s ease-in-out both;
 }
@@ -291,8 +361,8 @@ header h1 sup {
 }
 
 #keyboard {
-  border-top: 1px solid #ccc;
-  background-color: #fafafa;
+  background-color: var(--keyboard-bg-color);
+  border-top: 1px solid var(--keyboard-border-color);
   animation: keyboard-appear 0.5s ease-in-out both;
 }
 @keyframes keyboard-appear {
@@ -318,26 +388,26 @@ header h1 sup {
   margin: 0.1em;
   border: 0;
   padding: 0.2em;
-  background-color: #d3d6da;
+  background-color: var(--key-bg-color);
   border-radius: 0.2em;
   cursor: pointer;
-  box-shadow: inset 0 -2px 0px -1px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 -2px 0px -1px var(--key-shadow-color);
 }
 #keyboard button.⬜ {
-  background-color: gray;
-  color: #fff;
+  background-color: var(--absent-color);
+  color: var(--key-state-text-color);
 }
 #keyboard button.🟧 {
-  background-color: orange;
-  color: #fff;
+  background-color: var(--present-color);
+  color: var(--key-state-text-color);
 }
 #keyboard button.🟩 {
-  background-color: green;
-  color: #fff;
+  background-color: var(--correct-color);
+  color: var(--key-state-text-color);
 }
 #keyboard button:active {
-  color: #fff;
-  background-color: #686868;
+  color: var(--key-active-text-color);
+  background-color: var(--key-active-bg-color);
 }
 
 #keyboard .row {
@@ -372,14 +442,14 @@ header h1 sup {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: var(--modal-backdrop-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 1s;
+  transition: all 1s;
 }
 #modal.appear {
   pointer-events: auto;
@@ -393,8 +463,8 @@ header h1 sup {
 
 #modal .content {
   border-radius: 8px;
-  box-shadow: 0 4px 23px 0 rgb(0 0 0 / 20%);
-  background-color: #fff;
+  box-shadow: 0 4px 23px 0 var(--modal-shadow-color);
+  background-color: var(--modal-bg-color);
   margin: 1em;
   padding: 1em;
   position: relative;
@@ -429,7 +499,7 @@ header h1 sup {
   white-space: pre-wrap;
   padding: 1em;
   margin-bottom: 0.5em;
-  background-color: #eee;
+  background-color: var(--results-bg-color);
   border-radius: 0.2em;
   line-height: 1.05em;
   text-align: left;
@@ -439,8 +509,8 @@ header h1 sup {
 #modal a.button,
 #modal button,
 #info-modal button {
-  color: green;
-  background-color: rgba(0, 128, 0, 0.178);
+  color: var(--button-text-color);
+  background-color: var(--button-bg-color);
   font-size: 1.5em;
   margin: 0.2em 0;
   border-radius: 0.5em;
@@ -454,17 +524,17 @@ header h1 sup {
 }
 #modal button:active,
 #info-modal button:active {
-  background-color: rgba(0, 128, 0, 0.432);
+  background-color: var(--button-active-bg-color);
 }
 
 #modal button#share {
-  color: #fff;
-  background-color: green;
+  color: var(--button-strong-text-color);
+  background-color: var(--button-strong-bg-color);
 }
 
 #modal a.tweet {
-  color: #fff;
-  background-color: #1da1f2;
+  color: var(--button-strong-text-color);
+  background-color: var(--twitter-color);
 }
 
 #modal .idiom-code {
@@ -474,8 +544,8 @@ header h1 sup {
   border-radius: 0.5em;
   width: 10ex;
   text-align: center;
-  background-color: #fff;
-  border: 1px solid rgba(0, 128, 0, 0.432);
+  background-color: var(--text-field-bg-color);
+  border: 1px solid var(--text-field-border-color);
   font-weight: bold;
 }
 
@@ -497,7 +567,7 @@ header h1 sup {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: var(--modal-backdrop-color);
   backdrop-filter: blur(10px) saturate(180%);
   transition: opacity 0.3s;
   z-index: 100;
@@ -548,7 +618,7 @@ a.button.strong {
 }
 #debugging-container summary {
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--text-insignificant-color);
   cursor: pointer;
   margin-bottom: 0.5em;
 }

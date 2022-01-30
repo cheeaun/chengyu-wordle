@@ -314,8 +314,29 @@ const CodeInput = ({ code, url }) => {
   );
 };
 
+const prefersColorSchemeSupported =
+  'matchMedia' in window &&
+  window.matchMedia('(prefers-color-scheme: dark)').media !== 'not all';
+
 export function App() {
   const { t, i18n } = useTranslation();
+
+  const [colorScheme, setColorScheme] = useState(
+    LS.getItem(`${KEY_PREFIX}colorScheme`) || 'auto',
+  );
+  useEffect(() => {
+    if (!prefersColorSchemeSupported) return;
+    const html = document.querySelector('html');
+    if (colorScheme === 'dark') {
+      html.classList.add('dark-mode');
+      html.classList.remove('light-mode');
+    } else if (colorScheme === 'light') {
+      html.classList.add('light-mode');
+      html.classList.remove('dark-mode');
+    } else {
+      html.classList.remove('dark-mode', 'light-mode');
+    }
+  }, [colorScheme]);
 
   const [skipFirstTime, setSkipFirstTime] = useState(
     LS.getItem(`${KEY_PREFIX}skipFirstTime`) || false,
@@ -944,6 +965,40 @@ export function App() {
           />
         )}
         <div class="content">
+          {prefersColorSchemeSupported && (
+            <p class="color-scheme-selector">
+              <button
+                type="button"
+                class={colorScheme === 'dark' ? 'active' : ''}
+                onClick={() => {
+                  LS.setItem(`${KEY_PREFIX}colorScheme`, 'dark');
+                  setColorScheme('dark');
+                }}
+              >
+                🌑
+              </button>{' '}
+              <button
+                type="button"
+                class={colorScheme === 'auto' ? 'active' : ''}
+                onClick={() => {
+                  LS.removeItem(`${KEY_PREFIX}colorScheme`);
+                  setColorScheme('auto');
+                }}
+              >
+                🌓
+              </button>{' '}
+              <button
+                type="button"
+                class={colorScheme === 'light' ? 'active' : ''}
+                onClick={() => {
+                  LS.setItem(`${KEY_PREFIX}colorScheme`, 'light');
+                  setColorScheme('light');
+                }}
+              >
+                🌕
+              </button>
+            </p>
+          )}{' '}
           <p class="locale-selector">
             🌐{' '}
             <a
@@ -980,7 +1035,7 @@ export function App() {
             <li>🟩⬜⬜⬜ {t('howToPlay.spotCorrect')}</li>
             <li>⬜🟧⬜⬜ {t('howToPlay.spotPresent')}</li>
             <li>
-              ⬜⬜<span style={{ opacity: 0.5 }}>⬛</span>⬜{' '}
+              ⬜⬜<span style={{ filter: 'contrast(0)' }}>⬛</span>⬜{' '}
               {t('howToPlay.spotAbsent')}
             </li>
           </ul>
