@@ -831,6 +831,13 @@ export function App() {
                   >
                     📖 {t('glossary.baidu')}
                   </a>
+                  &nbsp; &nbsp;
+                  <a
+                    href={`https://www.zdic.net/hans/${currentGame.idiom}`}
+                    target="_blank"
+                  >
+                    📖 {t('glossary.zdic')}
+                  </a>
                 </small>
               </p>
               <div class="results">{shareTextWithLink}</div>

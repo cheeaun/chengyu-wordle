@@ -31,7 +31,8 @@
     "twitter": "@cheeaun on Twitter"
   },
   "glossary": {
-    "baidu": "Baidu"
+    "baidu": "Baidu",
+    "zdic": "ZDIC"
   },
   "hints": {
     "abbreviatedPinyin": "✨ Abbreviated pinyin: {{pinyinHint}}",

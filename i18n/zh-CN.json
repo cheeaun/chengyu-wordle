@@ -31,7 +31,8 @@
     "twitter": "推特上的 @cheeaun"
   },
   "glossary": {
-    "baidu": "百度"
+    "baidu": "百度",
+    "zdic": "汉典"
   },
   "hints": {
     "abbreviatedPinyin": "✨ 缩写拼音：{{pinyinHint}}",
