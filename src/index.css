@@ -47,10 +47,11 @@
     --text-strong-color: #fff;
     --text-strong-decoration-color: rgba(255, 255, 255, 0.2);
     --letter-border-color: #555;
-    --keyboard-bg-color: #222;
+    --absent-color: #444;
+    --keyboard-bg-color: #333;
     --key-bg-color: #707375;
     --key-shadow-color: #000;
-    --key-active-bg-color: #444;
+    --key-active-bg-color: #333;
     --modal-backdrop-color: rgba(37, 37, 37, 0.7);
     --modal-shadow-color: var(--primary-bg-color);
     --results-bg-color: #333;
