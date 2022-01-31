@@ -608,6 +608,7 @@ a.button {
 }
 a.button.strong {
   font-size: 1em !important;
+  border: 2px dashed !important;
 }
 
 #debugging-container {
