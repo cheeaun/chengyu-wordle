@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'preact/hooks';
+import { useState, useEffect, useMemo, useRef } from 'preact/hooks';
 import pinyin from 'pinyin';
 const py = (str) =>
   pinyin(str, { segment: true, group: true }).flat().join(' ').trim();
@@ -653,7 +653,7 @@ export function App() {
 
     return hints;
   }, [correctKeys, currentGame.idiom, definition]);
-  const hintIndex = useState(0);
+  const hintIndex = useRef(0);
   useEffect(() => {
     hintIndex.current = 0;
   }, [currentGame.idiom]);
