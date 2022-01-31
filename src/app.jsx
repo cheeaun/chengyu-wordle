@@ -886,12 +886,7 @@ export function App() {
                 )}`}
                 target="_blank"
               >
-                <svg
-                  height="16"
-                  width="16"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                <svg height="16" width="16" viewBox="0 0 24 24">
                   <title>{t('common.tweet')}</title>
                   <path
                     fill="currentColor"
