@@ -530,16 +530,6 @@ export function App() {
   };
 
   useEffect(() => {
-    document.addEventListener('keydown', (e) => {
-      // Enter
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    });
-  }, []);
-
-  useEffect(() => {
     const handleKey = (e) => {
       if (gameState) return;
       if (e.metaKey || e.ctrlKey || !e.key) {
