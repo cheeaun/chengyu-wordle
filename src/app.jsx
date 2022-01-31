@@ -3,8 +3,19 @@ import pinyin from 'pinyin';
 const py = (str) =>
   pinyin(str, { segment: true, group: true }).flat().join(' ').trim();
 import { useTranslation, Trans } from 'react-i18next';
+
 import { toClipboard } from 'copee';
-const copy = toClipboard;
+const copy = (text, fn = () => {}) => {
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard
+      .writeText(text)
+      .then(fn)
+      .catch((e) => {});
+  } else {
+    toClipboard(text);
+    fn();
+  }
+};
 
 // Always need to wrap localStorage in a try/catch block because
 // it can throw an exception in some browsers (e.g. Safari)
@@ -298,17 +309,9 @@ const CodeInput = ({ code, url }) => {
         onClick={(e) => {
           e.target.focus();
           e.target.select();
-          if (navigator.clipboard?.writeText) {
-            navigator.clipboard
-              .writeText(url || code)
-              .then(() => {
-                alert(t('ui.copiedURL'));
-              })
-              .catch((e) => {});
-          } else {
-            copy(url || code);
+          copy(url || code, () => {
             alert(t('ui.copiedURL'));
-          }
+          });
         }}
       />
     )
@@ -858,15 +861,12 @@ export function App() {
                     ) {
                       throw new Error('Web Share API not working well here');
                     }
+                    copy(shareTextWithLink);
                     await navigator.share({ text: shareTextWithLink });
                   } catch (e) {
-                    try {
-                      await navigator.clipboard.writeText(shareTextWithLink);
+                    copy(shareTextWithLink, () => {
                       alert(t('ui.copiedResults'));
-                    } catch (e2) {
-                      copy(shareTextWithLink);
-                      alert(t('ui.copiedResults'));
-                    }
+                    });
                   }
                 }}
               >
@@ -878,7 +878,26 @@ export function App() {
                   ></path>
                 </svg>
               </button>
-              &nbsp;&nbsp;
+              &nbsp;
+              <a
+                class="button facebook"
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                  permalink,
+                )}&hashtag=${encodeURIComponent('#chengyuwordle')}`}
+                target="_blank"
+                onClick={() => {
+                  copy(shareTextWithLink);
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 96.1 96.1">
+                  <title>Facebook</title>
+                  <path
+                    fill="currentColor"
+                    d="M72 0H59.7c-14 0-23 9.3-23 23.7v10.9H24c-1 0-2 .8-2 2v15.7c0 1.1 1 2 2 2h12.6v39.9c0 1 .8 2 2 2h16.3c1 0 2-1 2-2v-40h14.6c1 0 2-.8 2-1.9V36.5a2 2 0 0 0-2-2H56.8v-9.2c0-4.4 1.1-6.7 6.9-6.7H72c1 0 2-.9 2-2V2c0-1.1-1-2-2-2z"
+                  />
+                </svg>
+              </a>
+              &nbsp;
               <a
                 class="button tweet"
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(

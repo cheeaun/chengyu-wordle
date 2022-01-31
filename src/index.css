@@ -32,6 +32,7 @@
   --button-active-bg-color: var(--primary-active-bg-color);
   --button-strong-text-color: var(--inverse-text-color);
   --button-strong-bg-color: var(--green-color);
+  --facebook-color: #3b5998;
   --twitter-color: #1da1f2;
   --text-field-bg-color: var(--bg-color);
   --text-field-border-color: var(--primary-active-bg-color);
@@ -529,6 +530,10 @@ header h1 {
   background-color: var(--button-strong-bg-color);
 }
 
+#modal a.facebook {
+  color: var(--button-strong-text-color);
+  background-color: var(--facebook-color);
+}
 #modal a.tweet {
   color: var(--button-strong-text-color);
   background-color: var(--twitter-color);
