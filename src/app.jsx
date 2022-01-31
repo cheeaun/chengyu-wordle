@@ -913,7 +913,7 @@ export function App() {
                   />
                 </svg>
               </a>
-              &nbsp;&nbsp;
+              &nbsp;
               <CodeInput code={currentGame.id} url={permalink} />
             </>
           )}
