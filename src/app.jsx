@@ -588,6 +588,8 @@ export function App() {
   }, [currentGameKeys, board, currentStep, gameState]);
 
   const permalink = location.origin + location.pathname + '#' + currentGame.id;
+  const shortPermalink =
+    location.host + location.pathname + '#' + currentGame.id;
   const emojiResults = boardStates
     .map((row) => row.join(''))
     .join('\n')
@@ -596,7 +598,7 @@ export function App() {
   const shareText = `${t('app.title')} [${
     currentGame.id
   }] ${attempts}/6\n\n${emojiResults}`;
-  const shareTextWithLink = `${shareText}\n\n${permalink}`;
+  const shareTextWithLink = `${shareText}\n\n${shortPermalink}`;
 
   const hints = useMemo(() => {
     const hints = [];
