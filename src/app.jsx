@@ -796,7 +796,7 @@ export function App() {
               ? '🎉🎉🎉'
               : showModal === 'lost'
               ? '😭😭😭'
-              : '👾👾👾'}
+              : '🐯🐯🐯'}
           </h2>
           {showModal === 'play' && (
             <p>
