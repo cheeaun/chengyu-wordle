@@ -820,7 +820,20 @@ export function App() {
                   </ruby>
                 </b>
                 <div class="definition">
-                  {definition?.zh}
+                  {definition?.zh
+                    ? definition.zh.split('').map((c) => {
+                        const p = py(c);
+                        if (p === c) return c;
+                        return (
+                          <ruby>
+                            {c}
+                            <rp>(</rp>
+                            <rt>{py(c)}</rt>
+                            <rp>)</rp>
+                          </ruby>
+                        );
+                      })
+                    : ''}
                   {definition?.zh && definition?.en && <br />}
                   {definition?.en}
                 </div>

@@ -492,10 +492,6 @@ header h1 {
   font-size: 2em;
 }
 
-#modal .definition {
-  font-size: 0.8em;
-}
-
 #modal .results {
   white-space: pre-wrap;
   padding: 1em;
