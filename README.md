@@ -37,8 +37,8 @@ Notes:
 
 **Raw data** stored in `data/`.
 
-- List of idioms from [wenhuangzeng/chinese-idiom-chengyu](https://github.com/wenhuangzeng/chinese-idiom-chengyu/blob/master/src/data/idiom.json).
-- 🚨**SPOILERS**🚨 List of [high-frequency idioms from THUOCL (THU Open Chinese Lexicon)](http://thuocl.thunlp.org/source/THUOCL_chengyu.txt). I discovered this via [AllanChain/chinese-wordle](https://github.com/AllanChain/chinese-wordle).
+- List of idioms from [pwxcoo/chinese-xinhua](https://github.com/pwxcoo/chinese-xinhua) via [wenhuangzeng/chinese-idiom-chengyu](https://github.com/wenhuangzeng/chinese-idiom-chengyu/blob/master/src/data/idiom.json).
+- 🚨**SPOILERS**🚨 List of [high-frequency idioms from THUOCL (THU Open Chinese Lexicon)](http://thuocl.thunlp.org/source/THUOCL_chengyu.txt). I discovered this via [AllanChain/chinese-wordle](https://github.com/AllanChain/chinese-wordle). GitHub repo: [thunlp/THUOCL](https://github.com/thunlp/THUOCL/blob/master/data/THUOCL_chengyu.txt)
 
 **Game data** stored in `game-data/` are processed by running `npm run data`, which produces two files:
 
