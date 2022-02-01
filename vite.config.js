@@ -20,6 +20,7 @@ export default defineConfig({
     legacy({
       targets: ['defaults', 'samsung >= 9'],
       additionalLegacyPolyfills: ['unorm'],
+      modernPolyfills: ['es.array.flat'],
     }),
   ],
   server: {
