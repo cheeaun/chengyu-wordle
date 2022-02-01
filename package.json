@@ -18,6 +18,7 @@
     "pinyin": "~2.10.2",
     "preact": "~10.6.5",
     "react-i18next": "~11.15.3",
+    "unfetch": "~4.2.0",
     "unorm": "~1.6.0"
   },
   "devDependencies": {
