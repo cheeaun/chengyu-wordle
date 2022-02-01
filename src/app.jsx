@@ -1201,6 +1201,9 @@ export function App() {
         }}
         toastOptions={{
           className: 'toast',
+          style: {
+            pointerEvents: 'none',
+          },
         }}
       />
     </>

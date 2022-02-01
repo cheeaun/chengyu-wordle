@@ -629,9 +629,8 @@ a.button.strong {
 }
 
 .toast {
-  pointer-events: none;
-  color: var(--toast-text-color);
-  background-color: var(--toast-bg-color);
+  color: var(--toast-text-color) !important;
+  background-color: var(--toast-bg-color) !important;
 }
 
 @media (max-height: 480px) {
