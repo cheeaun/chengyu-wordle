@@ -702,7 +702,16 @@ export function App() {
               setShowModal(gameState || 'play');
             }}
           >
-            {t('common.play')}
+            {gameState ? (
+              t('common.play')
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 290 290">
+                <path
+                  fill="currentColor"
+                  d="M255 110a35 35 0 1 0 0 70 35 35 0 0 0 0-70zM35 110a35 35 0 1 0 0 70 35 35 0 0 0 0-70zM145 110a35 35 0 1 0 0 70 35 35 0 0 0 0-70z"
+                />
+              </svg>
+            )}
           </button>
         </div>
       </header>
@@ -800,6 +809,7 @@ export function App() {
           </h2>
           {showModal === 'play' && (
             <p>
+              {t('ui.idiomId')}{' '}
               <CodeInput code={currentGame.id} url={permalink} />
             </p>
           )}
