@@ -3,6 +3,8 @@ import pinyin from 'pinyin';
 const py = (str) =>
   pinyin(str, { segment: true, group: true }).flat().join(' ').trim();
 import { useTranslation, Trans } from 'react-i18next';
+import toast, { Toaster, useToasterStore } from 'react-hot-toast';
+const alert = (text) => toast(text);
 
 import { toClipboard } from 'copee';
 const copy = (text, fn = () => {}) => {
@@ -669,6 +671,16 @@ export function App() {
     alert(hint);
   };
 
+  // Limit number of toasts
+  // https://github.com/timolins/react-hot-toast/issues/31#issuecomment-803359550
+  const { toasts } = useToasterStore();
+  const TOAST_LIMIT = 1;
+  useEffect(() => {
+    toasts
+      .filter((t, i) => t.visible && i >= TOAST_LIMIT)
+      .forEach((t) => toast.dismiss(t.id));
+  }, [toasts]);
+
   return (
     <>
       <header>
@@ -1183,6 +1195,14 @@ export function App() {
           )}
         </div>
       </div>
+      <Toaster
+        containerStyle={{
+          top: '3.5em',
+        }}
+        toastOptions={{
+          className: 'toast',
+        }}
+      />
     </>
   );
 }

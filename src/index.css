@@ -37,6 +37,8 @@
   --text-field-bg-color: var(--bg-color);
   --text-field-border-color: var(--primary-active-bg-color);
   --text-insignificant-color: rgba(0, 0, 0, 0.5);
+  --toast-bg-color: var(--green-color);
+  --toast-text-color: var(--inverse-text-color);
 }
 
 @media screen and (prefers-color-scheme: dark) {
@@ -624,6 +626,12 @@ a.button.strong {
   color: var(--text-insignificant-color);
   cursor: pointer;
   margin-bottom: 0.5em;
+}
+
+.toast {
+  pointer-events: none;
+  color: var(--toast-text-color);
+  background-color: var(--toast-bg-color);
 }
 
 @media (max-height: 480px) {
