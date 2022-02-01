@@ -260,7 +260,7 @@ header h1 {
   }
 }
 
-#board .letter {
+.letter {
   border: 2px solid var(--letter-border-color);
   display: inline-block;
   min-width: 2em;
@@ -274,7 +274,7 @@ header h1 {
   display: flex;
 }
 
-#board .row.error .letter {
+.row.error .letter {
   animation: erroring 0.5s;
   animation-delay: 0s !important;
 }
@@ -291,12 +291,12 @@ header h1 {
   }
 }
 
-#board .letter ruby,
-#board .letter ruby * {
+.letter ruby,
+.letter ruby * {
   line-height: 1em;
 }
 
-#board .letter.lettered {
+.letter.lettered {
   animation: appear 0.2s ease-in-out;
 }
 @keyframes appear {
@@ -311,18 +311,18 @@ header h1 {
   }
 }
 
-#board .letter.🟩 {
+.letter.🟩 {
   background-color: var(--correct-color);
 }
-#board .letter.🟧 {
+.letter.🟧 {
   background-color: var(--present-color);
 }
-#board .letter.⬜ {
+.letter.⬜ {
   background-color: var(--absent-color);
 }
-#board .letter.🟩,
-#board .letter.🟧,
-#board .letter.⬜ {
+.letter.🟩,
+.letter.🟧,
+.letter.⬜ {
   color: var(--letter-state-text-color);
   border-color: var(--letter-state-border-color);
   transition: all 0.3s 0.15s;
@@ -337,9 +337,9 @@ header h1 {
   }
 }
 
-#board .letter.🟩 > *,
-#board .letter.🟧 > *,
-#board .letter.⬜ > * {
+.letter.🟩 > *,
+.letter.🟧 > *,
+.letter.⬜ > * {
   animation: flip-back 0.3s ease-in-out both;
 }
 @keyframes flip-back {
@@ -351,16 +351,16 @@ header h1 {
   }
 }
 
-#board .letter.🌈 + .letter.🌈,
-#board .letter.🌈 + .letter.🌈 > * {
+.letter.🌈 + .letter.🌈,
+.letter.🌈 + .letter.🌈 > * {
   animation-delay: 0.1s;
 }
-#board .letter.🌈 + .letter.🌈 + .letter.🌈,
-#board .letter.🌈 + .letter.🌈 + .letter.🌈 > * {
+.letter.🌈 + .letter.🌈 + .letter.🌈,
+.letter.🌈 + .letter.🌈 + .letter.🌈 > * {
   animation-delay: 0.2s;
 }
-#board .letter.🌈 + .letter.🌈 + .letter.🌈 + .letter.🌈,
-#board .letter.🌈 + .letter.🌈 + .letter.🌈 + .letter.🌈 > * {
+.letter.🌈 + .letter.🌈 + .letter.🌈 + .letter.🌈,
+.letter.🌈 + .letter.🌈 + .letter.🌈 + .letter.🌈 > * {
   animation-delay: 0.3s;
 }
 
@@ -607,6 +607,16 @@ header h1 {
 }
 #info-modal button.large {
   font-size: 1.2em;
+}
+
+#info-modal .example-idiom {
+  display: inline-flex;
+  height: 2.4em;
+  font-size: 1.4em;
+}
+#info-modal .example-idiom + p {
+  margin-top: 0em;
+  padding-top: 0;
 }
 
 a.button {

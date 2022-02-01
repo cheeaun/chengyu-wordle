@@ -320,6 +320,23 @@ const CodeInput = ({ code, url }) => {
   );
 };
 
+const Letter = ({ letter, state }) => {
+  return (
+    <div
+      class={`letter ${letter ? 'lettered' : ''} ${state ?? ''} ${
+        state ? '🌈' : ''
+      }`}
+    >
+      <ruby>
+        {letter || <span style={{ opacity: 0 }}>一</span>}
+        <rp>(</rp>
+        <rt>{py(letter) || <>&nbsp;</>}</rt>
+        <rp>)</rp>
+      </ruby>
+    </div>
+  );
+};
+
 const prefersColorSchemeSupported =
   'matchMedia' in window &&
   window.matchMedia('(prefers-color-scheme: dark)').media !== 'not all';
@@ -737,19 +754,7 @@ export function App() {
               key={index}
             >
               {row.v.map((letter, i) => (
-                <div
-                  className={`letter ${letter ? 'lettered' : ''} ${
-                    boardStates[index][i] ?? ''
-                  } ${boardStates[index][i] ? '🌈' : ''}`}
-                  key={i}
-                >
-                  <ruby>
-                    {letter || <span style={{ opacity: 0 }}>一</span>}
-                    <rp>(</rp>
-                    <rt>{py(letter) || <>&nbsp;</>}</rt>
-                    <rp>)</rp>
-                  </ruby>
-                </div>
+                <Letter key={i} letter={letter} state={boardStates[index][i]} />
               ))}
             </div>
           );
@@ -1080,14 +1085,36 @@ export function App() {
           <p>{t('howToPlay.how1')}</p>
           <p>{t('howToPlay.how2')}</p>
           <p>{t('howToPlay.how3')}</p>
-          <ul>
-            <li>🟩⬜⬜⬜ {t('howToPlay.spotCorrect')}</li>
-            <li>⬜🟧⬜⬜ {t('howToPlay.spotPresent')}</li>
-            <li>
-              ⬜⬜<span style={{ filter: 'contrast(0)' }}>⬛</span>⬜{' '}
-              {t('howToPlay.spotAbsent')}
-            </li>
-          </ul>
+          <div class="example-idiom">
+            {'新年快乐'.split('').map((letter, i) => (
+              <Letter
+                key={letter}
+                letter={letter}
+                state={i === 0 ? '🟩' : ''}
+              />
+            ))}
+          </div>
+          <p>{t('howToPlay.spotCorrect')}</p>
+          <div class="example-idiom">
+            {'恭喜发财'.split('').map((letter, i) => (
+              <Letter
+                key={letter}
+                letter={letter}
+                state={i === 1 ? '🟧' : ''}
+              />
+            ))}
+          </div>
+          <p>{t('howToPlay.spotPresent')}</p>
+          <div class="example-idiom">
+            {'红包拿来'.split('').map((letter, i) => (
+              <Letter
+                key={letter}
+                letter={letter}
+                state={i === 2 ? '⬜' : ''}
+              />
+            ))}
+          </div>
+          <p>{t('howToPlay.spotAbsent')}</p>
           <p>{t('howToPlay.how4')}</p>
           {skipFirstTime ? (
             <>
