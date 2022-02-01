@@ -676,7 +676,7 @@ export function App() {
     hints.push(t('hints.abbreviatedPinyin', { pinyinHint }));
 
     return hints;
-  }, [correctKeys, currentGame.idiom, definition]);
+  }, [currentGame.idiom, definition]);
   const hintIndex = useRef(0);
   useEffect(() => {
     hintIndex.current = 0;
