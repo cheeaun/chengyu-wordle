@@ -47,12 +47,7 @@
     />
     <script src="//d2wy8f7a9ursnm.cloudfront.net/v7/bugsnag.min.js"></script>
     <script>
-      var legacy = false;
-      try {
-        new Function('m', 'return import(m)');
-      } catch (o) {
-        legacy: true;
-      }
+      var legacy = !('noModule' in HTMLScriptElement.prototype);
       Bugsnag.start({
         apiKey: '9397bcb69e62dcc87a77b78c0f6733e6',
         metadata: {
