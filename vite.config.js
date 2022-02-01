@@ -19,7 +19,7 @@ export default defineConfig({
     content(),
     legacy({
       targets: ['defaults', 'samsung >= 9', 'android >= 4'],
-      additionalLegacyPolyfills: ['unorm', 'unfetch'],
+      additionalLegacyPolyfills: ['unorm', 'unfetch/polyfill/polyfill.mjs'],
       modernPolyfills: ['es.array.flat'],
     }),
   ],
