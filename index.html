@@ -80,20 +80,5 @@
   <body>
     <div id="app"></div>
     <script type="module" src="./src/main.jsx"></script>
-    <script>
-      window.goatcounter = {};
-      window.addEventListener('hashchange', function (e) {
-        if (window.goatcounter.count) {
-          window.goatcounter.count({
-            path: location.pathname + location.search + location.hash,
-          });
-        }
-      });
-    </script>
-    <script
-      data-goatcounter="https://chengyu-wordle.goatcounter.com/count"
-      async
-      src="//gc.zgo.at/count.js"
-    ></script>
   </body>
 </html>
