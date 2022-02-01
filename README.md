@@ -93,6 +93,10 @@ I looked up some data from the Googleverse and realised this is kind of doable. 
 
 <img src="screenshots/handle-screenshot.jpg" width="240" alt="">
 
+### [Telegram @unofficial_wordle_bot](https://t.me/unofficial_wordle_bot) by [Oh Chin Yang](https://www.facebook.com/iamohcy)
+
+<img src="screenshots/telegram-unofficial-wordle-bot-screenshot.jpg" width="240" alt="">
+
 ### [疯狂猜成语安卓版 (Fēngkuáng cāi chéngyǔ ānzhuō bǎn)](http://www.ddooo.com/softdown/44315.htm) - Android game called "Crazy Guess Idioms".
 
 <img src="screenshots/crazy-guess-idioms-android-screenshot.jpg" width="240" alt="">
