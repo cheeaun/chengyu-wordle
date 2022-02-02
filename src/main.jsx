@@ -33,10 +33,12 @@ i18n
   .then((t) => {
     const updateLocale = () => {
       document.documentElement.lang = i18n.resolvedLanguage;
-      document.title = document.querySelector('meta[name="title"]').content =
-        t('app.title');
+      document.title = document.querySelector(
+        'meta[property="og:title"]',
+      ).content = t('app.title');
       document.querySelector('meta[name="description"]').content =
-        t('app.description');
+        document.querySelector('meta[property="og:description"]').content =
+          t('app.description');
     };
     i18n.on('languageChanged', updateLocale);
     updateLocale();
