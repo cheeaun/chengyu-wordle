@@ -10,6 +10,34 @@ This is my attempt at recreating [Wordle](https://www.powerlanguage.co.uk/wordle
 
 <img src="screenshots/screenshot-3d.jpg" width="512" alt="">
 
+## Story
+
+I play Wordle sometimes and thought that it's pretty cool. Personally I don't find the Wordle *braggings* useful. They kind of pollute the social media timelines (Facebook, Twitter) but at least they're better than ads 🔥🤷‍♂️.
+
+Then, I came across few "forks" of Wordle:
+
+- [Primel, by David Lawrence](https://twitter.com/millerdl/status/1484286518005051394) - guess a 5 digit prime number.
+- [Katla, by Fatih Kalifa](https://twitter.com/pveyes/status/1484454960586579968) - Wordle, in Indonesian language.
+- [Thwordle, by Manassarn Manoonchai](https://twitter.com/narze/status/1484596261277900810) - Wordle, in Thai language.
+- [Katapat, by Eugene Low](https://amanz.my/2022322924/) - Wordle, in Bahasa Malaysia.
+
+I'm like, "Hey, that's pretty cool, but maybe I could try something else?".
+
+One day, I [tweeted](https://twitter.com/cheeaun/status/1484482726644183041):
+
+> **Wordle, but for Chinese idioms.**
+> 
+> #idea
+
+This is timely, because Chinese New Year is coming up.
+
+I looked up some data from the Googleverse and realised this is kind of doable. It's actually a bit difficult for me to build this because I can't actually read or write Chinese. But heck, who cares, buidling a game is fun.
+
+## Media coverage
+
+- 30 Jan 2022: **Sixth Tone** - [Wordle-Like Games Slowly Gain Traction on Chinese Social Media](https://www.sixthtone.com/news/1009586/wordle-like-games-slowly-gain-traction-on-chinese-social-media-)
+- 2 Feb 2022: **Kotaku** - [A Sensational Wordle Clone Without Any Actual Words](https://kotaku.com/games-like-wordle-subwaydle-nyct-mta-best-routes-1848461481)
+
 ## Technicalities
 
 ### Tech
@@ -51,29 +79,6 @@ Notes:
 - 中文: `./i18n/zh-CN.json`
 
 As of now, 中文 is very roughly translated from English via Google Translate, which may not be great. **Help is needed for translations!**
-
-## Story
-
-I play Wordle sometimes and thought that it's pretty cool. Personally I don't find the Wordle *braggings* useful. They kind of pollute the social media timelines (Facebook, Twitter) but at least they're better than ads 🔥🤷‍♂️.
-
-Then, I came across few "forks" of Wordle:
-
-- [Primel, by David Lawrence](https://twitter.com/millerdl/status/1484286518005051394) - guess a 5 digit prime number.
-- [Katla, by Fatih Kalifa](https://twitter.com/pveyes/status/1484454960586579968) - Wordle, in Indonesian language.
-- [Thwordle, by Manassarn Manoonchai](https://twitter.com/narze/status/1484596261277900810) - Wordle, in Thai language.
-- [Katapat, by Eugene Low](https://amanz.my/2022322924/) - Wordle, in Bahasa Malaysia.
-
-I'm like, "Hey, that's pretty cool, but maybe I could try something else?".
-
-One day, I [tweeted](https://twitter.com/cheeaun/status/1484482726644183041):
-
-> **Wordle, but for Chinese idioms.**
-> 
-> #idea
-
-This is timely, because Chinese New Year is coming up.
-
-I looked up some data from the Googleverse and realised this is kind of doable. It's actually a bit difficult for me to build this because I can't actually read or write Chinese. But heck, who cares, buidling a game is fun.
 
 ## Other similar attempts
 
