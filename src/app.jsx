@@ -45,6 +45,12 @@ const LS = {
   },
 };
 
+const fireEvent = (...props) => {
+  if (window.plausible) {
+    plausible(...props);
+  }
+};
+
 // Data
 import idiomsTxt from '../game-data/all-idioms.txt?raw';
 const idioms = idiomsTxt.split('\n');
@@ -968,12 +974,14 @@ export function App() {
               <button
                 type="button"
                 onClick={() => {
+                  fireEvent('Click: Random');
                   const yes = confirm(t('ui.confirmRandom'));
                   if (yes) {
                     const rand = Math.round(Math.random() * (games.length - 1));
                     const randGame = games[rand];
                     location.hash = `#${randGame.id}`;
                     setShowModal(null);
+                    fireEvent('Game load: Random');
                   }
                 }}
               >
@@ -982,6 +990,7 @@ export function App() {
               <button
                 type="button"
                 onClick={() => {
+                  fireEvent('Click: Idiom ID');
                   // Ask user for idiom ID, load game if ID is valid
                   let id = prompt(t('ui.promptIdiom'));
                   try {
@@ -992,6 +1001,7 @@ export function App() {
                     if (game) {
                       location.hash = `#${game.id}`;
                       setShowModal(null);
+                      fireEvent('Game load: Idiom ID');
                     } else {
                       alert('Invalid idiom ID');
                     }
