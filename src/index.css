@@ -643,6 +643,46 @@ a.button.strong {
   background-color: var(--toast-bg-color) !important;
 }
 
+#stats {
+  background-color: var(--modal-backdrop-color);
+  border: 2px solid var(--primary-active-bg-color);
+  padding: 0.1em 1em;
+  margin-bottom: 1em;
+  border-radius: 0.5em;
+}
+
+#dashboard-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--bg-color);
+  z-index: 200;
+  overflow: auto;
+  padding: 1em;
+}
+#dashboard-modal .close {
+  position: absolute;
+  top: 0.25em;
+  right: 0.25em;
+  cursor: pointer;
+  z-index: 1;
+}
+#dashboard-modal .boards {
+  line-height: calc(1em + 1px);
+  text-align: left;
+  letter-spacing: 1px;
+}
+#dashboard-modal .boards .board {
+  text-decoration: none;
+  display: inline-block;
+}
+#dashboard-modal .boards .board:hover {
+  filter: saturate(180%) brightness(90%);
+  transform: scale(1.5);
+}
+
 @media (max-height: 480px) {
   #board {
     font-size: 1.25em;

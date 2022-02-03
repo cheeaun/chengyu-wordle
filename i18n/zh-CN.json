@@ -15,6 +15,12 @@
     "share": "分享",
     "tweet": "鸣叫"
   },
+  "dashboard": {
+    "heading": "恭喜你，你成功了！ {{gamesCount}}+游戏！",
+    "subheading": "在这里，您可以访问所有成语游戏，包括您可能没有玩过的游戏。 单击该框以玩特定的成语游戏。",
+    "totalGamesPlayed": "已玩游戏总数：<0>{{gamesCountOverTotal}}</0>",
+    "wonLost": "🟩 获胜：<0>{{wonCount}}</0> · 🟧 失败：<1>{{lostCount}}</1>"
+  },
   "debugging": {
     "clearDB": "清除数据库",
     "confirmClearDB": "你确定吗？",
@@ -54,6 +60,7 @@
     "copiedResults": "将结果复制到剪贴板",
     "copiedURL": "将 URL 复制到剪贴板",
     "countdownNow": "现在！",
+    "gamesPlayed": "📊 玩过的游戏：<0/>",
     "hint": "我被困住了",
     "idiomId": "成语ID:",
     "nextIdiom": "下一个成语：<0/>",

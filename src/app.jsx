@@ -1,4 +1,10 @@
-import { useState, useEffect, useMemo, useRef } from 'preact/hooks';
+import {
+  useState,
+  useEffect,
+  useMemo,
+  useRef,
+  useCallback,
+} from 'preact/hooks';
 import pinyin from 'pinyin';
 const py = (str) =>
   pinyin(str, { segment: true, group: true }).flat().join(' ').trim();
@@ -60,6 +66,7 @@ const games = gameIdioms.slice(1).map((row) => ({
   idiom: row[1],
 }));
 
+const MAX_GAMES_BEFORE_SHOW_DASHBOARD = 7000;
 const MAX_LETTERS = 4;
 const MAX_KEYS = 20;
 const MAX_STEPS = 6;
@@ -343,12 +350,90 @@ const Letter = ({ letter, state }) => {
   );
 };
 
+import JSConfetti from 'js-confetti';
+const jsConfetti = new JSConfetti();
+const IdiomsDashboard = () => {
+  const { t } = useTranslation();
+  let wonCount = 0;
+  let lostCount = 0;
+  const idioms = games.map((game) => {
+    // Get board from localStorage
+    const boardGame = JSON.parse(LS.getItem(`${KEY_PREFIX}${game.id}`));
+    if (boardGame && boardGame.gameState) {
+      const { board, gameState } = boardGame;
+      if (gameState === 'won') {
+        wonCount++;
+      } else if (gameState === 'lost') {
+        lostCount++;
+      }
+      return (
+        <a
+          href={`/#${game.id}`}
+          class={`board ${gameState}`}
+          title={`${game.id} (${gameState})`}
+        >
+          {gameState === 'won' ? '🟩' : '🟧'}
+        </a>
+      );
+    } else {
+      return (
+        <a href={`/#${game.id}`} class="board" title={`${game.id}`}>
+          ⬜
+        </a>
+      );
+    }
+  });
+
+  useEffect(() => {
+    jsConfetti.addConfetti({
+      emojis: ['🟩', '🟧'],
+      emojiSize: 30,
+      confettiNumber: 100,
+    });
+  }, []);
+
+  return (
+    <>
+      <h2>
+        {t('dashboard.heading', {
+          gamesCount: MAX_GAMES_BEFORE_SHOW_DASHBOARD,
+        })}
+      </h2>
+      <p>{t('dashboard.subheading')}</p>
+      <p>
+        <Trans
+          i18nKey="dashboard.totalGamesPlayed"
+          values={{
+            gamesCountOverTotal: `${wonCount + lostCount} / ${games.length}`,
+          }}
+          components={[<b />]}
+        />
+        <br />
+        <Trans
+          i18nKey="dashboard.wonLost"
+          values={{
+            wonCount,
+            lostCount,
+          }}
+          components={[<b />, <b />]}
+        />
+      </p>
+      <div class="boards">{idioms}</div>
+    </>
+  );
+};
+
 const prefersColorSchemeSupported =
   'matchMedia' in window &&
   window.matchMedia('(prefers-color-scheme: dark)').media !== 'not all';
 
 export function App() {
   const { t, i18n } = useTranslation();
+
+  const [showDashboard, setShowDashboard] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showModal, setShowModal] = useState(false); // false | won | lost
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   const [colorScheme, setColorScheme] = useState(
     LS.getItem(`${KEY_PREFIX}colorScheme`) || 'auto',
@@ -379,6 +464,7 @@ export function App() {
       setCurrentGame(
         games.find((g) => g.id === location.hash.slice(1)) || getTodayGame(),
       );
+      setShowDashboard(false);
     });
   }, []);
 
@@ -434,11 +520,6 @@ export function App() {
   }, [currentGame.idiom]);
 
   const currentStep = board?.findIndex((row) => row.s === false) || 0;
-
-  // Set current step to first empty item in board
-  const [showError, setShowError] = useState(false);
-  const [showModal, setShowModal] = useState(false); // false | won | lost
-  const [showInfoModal, setShowInfoModal] = useState(false);
 
   const currentGameKeys = useMemo(() => {
     const { keys } = getIdiomsKeys(currentGame.idiom);
@@ -703,6 +784,45 @@ export function App() {
       .filter((t, i) => t.visible && i >= TOAST_LIMIT)
       .forEach((t) => toast.dismiss(t.id));
   }, [toasts]);
+
+  const gamesPlayedCount = useMemo(() => {
+    // Only count games played if info modal is open
+    if (!showInfoModal) return;
+    try {
+      const keys = Object.keys(localStorage).filter((k) => {
+        const isPrefixed = k.startsWith(KEY_PREFIX);
+        if (!isPrefixed) return false;
+        const gameID = k.slice(KEY_PREFIX.length);
+        return isPrefixed && games.find((g) => g.id === gameID);
+      });
+      return keys.length;
+    } catch (e) {}
+  }, [showInfoModal]);
+
+  const GamesCount = useCallback(
+    () => (
+      <b>
+        {gamesPlayedCount}
+        {gamesPlayedCount >= MAX_GAMES_BEFORE_SHOW_DASHBOARD && (
+          <>
+            {' '}
+            /{' '}
+            <a
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowInfoModal(false);
+                setShowDashboard(true);
+              }}
+            >
+              {games.length}
+            </a>
+          </>
+        )}
+      </b>
+    ),
+    [gamesPlayedCount],
+  );
 
   return (
     <>
@@ -1091,6 +1211,13 @@ export function App() {
               中文
             </a>
           </p>
+          {skipFirstTime && gamesPlayedCount > 0 && (
+            <div id="stats">
+              <p>
+                <Trans i18nKey="ui.gamesPlayed" components={[<GamesCount />]} />
+              </p>
+            </div>
+          )}
           <h2>{t('howToPlay.heading')}</h2>
           <p>{t('howToPlay.how1')}</p>
           <p>{t('howToPlay.how2')}</p>
@@ -1232,6 +1359,19 @@ export function App() {
           )}
         </div>
       </div>
+      {showDashboard && (
+        <div id="dashboard-modal">
+          <CloseIcon
+            height="24"
+            width="24"
+            class="close"
+            onClick={() => {
+              setShowDashboard(false);
+            }}
+          />
+          <IdiomsDashboard />
+        </div>
+      )}
       <Toaster
         containerStyle={{
           top: '3.5em',

@@ -15,6 +15,12 @@
     "share": "Share",
     "tweet": "Tweet"
   },
+  "dashboard": {
+    "heading": "Congratulations, you've made it! {{gamesCount}}+ games!",
+    "subheading": "Here you have access to ALL idiom games, including the ones you might have not played. Click on the box to play a specific idiom game.",
+    "totalGamesPlayed": "Total games played: <0>{{gamesCountOverTotal}}</0>",
+    "wonLost": "🟩 Won: <0>{{wonCount}}</0> · 🟧 Lost: <1>{{lostCount}}</1>"
+  },
   "debugging": {
     "clearDB": "Clear database",
     "confirmClearDB": "Are you sure?",
@@ -54,6 +60,7 @@
     "copiedResults": "Copied results to clipboard",
     "copiedURL": "Copied URL to clipboard",
     "countdownNow": "Now!",
+    "gamesPlayed": "📊 Games played: <0/>",
     "hint": "I'm stuck",
     "idiomId": "Idiom ID:",
     "nextIdiom": "Next Idiom: <0/>",
