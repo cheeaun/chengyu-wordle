@@ -1096,7 +1096,7 @@ export function App() {
           <p>{t('howToPlay.how2')}</p>
           <p>{t('howToPlay.how3')}</p>
           <div class="example-idiom">
-            {'新年快乐'.split('').map((letter, i) => (
+            {'九牛一毛'.split('').map((letter, i) => (
               <Letter
                 key={letter}
                 letter={letter}
@@ -1106,7 +1106,7 @@ export function App() {
           </div>
           <p>{t('howToPlay.spotCorrect')}</p>
           <div class="example-idiom">
-            {'恭喜发财'.split('').map((letter, i) => (
+            {'理所当然'.split('').map((letter, i) => (
               <Letter
                 key={letter}
                 letter={letter}
@@ -1116,7 +1116,7 @@ export function App() {
           </div>
           <p>{t('howToPlay.spotPresent')}</p>
           <div class="example-idiom">
-            {'红包拿来'.split('').map((letter, i) => (
+            {'爱不释手'.split('').map((letter, i) => (
               <Letter
                 key={letter}
                 letter={letter}
