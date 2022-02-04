@@ -18,7 +18,7 @@ export default defineConfig({
     preact(),
     content(),
     legacy({
-      targets: ['defaults', 'samsung >= 9', 'android >= 4'],
+      targets: ['defaults', 'samsung >= 9', 'android >= 4', 'chrome >= 30'],
       additionalLegacyPolyfills: ['unorm', 'unfetch/polyfill/polyfill.mjs'],
       modernPolyfills: ['es.array.flat'],
     }),

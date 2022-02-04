@@ -14,7 +14,7 @@ const alert = (text) => toast(text);
 
 import { toClipboard } from 'copee';
 const copy = (text, fn = () => {}) => {
-  if (navigator.clipboard?.writeText) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard
       .writeText(text)
       .then(fn)
