@@ -881,7 +881,7 @@ export function App() {
           </button>
         </div>
       </header>
-      <div id="board">
+      <div id="board" class={gameState}>
         {board.map((row, index) => {
           return (
             <div

@@ -10,6 +10,7 @@
   --text-strong-color: #000;
   --text-strong-decoration-color: rgba(0, 0, 0, 0.2);
   --letter-border-color: var(--border-color);
+  --letter-border-active-color: #666;
   --letter-error-border-color: lightcoral;
   --correct-color: var(--green-color);
   --present-color: orange;
@@ -50,6 +51,7 @@
     --text-strong-color: #fff;
     --text-strong-decoration-color: rgba(255, 255, 255, 0.2);
     --letter-border-color: #555;
+    --letter-border-active-color: #ccc;
     --absent-color: #444;
     --keyboard-bg-color: #333;
     --key-bg-color: #707375;
@@ -309,6 +311,15 @@ header h1 {
   100% {
     transform: scale(1);
   }
+}
+
+#board:not(.won):not(.lost) .row.current .letter.lettered,
+#board:not(.won):not(.lost) .row.current .letter:not(.lettered):first-child,
+#board:not(.won):not(.lost)
+  .row.current
+  .letter.lettered
+  + .letter:not(.lettered) {
+  border-color: var(--letter-border-active-color);
 }
 
 .letter.🟩 {
