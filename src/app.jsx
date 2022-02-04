@@ -799,6 +799,17 @@ export function App() {
     } catch (e) {}
   }, [showInfoModal]);
 
+  useEffect(() => {
+    if (!gamesPlayedCount || gamesPlayedCount < 10) return;
+    const precision = gamesPlayedCount < 100 ? 1 : 2;
+    const count = +gamesPlayedCount.toPrecision(precision);
+    fireEvent('Games Played', {
+      props: {
+        count,
+      },
+    });
+  }, [gamesPlayedCount]);
+
   const GamesCount = useCallback(
     () => (
       <b>
