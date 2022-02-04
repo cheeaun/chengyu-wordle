@@ -1264,7 +1264,7 @@ export function App() {
                       href="https://github.com/cheeaun/chengyu-wordle/"
                       target="_blank"
                     />,
-                    <a href="https://cheeaun.com" target="_blank" />,
+                    <a href="https://cheeaun.com/projects/" target="_blank" />,
                     <a
                       href="https://www.powerlanguage.co.uk/wordle/"
                       target="_blank"
