@@ -872,6 +872,7 @@ export function App() {
               t('common.play')
             ) : (
               <svg width="16" height="16" viewBox="0 0 290 290">
+                <title>...</title>
                 <path
                   fill="currentColor"
                   d="M255 110a35 35 0 1 0 0 70 35 35 0 0 0 0-70zM35 110a35 35 0 1 0 0 70 35 35 0 0 0 0-70zM145 110a35 35 0 1 0 0 70 35 35 0 0 0 0-70z"
@@ -897,7 +898,7 @@ export function App() {
           );
         })}
       </div>
-      <div id="keyboard">
+      <div id="keyboard" class={gameState}>
         <div class="inner">
           <div class="keys">
             {currentGameKeys.map((key, i) => (
