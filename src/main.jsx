@@ -44,4 +44,8 @@ i18n
     updateLocale();
   });
 
+// Metadata for bugsnag
+Bugsnag.addMetadata('legacy', import.meta.env.LEGACY);
+if (__COMMIT_HASH__) Bugsnag.addMetadata('commitHash', __COMMIT_HASH__);
+
 render(<App />, document.getElementById('app'));
