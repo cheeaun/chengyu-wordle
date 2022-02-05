@@ -10,6 +10,7 @@
     "data": "node ./scripts/gen-data.mjs"
   },
   "dependencies": {
+    "@fontsource/nunito": "~4.5.2",
     "@vitejs/plugin-legacy": "~1.6.4",
     "autoprefixer": "~10.4.2",
     "copee": "~1.0.6",

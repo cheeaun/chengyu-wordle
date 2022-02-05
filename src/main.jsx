@@ -1,6 +1,9 @@
+import '@fontsource/nunito/400.css';
+import '@fontsource/nunito/700.css';
+import './index.css';
+
 import { render } from 'preact';
 import { App } from './app';
-import './index.css';
 
 import en from '../i18n/en.json';
 import zhCN from '../i18n/zh-CN.json';

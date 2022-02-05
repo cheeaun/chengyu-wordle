@@ -31,6 +31,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
+          if (id.includes('.css')) return; // Do nothing for CSS
           if (id.includes('all-idioms')) return 'all-idioms';
           if (id.includes('game-idioms')) return 'game-idioms';
           if (id.includes('node_modules/pinyin')) return 'pinyin';
