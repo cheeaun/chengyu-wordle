@@ -25,6 +25,8 @@ const copy = (text, fn = () => {}) => {
   }
 };
 
+import getIdiomStates from './getIdiomStates';
+
 // Always need to wrap localStorage in a try/catch block because
 // it can throw an exception in some browsers (e.g. Safari)
 const LS = {
@@ -93,46 +95,6 @@ window.allGames = () => {
   }
   return allGames;
 };
-
-const getIdiomStates = (hiddenIdiom, testIdiom) => {
-  const letters1 =
-    typeof testIdiom === 'string' ? testIdiom.split('') : testIdiom;
-  const letters2 =
-    typeof hiddenIdiom === 'string' ? hiddenIdiom.split('') : hiddenIdiom;
-  const lettersLength = letters1.length;
-  const states = Array.from({ length: lettersLength }, () => '⬜');
-  if (lettersLength !== letters2.length) {
-    throw new Error('idioms must have the same length');
-  }
-  const correctLetterIndices = [];
-  for (let i = 0; i < lettersLength; i++) {
-    const l1 = letters1[i];
-    const l2 = letters2[i];
-    if (l1 === l2) {
-      states[i] = '🟩';
-      correctLetterIndices.push(i);
-    }
-  }
-  const presentLetterIndices = [];
-  for (let i = 0; i < lettersLength; i++) {
-    const l1 = letters1[i];
-    const l2 = letters2[i];
-    if (l1 !== l2) {
-      const l1Index = letters2.indexOf(l1);
-      if (
-        l1Index !== -1 &&
-        !correctLetterIndices.includes(l1Index) &&
-        !presentLetterIndices.includes(l1Index)
-      ) {
-        states[i] = '🟧';
-        presentLetterIndices.push(l1Index);
-      }
-    }
-  }
-  return states;
-};
-
-window.getIdiomStates = getIdiomStates;
 
 const getBoardGameState = (boardStates) => {
   const won = boardStates.some(

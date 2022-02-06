@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "data": "node ./scripts/gen-data.mjs"
+    "data": "node ./scripts/gen-data.mjs",
+    "test": "vitest"
   },
   "dependencies": {
     "@fontsource/nunito": "~4.5.2",
@@ -31,6 +32,7 @@
     "postcss-custom-properties": "~12.1.3",
     "postcss-dark-theme-class": "~0.7.3",
     "shorthash2": "~1.0.3",
-    "vite": "~2.7.13"
+    "vite": "~2.7.13",
+    "vitest": "~0.2.7"
   }
 }
