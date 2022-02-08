@@ -750,7 +750,7 @@ a.button.strong {
 }
 
 @media (min-height: 700px) {
-  #board {
+  #board:not(.hard-mode) {
     justify-content: center;
     font-size: 1.85em;
   }
@@ -760,6 +760,12 @@ a.button.strong {
   }
   header h1 {
     font-size: 1.2em;
+  }
+}
+@media (min-height: 900px) {
+  #board.hard-mode {
+    justify-content: center;
+    font-size: 1.85em;
   }
 }
 @media (min-height: 750px) {

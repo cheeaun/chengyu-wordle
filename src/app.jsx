@@ -850,7 +850,7 @@ export function App() {
           </button>
         </div>
       </header>
-      <div id="board" class={gameState}>
+      <div id="board" class={`${gameState} ${HARD_MODE ? 'hard-mode' : ''}`}>
         {board.map((row, index) => {
           return (
             <div
