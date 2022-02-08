@@ -9,6 +9,7 @@ import pinyin from 'pinyin';
 const py = (str) =>
   pinyin(str, { segment: true, group: true }).flat().join(' ').trim();
 import { useTranslation, Trans } from 'react-i18next';
+
 import toast, { Toaster, useToasterStore } from 'react-hot-toast';
 const alert = (text) => toast(text);
 
@@ -68,12 +69,17 @@ const games = gameIdioms.slice(1).map((row) => ({
   idiom: row[1],
 }));
 
+const KEY_PREFIX = 'cywd-';
+const HARD_MODE = JSON.parse(LS.getItem(`${KEY_PREFIX}hardMode`) || false);
 const MAX_GAMES_BEFORE_SHOW_DASHBOARD = 7000;
 const MAX_LETTERS = 4;
-const MAX_KEYS = 20;
+const MAX_KEYS = HARD_MODE ? 40 : 20;
 const MAX_STEPS = 6;
-const MIN_IDIOMS = 6;
-const KEY_PREFIX = 'cywd-';
+const MIN_IDIOMS = HARD_MODE ? 10 : 6;
+
+if (HARD_MODE) {
+  fireEvent('Hard mode');
+}
 
 window.clearGames = () => {
   for (let i = 0; i < localStorage.length; i++) {
@@ -666,9 +672,9 @@ export function App() {
     .join('\n')
     .trim();
   const attempts = gameState === 'won' ? emojiResults.split('\n').length : 'X';
-  const shareText = `${t('app.title')} [${
-    currentGame.id
-  }] ${attempts}/6\n\n${emojiResults}`;
+  const shareText = `${t('app.title')} [${currentGame.id}]${
+    HARD_MODE ? ' 🔥' : ''
+  } ${attempts}/6\n\n${emojiResults}`;
   const shareTextWithLink = `${shareText}\n\n${shortPermalink}`;
 
   const hints = useMemo(() => {
@@ -860,7 +866,7 @@ export function App() {
           );
         })}
       </div>
-      <div id="keyboard" class={gameState}>
+      <div id="keyboard" class={`${gameState} ${HARD_MODE ? 'hard-mode' : ''}`}>
         <div class="inner">
           <div class="keys">
             {currentGameKeys.map((key, i) => (
@@ -887,9 +893,13 @@ export function App() {
             <button type="button" onClick={handleEnter} tabIndex={-1}>
               {t('common.enter')}
             </button>
-            <button type="button" class="stuck" onClick={showHint}>
-              {t('ui.hint')}
-            </button>
+            {HARD_MODE ? (
+              <b class="hard">{t('ui.hardMode')}</b>
+            ) : (
+              <button type="button" class="stuck" onClick={showHint}>
+                {t('ui.hint')}
+              </button>
+            )}
             <button type="button" onClick={handleBackspace} tabIndex={-1}>
               <svg height="24" viewBox="0 0 24 24" width="24">
                 <path
@@ -1190,6 +1200,25 @@ export function App() {
               <p>
                 <Trans i18nKey="ui.gamesPlayed" components={[<GamesCount />]} />
               </p>
+              <div id="config">
+                <p>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={HARD_MODE}
+                      onInput={(e) => {
+                        const { checked } = e.target;
+                        LS.setItem(
+                          `${KEY_PREFIX}hardMode`,
+                          checked ? 'true' : 'false',
+                        );
+                        location.reload();
+                      }}
+                    />{' '}
+                    {t('ui.hardMode')}
+                  </label>
+                </p>
+              </div>
             </div>
           )}
           <h2>{t('howToPlay.heading')}</h2>

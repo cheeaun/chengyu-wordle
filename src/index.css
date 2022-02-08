@@ -103,7 +103,7 @@ ruby rt {
 } */
 
 button,
-input {
+input[type='text'] {
   touch-action: manipulation;
   color: inherit;
   appearance: none;
@@ -114,7 +114,9 @@ button {
 }
 
 button,
-svg {
+svg,
+label,
+label * {
   vertical-align: middle;
 }
 
@@ -450,6 +452,12 @@ header h1 {
 #keyboard .row button.stuck:active {
   color: inherit;
 }
+#keyboard .row .hard {
+  font-size: 0.8em;
+  margin-top: 1em;
+  padding: 0;
+  color: var(--text-insignificant-color);
+}
 
 #modal {
   position: fixed;
@@ -662,6 +670,14 @@ a.button.strong {
   border-radius: 0.5em;
 }
 
+#config {
+  border-top: 1px solid var(--primary-bg-color);
+}
+#config label {
+  display: block;
+  cursor: pointer;
+}
+
 #dashboard-modal {
   position: fixed;
   top: 0;
@@ -726,6 +742,12 @@ a.button.strong {
     transform: scale(0.9);
   }
 }
+@media (max-height: 520px) {
+  #keyboard.hard-mode .keys {
+    white-space: nowrap;
+    overflow-x: auto;
+  }
+}
 
 @media (min-height: 700px) {
   #board {
@@ -746,45 +768,61 @@ a.button.strong {
   }
 }
 @media (min-height: 800px) {
-  #keyboard .inner {
+  #keyboard:not(.hard-mode) .inner {
     padding-top: 5px;
     padding-bottom: 5px;
   }
-  #keyboard button {
+  #keyboard:not(.hard-mode) button {
     padding-top: 0.3em;
     padding-bottom: 0.3em;
   }
 }
 @media (min-height: 850px) {
-  #keyboard .inner {
+  #keyboard:not(.hard-mode) .inner {
     padding-top: 10px;
     padding-bottom: 10px;
   }
-  #keyboard button {
+  #keyboard:not(.hard-mode) button {
     padding-top: 0.4em;
     padding-bottom: 0.4em;
+  }
+  #keyboard.hard-mode .inner {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  #keyboard.hard-mode button {
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
   }
 }
 @media (min-width: 500px) {
   #modal .content {
     padding: 2em;
   }
-  #keyboard .inner {
+  #keyboard:not(.hard-mode) .inner {
     padding-left: 5px;
     padding-right: 5px;
   }
-  #keyboard button {
+  #keyboard:not(.hard-mode) button {
     padding-left: 0.35em;
     padding-right: 0.35em;
   }
 }
 @media (min-width: 600px) {
-  #keyboard .inner {
+  #keyboard:not(.hard-mode) .inner {
     padding-left: 10px;
     padding-right: 10px;
   }
-  #keyboard button {
+  #keyboard:not(.hard-mode) button {
     padding-left: 0.5em;
     padding-right: 0.5em;
+  }
+  #keyboard.hard-mode .inner {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  #keyboard.hard-mode button {
+    padding-left: 0.35em;
+    padding-right: 0.35em;
   }
 }
