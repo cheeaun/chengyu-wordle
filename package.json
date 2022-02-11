@@ -11,7 +11,7 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@fontsource/nunito": "~4.5.3",
+    "@fontsource/nunito": "~4.5.4",
     "@vitejs/plugin-legacy": "~1.7.0",
     "autoprefixer": "~10.4.2",
     "canvas-confetti": "~1.5.1",
@@ -33,6 +33,6 @@
     "postcss-dark-theme-class": "~0.7.3",
     "shorthash2": "~1.0.3",
     "vite": "~2.8.0",
-    "vitest": "~0.3.0"
+    "vitest": "~0.3.2"
   }
 }
