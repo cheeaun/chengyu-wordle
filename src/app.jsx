@@ -5,9 +5,9 @@ import {
   useRef,
   useCallback,
 } from 'preact/hooks';
-import pinyin from 'pinyin';
-const py = (str) =>
-  pinyin(str, { segment: true, group: true }).flat().join(' ').trim();
+import { pinyin } from 'pinyin-pro';
+const py = pinyin;
+
 import { useTranslation, Trans } from 'react-i18next';
 
 import toast, { Toaster, useToasterStore } from 'react-hot-toast';
@@ -80,6 +80,31 @@ const MIN_IDIOMS = HARD_MODE ? 10 : 6;
 if (HARD_MODE) {
   fireEvent('Hard mode');
 }
+
+// Check letters with multiple pinyins
+// const letter2PY = new Map();
+// const differentPinyins = [];
+// games.forEach((game) => {
+//   const letters = game.idiom.split('');
+//   const pinyins = pinyin(game.idiom, { type: 'array' });
+//   letters.forEach((letter, i) => {
+//     if (!letter2PY.has(letter)) {
+//       letter2PY.set(letter, pinyins[i]);
+//     } else if (letter2PY.get(letter) !== pinyins[i]) {
+//       differentPinyins.push({
+//         id: game.id,
+//         idiom: game.idiom,
+//         letter,
+//         pinyins: [letter2PY.get(letter), pinyins[i]].join(' '),
+//       });
+//     }
+//   });
+// });
+// console.log({
+//   differentPinyins: `id,idiom,letter,pinyins\n${differentPinyins
+//     .map((row) => `${row.id},${row.idiom},${row.letter},${row.pinyins}`)
+//     .join('\n')}`,
+// });
 
 window.clearGames = () => {
   for (let i = 0; i < localStorage.length; i++) {
@@ -301,7 +326,7 @@ const CodeInput = ({ code, url }) => {
   );
 };
 
-const Letter = ({ letter, state }) => {
+const Letter = ({ letter, pinyin, state }) => {
   return (
     <div
       class={`letter ${letter ? 'lettered' : ''} ${state ?? ''} ${
@@ -311,7 +336,7 @@ const Letter = ({ letter, state }) => {
       <ruby>
         {letter || <span style={{ opacity: 0 }}>一</span>}
         <rp>(</rp>
-        <rt>{py(letter) || <>&nbsp;</>}</rt>
+        <rt>{pinyin || py(letter) || <>&nbsp;</>}</rt>
         <rp>)</rp>
       </ruby>
     </div>
@@ -489,14 +514,27 @@ export function App() {
 
   const currentStep = board?.findIndex((row) => row.s === false) || 0;
 
-  const currentGameKeys = useMemo(() => {
+  const [currentGameKeys, currentGameKeysPinyin] = useMemo(() => {
     const { keys } = getIdiomsKeys(currentGame.idiom);
-
-    // SPOILER inside console.log!
     const allPossibleIdioms = idioms.filter((idiom) => {
       // check if idiom contains 4 letters from keys
       return idiom.split('').every((letter) => keys.has(letter));
     });
+
+    // Pinyin mappings
+    const keysPinyin = new Map();
+    allPossibleIdioms.forEach((idiom) => {
+      const idiomPinyin = pinyin(idiom, { type: 'array' });
+      idiomPinyin.forEach((pinyin, i) => {
+        if (keysPinyin.has(idiom[i])) {
+          keysPinyin.get(idiom[i]).add(pinyin);
+        } else {
+          keysPinyin.set(idiom[i], new Set([pinyin]));
+        }
+      });
+    });
+
+    // SPOILER inside console.log!
     const possibleIdioms = allPossibleIdioms
       .map((idiom) => {
         return `${idiom} (${py(idiom)})`;
@@ -515,7 +553,8 @@ export function App() {
     }
     window.ANSWER = `${currentGame.idiom} (${py(currentGame.idiom)})`;
 
-    return [...keys].sort((a, b) => a.localeCompare(b, 'zh'));
+    const sortedKeys = [...keys].sort((a, b) => a.localeCompare(b, 'zh'));
+    return [sortedKeys, keysPinyin];
   }, [currentGame.idiom]);
 
   const handleLetter = (letter, overwrite = false) => {
@@ -626,9 +665,22 @@ export function App() {
         const value = [...row.v].reverse().find((v) => v !== '');
         if (value) {
           const pinyinLetter = py(value)[0];
-          const possibleLetters = currentGameKeys.filter(
-            (k) => py(k)[0] === pinyinLetter,
-          );
+
+          const possibleLettersSet = new Set();
+          currentGameKeysPinyin.forEach((pinyins, letter) => {
+            pinyins.forEach((pinyin) => {
+              const firstPinyinChar = pinyin[0];
+              if (
+                firstPinyinChar.localeCompare(pinyinLetter, 'en', {
+                  sensitivity: 'base',
+                }) === 0
+              ) {
+                possibleLettersSet.add(letter);
+              }
+            });
+          });
+          const possibleLetters = [...possibleLettersSet];
+
           if (possibleLetters.length <= 1) return;
           const letterIndex = possibleLetters.indexOf(value);
           const nextLetter =
@@ -642,27 +694,32 @@ export function App() {
             handleLetter(nextLetter, true);
           }
         }
-      } else {
+      } else if (/[a-z]/i.test(key)) {
         // Type "a" will trigger the first letter pinyin that starts with "ā"
-        const letter = currentGameKeys.find((k) => {
-          const firstPinyinChar = py(k)[0];
-          return (
-            firstPinyinChar.localeCompare(key, 'en', {
-              sensitivity: 'base',
-            }) === 0
-          );
+        let breakLoop = false;
+        currentGameKeysPinyin.forEach((pinyins, letter) => {
+          if (breakLoop) return;
+          pinyins.forEach((pinyin) => {
+            if (breakLoop) return;
+            const firstPinyinChar = pinyin[0];
+            if (
+              firstPinyinChar.localeCompare(key, 'en', {
+                sensitivity: 'base',
+              }) === 0
+            ) {
+              e.preventDefault();
+              breakLoop = true;
+              handleLetter(letter);
+            }
+          });
         });
-        if (letter) {
-          e.preventDefault();
-          handleLetter(letter);
-        }
       }
     };
     document.addEventListener('keydown', handleKey);
     return () => {
       document.removeEventListener('keydown', handleKey);
     };
-  }, [currentGameKeys, board, currentStep, gameState]);
+  }, [currentGameKeys, currentGameKeysPinyin, board, currentStep, gameState]);
 
   const permalink = location.origin + location.pathname + '#' + currentGame.id;
   const shortPermalink =
@@ -852,6 +909,7 @@ export function App() {
       </header>
       <div id="board" class={`${gameState} ${HARD_MODE ? 'hard-mode' : ''}`}>
         {board.map((row, index) => {
+          const pinyins = pinyin(row.v.join(''), { type: 'array' });
           return (
             <div
               className={`row ${
@@ -860,7 +918,12 @@ export function App() {
               key={index}
             >
               {row.v.map((letter, i) => (
-                <Letter key={i} letter={letter} state={boardStates[index][i]} />
+                <Letter
+                  key={i}
+                  letter={letter}
+                  pinyin={pinyins[i]}
+                  state={boardStates[index][i]}
+                />
               ))}
             </div>
           );
@@ -883,7 +946,13 @@ export function App() {
                 <ruby>
                   {key}
                   <rp>(</rp>
-                  <rt>{py(key)}</rt>
+                  <rt>
+                    {currentGameKeysPinyin.has(key)
+                      ? [...currentGameKeysPinyin.get(key)]
+                          .sort((a, b) => a.localeCompare(b, 'zh'))
+                          .join(' ⸱ ')
+                      : py(key)}
+                  </rt>
                   <rp>)</rp>
                 </ruby>
               </button>
