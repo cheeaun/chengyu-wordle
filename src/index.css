@@ -276,6 +276,7 @@ header h1 {
   justify-content: center;
   align-items: center;
   display: flex;
+  position: relative;
 }
 
 .row.error .letter {
@@ -315,13 +316,35 @@ header h1 {
   }
 }
 
-#board:not(.won):not(.lost) .row.current .letter.lettered,
-#board:not(.won):not(.lost) .row.current .letter:not(.lettered):first-child,
+#board:not(.won):not(.lost) .row.current .letter.lettered {
+  border-color: var(--letter-border-active-color);
+}
+
+#board:not(.won):not(.lost)
+  .row.current
+  .letter:not(.lettered):first-child:after,
 #board:not(.won):not(.lost)
   .row.current
   .letter.lettered
-  + .letter:not(.lettered) {
-  border-color: var(--letter-border-active-color);
+  + .letter:not(.lettered):after {
+  display: block;
+  content: '';
+  position: absolute;
+  bottom: 0.3em;
+  left: 0.3em;
+  right: 0.3em;
+  background-color: var(--letter-border-color);
+  height: 3px;
+  animation: blink 2s linear infinite alternate;
+  border-radius: 3px;
+}
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .letter.🟩 {
