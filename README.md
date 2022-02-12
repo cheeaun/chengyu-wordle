@@ -36,6 +36,7 @@ I looked up some data from the Googleverse and realised this is kind of doable. 
 ## Media coverage
 
 - 10 Feb 2022: **AsiaOne** - [Want more Wordle? Here are 13 spin-offs to try, including a Singlish version](https://www.asiaone.com/lifestyle/want-more-wordle-here-are-13-spin-offs-try-including-singlish-version)
+- 6 Feb 2022: **新加坡眼** [这款小游戏风靡全球，让李显龙总理都“玩上瘾了”](https://www.yan.sg/lixinglongzholi/)
 - 4 Feb 2022: **Mothership** - [PM Lee says Wordle a fun way to keep the mind engaged, recommends Chinese & Malay versions](https://mothership.sg/2022/02/pm-lee-says-wordle-a-fun-way-to-keep-the-mind-engaged-recommends-chinese-malay-versions/)
 - 4 Feb 2022: **8world Entertainment Lifestyle** - [全世界都在Wordle！快试试数字版Nerdle](https://entlife.8world.com/life/nerdle-nerdle-is-a-new-maths-based-wordle-clone-1718676)
 - 3 Feb 2022: **Lee Hsien Loong** - [...I was also pleasantly surprised to find out that there are Chinese and Malay versions of the game. Give it a go — a simple but fun way to keep the mind engaged. ](https://www.facebook.com/leehsienloong/posts/484183366401131)
