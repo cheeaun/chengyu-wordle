@@ -586,6 +586,8 @@ export function App() {
   const handleLetter = (letter, overwrite = false) => {
     if (!board[currentStep]) return;
     if (gameState) return;
+    setShowError(false);
+
     const newBoard = [...board];
     let columnIndex = newBoard[currentStep].v.findIndex((v) => v === '');
     if (overwrite) {
