@@ -565,11 +565,10 @@ header h1 {
   border: 0;
   padding: 0.2em;
   border-radius: 0.5em;
-  width: 10ex;
+  width: 9ex;
   text-align: center;
   background-color: var(--text-field-bg-color);
   border: 1px solid var(--text-field-border-color);
-  font-weight: bold;
 }
 
 #modal .footer {
