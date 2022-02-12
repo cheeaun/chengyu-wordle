@@ -4,7 +4,7 @@
 >
 > Guess the idiom in 6 tries. 
 
-This is my attempt at recreating [Wordle](https://www.powerlanguage.co.uk/wordle/), made by [Josh Wardle](https://twitter.com/powerlanguish), from scratch.
+This is my attempt at recreating [Wordle](https://www.nytimes.com/games/wordle/), made by [Josh Wardle](https://twitter.com/powerlanguish), from scratch.
 
 ## Screenshot
 
@@ -123,5 +123,5 @@ As of now, 中文 is very roughly translated from English via Google Translate, 
 
 ## Copyright and license
 
-- Wordle ©️ Josh Wardle
+- Wordle ©️ The New York Times Company
 - Everything else: [MIT license](https://cheeaun.mit-license.org/)

@@ -7,6 +7,7 @@ import {
 } from 'preact/hooks';
 import { pinyin } from 'pinyin-pro';
 const py = pinyin;
+window.pinyin = pinyin;
 
 import { useTranslation, Trans } from 'react-i18next';
 
@@ -1363,10 +1364,9 @@ export function App() {
                     />,
                     <a href="https://cheeaun.com/projects/" target="_blank" />,
                     <a
-                      href="https://www.powerlanguage.co.uk/wordle/"
+                      href="https://www.nytimes.com/games/wordle/"
                       target="_blank"
                     />,
-                    <a href="https://powerlanguage.co.uk/" target="_blank" />,
                   ]}
                 />
               </p>
