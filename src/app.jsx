@@ -9,6 +9,7 @@ import { pinyin } from 'pinyin-pro';
 const py = pinyin;
 window.pinyin = pinyin;
 
+import { toJpeg } from 'html-to-image';
 import { useTranslation, Trans } from 'react-i18next';
 
 import toast, { Toaster, useToasterStore } from 'react-hot-toast';
@@ -231,6 +232,20 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
 //   getIdiomsKeys(game.idiom);
 // });
 
+const ShareIcon = (props) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"></path>
+  </svg>
+);
+
+const DownloadIcon = (props) => (
+  <svg viewBox="0 0 330 330" fill="currentColor" {...props}>
+    <title>⬇️</title>
+    <path d="m154 256 1 1h2v1h1l1 1h2v1h8v-1h2l1-1h1v-1h2l1-1 70-70a15 15 0 0 0-22-22l-44 45V25a15 15 0 0 0-30 0v184l-44-45a15 15 0 1 0-22 22z" />
+    <path d="M315 160c-8 0-15 7-15 15v115H30V175a15 15 0 0 0-30 0v130c0 8 7 15 15 15h300c8 0 15-7 15-15V175c0-8-7-15-15-15z" />
+  </svg>
+);
+
 const PlayIcon = (props) => (
   <svg viewBox="0 0 20 20" fill="currentColor" {...props}>
     <title>▶️</title>
@@ -440,6 +455,72 @@ const IdiomsDashboard = () => {
         />
       </p>
       <div class="boards">{idioms}</div>
+    </>
+  );
+};
+
+const ShareImageButton = ({ header, footer, boardStates, id }) => {
+  const { t } = useTranslation();
+  const imageRef = useRef(null);
+  const [imageSrc, setImageSrc] = useState(null);
+  const imageOpts = {
+    canvasWidth: 1080,
+    canvasHeight: 1080,
+    quality: 0.5,
+  };
+
+  // Update image when light/dark mode kicks in
+  const [mediaChanged, setMediaChanged] = useState();
+  useEffect(() => {
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const colorSchemeChange = (event) => {
+      console.log(event.matches);
+      setMediaChanged(event.matches);
+    };
+    media.addEventListener('change', colorSchemeChange);
+    return () => {
+      media.removeEventListener('change', colorSchemeChange);
+    };
+  });
+
+  useEffect(() => {
+    toJpeg(imageRef.current, imageOpts).then((dataURL) => {
+      setImageSrc(dataURL);
+    });
+  }, [boardStates, id, mediaChanged]);
+
+  const fileName = `chengyu-wordle-${id}.jpg`;
+
+  return (
+    <>
+      <a
+        id="share-image-button"
+        class="button"
+        href={imageSrc}
+        download={fileName}
+        target="_blank"
+      >
+        {t('common.image')} <DownloadIcon width="12" height="12" />
+      </a>
+      <div id="share-image-container">
+        <div id="share-image" ref={imageRef}>
+          <p class="header">
+            <b>{header}</b>
+          </p>
+          <div class="board">
+            {boardStates.map((row) => {
+              return (
+                <div>
+                  {row.map((letter) => {
+                    return <span class={`tile ${letter}`} />;
+                  })}
+                </div>
+              );
+            })}
+          </div>
+          <p class="footer">{footer}</p>
+        </div>
+      </div>
     </>
   );
 };
@@ -759,9 +840,10 @@ export function App() {
     .join('\n')
     .trim();
   const attempts = gameState === 'won' ? emojiResults.split('\n').length : 'X';
+  const attemptsText = `${attempts}/${MAX_STEPS}`;
   const shareText = `${t('app.title')} [${currentGame.id}]${
     HARD_MODE ? ' 🔥' : ''
-  } ${attempts}/6\n\n${emojiResults}`;
+  } ${attemptsText}\n\n${emojiResults}`;
   const shareTextWithLink = `${shareText}\n\n${shortPermalink}`;
 
   const hints = useMemo(() => {
@@ -1106,14 +1188,17 @@ export function App() {
                   }
                 }}
               >
-                {t('common.share')}{' '}
-                <svg height="16" width="16" viewBox="0 0 24 24">
-                  <path
-                    fill="currentColor"
-                    d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"
-                  ></path>
-                </svg>
+                {t('common.share')} <ShareIcon width="16" height="16" />
               </button>
+              &nbsp;
+              <ShareImageButton
+                id={currentGame.id}
+                header={t('app.title')}
+                footer={`[${currentGame.id}]${
+                  HARD_MODE ? ' 🔥' : ''
+                } ${attemptsText}`}
+                boardStates={boardStates}
+              />
               &nbsp;
               <a
                 class="button facebook"

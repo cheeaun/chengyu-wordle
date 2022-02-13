@@ -6,5 +6,6 @@ module.exports = {
       darkSelector: '.dark-mode',
       lightSelector: '.light-mode',
     },
+    'postcss-calc': {},
   },
 };

@@ -520,6 +520,7 @@ header h1 {
   transform: translateY(80vh);
   transition: transform 0.3s ease-in-out;
   overflow: auto;
+  overflow-x: hidden;
 }
 #modal.appear .content {
   transition-delay: 0.3s;
@@ -557,7 +558,7 @@ header h1 {
   font-size: 1.5em;
   margin: 0.2em 0;
   border-radius: 0.5em;
-  padding: 0.5em 1em;
+  padding: 0.5em 0.7em;
   font-size: 1em;
   text-transform: uppercase;
   font-weight: bold;
@@ -573,6 +574,11 @@ header h1 {
 #modal button#share {
   color: var(--button-strong-text-color);
   background-color: var(--button-strong-bg-color);
+}
+#modal #share-image-button {
+  color: var(--button-strong-text-color);
+  background: #d6249f
+    radial-gradient(circle at 30% 100%, #fd5949 0%, #d6249f 50%, #285aeb 100%);
 }
 
 #modal a.facebook {
@@ -875,4 +881,51 @@ a.button.strong {
     padding-left: 0.35em;
     padding-right: 0.35em;
   }
+}
+
+#share-image-container {
+  display: inline-block;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+}
+#share-image {
+  pointer-events: none;
+  background-color: var(--bg-color);
+  width: 320px;
+  height: 320px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+}
+#share-image .header {
+  color: var(--text-color);
+}
+#share-image .footer {
+  color: var(--text-insignificant-color);
+}
+#share-image .board {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+#share-image .tile {
+  vertical-align: middle;
+  display: inline-block;
+  width: calc(320px / 6 / 2);
+  height: calc(320px / 6 / 2);
+  aspect-ratio: 1;
+  background-color: var(--absent-color);
+  margin: 3px;
+  border-radius: 10%;
+}
+#share-image .tile.🟩 {
+  background-color: var(--correct-color);
+}
+#share-image .tile.🟧 {
+  background-color: var(--present-color);
 }
