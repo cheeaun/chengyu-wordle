@@ -14,6 +14,8 @@ import { useTranslation, Trans } from 'react-i18next';
 import toast, { Toaster, useToasterStore } from 'react-hot-toast';
 const alert = (text) => toast(text);
 
+import Switch from 'rc-switch';
+
 import { toClipboard } from 'copee';
 const copy = (text, fn = () => {}) => {
   if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1300,19 +1302,19 @@ export function App() {
               <div id="config">
                 <p>
                   <label>
-                    <input
-                      type="checkbox"
-                      checked={HARD_MODE}
-                      onInput={(e) => {
-                        const { checked } = e.target;
+                    {t('ui.hardMode')}
+                    <Switch
+                      defaultChecked={HARD_MODE}
+                      onChange={(checked) => {
                         LS.setItem(
                           `${KEY_PREFIX}hardMode`,
                           checked ? 'true' : 'false',
                         );
-                        location.reload();
+                        setTimeout(() => {
+                          location.reload();
+                        }, 310); // Wait for Switch to animate
                       }}
-                    />{' '}
-                    {t('ui.hardMode')}
+                    />
                   </label>
                 </p>
               </div>

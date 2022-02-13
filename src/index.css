@@ -4,6 +4,7 @@
   --bg-color: #fff;
   --border-color: #ccc;
   --green-color: green;
+  --gray-color: gray;
   --primary-color: var(--green-color);
   --primary-bg-color: rgba(0, 128, 0, 0.178);
   --primary-active-bg-color: rgba(0, 128, 0, 0.432);
@@ -14,7 +15,7 @@
   --letter-error-border-color: lightcoral;
   --correct-color: var(--green-color);
   --present-color: orange;
-  --absent-color: gray;
+  --absent-color: var(--gray-color);
   --letter-state-text-color: var(--inverse-text-color);
   --letter-state-border-color: rgba(0, 0, 0, 0.2);
   --keyboard-bg-color: #fafafa;
@@ -549,8 +550,8 @@ header h1 {
 }
 
 #modal a.button,
-#modal button,
-#info-modal button {
+#modal button:not([role='switch']),
+#info-modal button:not([role='switch']) {
   color: var(--button-text-color);
   background-color: var(--button-bg-color);
   font-size: 1.5em;
@@ -698,6 +699,8 @@ a.button.strong {
 #config label {
   display: block;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
 }
 
 #dashboard-modal {
@@ -730,6 +733,25 @@ a.button.strong {
 #dashboard-modal .boards .board:hover {
   filter: saturate(180%) brightness(90%);
   transform: scale(1.5);
+}
+
+.rc-switch {
+  border-color: var(--gray-color);
+  background-color: var(--gray-color);
+}
+.rc-switch-checked {
+  border-color: var(--green-color);
+  background-color: var(--green-color);
+}
+.rc-switch:focus {
+  box-shadow: 0 0 0 2px var(--text-color);
+}
+.rc-switch:after {
+  animation: none;
+  box-shadow: none;
+}
+.rc-switch:hover:after {
+  transform: none;
 }
 
 @media (max-height: 480px) {
