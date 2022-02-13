@@ -27,6 +27,7 @@ export default defineConfig({
     port: 3030,
   },
   build: {
+    target: ['es2020', 'chrome61', 'safari11'],
     sourcemap: true,
     rollupOptions: {
       output: {
