@@ -481,9 +481,17 @@ const ShareImageButton = ({ header, footer, boardStates, id }) => {
     const colorSchemeChange = (event) => {
       setMediaChanged(event.matches);
     };
-    media.addEventListener('change', colorSchemeChange);
+    try {
+      media.addEventListener('change', colorSchemeChange);
+    } catch (e) {
+      media.addListener('change', colorSchemeChange);
+    }
     return () => {
-      media.removeEventListener('change', colorSchemeChange);
+      try {
+        media.removeEventListener('change', colorSchemeChange);
+      } catch (e) {
+        media.removeListener('change', colorSchemeChange);
+      }
     };
   });
 
