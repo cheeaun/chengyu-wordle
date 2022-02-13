@@ -35,6 +35,8 @@ I looked up some data from the Googleverse and realised this is kind of doable. 
 
 ## Media coverage
 
+- [Wikipedia: Wordle](https://zh.wikipedia.org/wiki/Wordle#cite_note-45)
+- 11 Feb 2022: **红蚂蚁** [连总理都推荐的爆红猜字游戏Wordle　为何在全球疯狂吸粉？](https://www.redants.sg/good-reads/story20220211-5941)
 - 10 Feb 2022: **AsiaOne** - [Want more Wordle? Here are 13 spin-offs to try, including a Singlish version](https://www.asiaone.com/lifestyle/want-more-wordle-here-are-13-spin-offs-try-including-singlish-version)
 - 6 Feb 2022: **新加坡眼** [这款小游戏风靡全球，让李显龙总理都“玩上瘾了”](https://www.yan.sg/lixinglongzholi/)
 - 4 Feb 2022: **Mothership** - [PM Lee says Wordle a fun way to keep the mind engaged, recommends Chinese & Malay versions](https://mothership.sg/2022/02/pm-lee-says-wordle-a-fun-way-to-keep-the-mind-engaged-recommends-chinese-malay-versions/)
