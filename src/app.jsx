@@ -459,6 +459,10 @@ const IdiomsDashboard = () => {
   );
 };
 
+const prefersColorSchemeSupported =
+  'matchMedia' in window &&
+  window.matchMedia('(prefers-color-scheme: dark)').media !== 'not all';
+
 const ShareImageButton = ({ header, footer, boardStates, id }) => {
   const { t } = useTranslation();
   const imageRef = useRef(null);
@@ -472,9 +476,9 @@ const ShareImageButton = ({ header, footer, boardStates, id }) => {
   // Update image when light/dark mode kicks in
   const [mediaChanged, setMediaChanged] = useState();
   useEffect(() => {
+    if (!prefersColorSchemeSupported) return;
     const media = window.matchMedia('(prefers-color-scheme: dark)');
     const colorSchemeChange = (event) => {
-      console.log(event.matches);
       setMediaChanged(event.matches);
     };
     media.addEventListener('change', colorSchemeChange);
@@ -524,10 +528,6 @@ const ShareImageButton = ({ header, footer, boardStates, id }) => {
     </>
   );
 };
-
-const prefersColorSchemeSupported =
-  'matchMedia' in window &&
-  window.matchMedia('(prefers-color-scheme: dark)').media !== 'not all';
 
 export function App() {
   const { t, i18n } = useTranslation();
