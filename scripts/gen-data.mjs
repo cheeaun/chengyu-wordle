@@ -3,7 +3,7 @@ import { stringify } from 'csv-stringify/sync';
 import hash from 'shorthash2';
 
 const idioms = JSON.parse(
-  await readFile(new URL('../data/idioms.json', import.meta.url))
+  await readFile(new URL('../data/idioms.json', import.meta.url)),
 );
 console.log(`Total idioms: ${idioms.length}`);
 
@@ -28,10 +28,15 @@ for (let i = 0, len = freqIdioms.length; i < len; i++) {
   if (dupIdiom) {
     throw new Error(`Duplicate id: ${id} for ${idiom} vs ${dupIdiom.idiom}`);
   }
-  gameIdioms.push({
-    id,
-    idiom,
-  });
+  // This filters out phrases that are NOT idioms.
+  // Set 18 here because we've already reached 20th (daily) game
+  // So everything before 18 could be not idioms.
+  if (i <= 18 || letter4idioms.find((id) => id.word === idiom)) {
+    gameIdioms.push({
+      id,
+      idiom,
+    });
+  }
   allIdioms.add(idiom);
 }
 
@@ -45,7 +50,7 @@ await writeFile(
   filePath,
   stringify(gameIdioms, {
     header: true,
-  })
+  }),
 );
 console.log(`File written: ${filePath}`);
 
