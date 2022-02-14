@@ -496,24 +496,29 @@ const ShareImageButton = ({ header, footer, boardStates, id }) => {
   });
 
   useEffect(() => {
-    toJpeg(imageRef.current, imageOpts).then((dataURL) => {
-      setImageSrc(dataURL);
-    });
+    try {
+      toJpeg(imageRef.current, imageOpts).then((dataURL) => {
+        setImageSrc(dataURL);
+      });
+    } catch (e) {}
+    return () => setImageSrc(null);
   }, [boardStates, id, mediaChanged]);
 
   const fileName = `chengyu-wordle-${id}.jpg`;
 
   return (
     <>
-      <a
-        id="share-image-button"
-        class="button"
-        href={imageSrc}
-        download={fileName}
-        target="_blank"
-      >
-        {t('common.image')} <DownloadIcon width="12" height="12" />
-      </a>
+      {!!imageSrc && (
+        <a
+          id="share-image-button"
+          class="button"
+          href={imageSrc}
+          download={fileName}
+          target="_blank"
+        >
+          {t('common.image')} <DownloadIcon width="12" height="12" />
+        </a>
+      )}
       <div id="share-image-container">
         <div id="share-image" ref={imageRef}>
           <p class="header">
