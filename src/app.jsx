@@ -496,11 +496,13 @@ const ShareImageButton = ({ header, footer, boardStates, id }) => {
   });
 
   useEffect(() => {
-    try {
-      toJpeg(imageRef.current, imageOpts).then((dataURL) => {
+    toJpeg(imageRef.current, imageOpts)
+      .then((dataURL) => {
         setImageSrc(dataURL);
+      })
+      .catch((e) => {
+        setImageSrc(null);
       });
-    } catch (e) {}
     return () => setImageSrc(null);
   }, [boardStates, id, mediaChanged]);
 
