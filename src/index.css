@@ -462,6 +462,7 @@ header h1 {
   font-size: 1em;
   text-transform: uppercase;
   font-weight: bold;
+  min-width: 5em;
 }
 #keyboard .row button.stuck {
   background-color: transparent;
