@@ -904,12 +904,10 @@ export function App() {
     hints.push(...letterHints);
 
     // 4. Pinyin hints
-    const pinyinHint = letters
-      .map((c) => py(c)[0])
-      .join('')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-    // https://stackoverflow.com/a/37511463/20838
+    const pinyinHint = py(currentGame.idiom, {
+      pattern: 'first',
+      type: 'array',
+    }).join('');
     hints.push(t('hints.abbreviatedPinyin', { pinyinHint }));
 
     return hints;
