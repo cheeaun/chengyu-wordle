@@ -496,6 +496,7 @@ const ShareImageButton = ({ header, footer, boardStates, id }) => {
   });
 
   useEffect(() => {
+    setImageSrc(null);
     toJpeg(imageRef.current, imageOpts)
       .then((dataURL) => {
         setImageSrc(dataURL);
@@ -503,7 +504,6 @@ const ShareImageButton = ({ header, footer, boardStates, id }) => {
       .catch((e) => {
         setImageSrc(null);
       });
-    return () => setImageSrc(null);
   }, [boardStates, id, mediaChanged]);
 
   const fileName = `chengyu-wordle-${id}.jpg`;
