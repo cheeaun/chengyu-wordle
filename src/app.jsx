@@ -670,7 +670,7 @@ export function App() {
         .map((idiom, i) => `${i + 1}. ${idiom}`)
         .join('\n')}
 
-🚨SPOILER🚨 Type 'ANSWER' to see the answer.`);
+🚨SPOILER🚨 Type 'HINTS' to see all hints. Type 'ANSWER' to see the answer.`);
       console.groupEnd();
     }
     window.ANSWER = `${currentGame.idiom} (${py(currentGame.idiom)})`;
@@ -909,6 +909,8 @@ export function App() {
       type: 'array',
     }).join('');
     hints.push(t('hints.abbreviatedPinyin', { pinyinHint }));
+
+    window.HINTS = hints;
 
     return hints;
   }, [currentGame.idiom, definition]);
