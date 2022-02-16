@@ -391,7 +391,7 @@ const CurrentPlaying = () => {
           setPlayingCount(0);
         });
     };
-    const fetchInt = setInterval(fetchPlayingCount, 60 * 1000);
+    const fetchInt = setInterval(fetchPlayingCount, 2 * 60 * 1000);
     fetchPlayingCount();
     return () => {
       clearInterval(fetchInt);
