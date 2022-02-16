@@ -380,7 +380,10 @@ const CurrentPlaying = () => {
   useEffect(() => {
     const fetchPlayingCount = () => {
       fetch('https://chengyu-wordle-realtime-visitors.cheeaun.workers.dev/')
-        .then((r) => r.text())
+        .then((r) => {
+          if (!r.ok) throw Error(r.statusText);
+          return r.text();
+        })
         .then((text) => {
           setPlayingCount(+text);
         })
