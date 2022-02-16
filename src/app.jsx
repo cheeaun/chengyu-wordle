@@ -374,6 +374,36 @@ const Letter = ({ letter, pinyin, state }) => {
   );
 };
 
+const CurrentPlaying = () => {
+  const { t } = useTranslation();
+  const [playingCount, setPlayingCount] = useState(0);
+  useEffect(() => {
+    const fetchPlayingCount = () => {
+      fetch('https://chengyu-wordle-realtime-visitors.cheeaun.workers.dev/')
+        .then((r) => r.text())
+        .then((text) => {
+          setPlayingCount(+text);
+        })
+        .catch((e) => {
+          setPlayingCount(0);
+        });
+    };
+    const fetchInt = setInterval(fetchPlayingCount, 60 * 1000);
+    fetchPlayingCount();
+    return () => {
+      clearInterval(fetchInt);
+    };
+  }, []);
+
+  if (playingCount <= 1) return null;
+
+  return (
+    <div id="current-playing">
+      {t('ui.countPlaying', { count: playingCount })}
+    </div>
+  );
+};
+
 import confetti from 'canvas-confetti';
 let confettiRAF;
 const blastConfetti = () => {
@@ -1012,7 +1042,10 @@ export function App() {
           >
             <InfoIcon width="16" height="16" />
           </button>
-          <h1>{t('app.title')}</h1>
+          <span>
+            <h1>{t('app.title')}</h1>
+            <CurrentPlaying />
+          </span>
           <button
             type="button"
             onClick={() => {

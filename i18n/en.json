@@ -61,6 +61,7 @@
     "copiedResults": "Copied results to clipboard",
     "copiedURL": "Copied URL to clipboard",
     "countdownNow": "Now!",
+    "countPlaying": "{{count}} playing",
     "easyEnableHardMode": "Too easy? Tap ⓘ to enable \"Hard mode 🔥\"!",
     "gamesPlayed": "📊 Games played: <0/>",
     "hardMode": "Hard mode 🔥",

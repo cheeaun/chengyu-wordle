@@ -123,7 +123,7 @@ label * {
 
 header {
   border-bottom: 1px solid var(--border-color);
-  padding: 0.5em;
+  padding: 0.4em 0.5em;
   margin-bottom: 2px;
   animation: header-appear 0.5s ease-in-out both;
 }
@@ -152,7 +152,7 @@ header .inner {
 
 header button {
   border: 0;
-  padding: 0.2em 1em;
+  padding: 0.3em 1em;
   margin: 0;
   background-color: var(--primary-bg-color);
   color: var(--primary-color);
@@ -173,6 +173,13 @@ header h1 {
   font-size: 1em;
   margin: 0;
   padding: 0;
+  line-height: 1;
+}
+
+#current-playing {
+  line-height: 1;
+  font-size: 9px;
+  color: var(--text-insignificant-color);
 }
 
 .locale-selector a:not(.selected) {
