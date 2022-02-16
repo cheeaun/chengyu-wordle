@@ -267,6 +267,18 @@ const CloseIcon = (props) => (
   </svg>
 );
 
+const InfoIcon = (props) => (
+  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}>
+    <title>ℹ️</title>
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+    />
+  </svg>
+);
+
 const startDate = new Date(2022, 0, 27); // 27 January 2022
 const getTodayGame = () => {
   const today = new Date().setHours(0, 0, 0, 0);
@@ -998,21 +1010,7 @@ export function App() {
               setShowInfoModal(true);
             }}
           >
-            <svg
-              width="16"
-              height="16"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <title>ℹ️</title>
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+            <InfoIcon width="16" height="16" />
           </button>
           <h1>{t('app.title')}</h1>
           <button
