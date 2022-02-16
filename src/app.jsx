@@ -329,6 +329,7 @@ const CodeInput = ({ code, url }) => {
   return (
     code && (
       <input
+        type="text"
         readOnly
         value={code}
         class="idiom-code"
