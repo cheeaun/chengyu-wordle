@@ -386,7 +386,9 @@ const CurrentPlaying = () => {
           return r.text();
         })
         .then((text) => {
-          setPlayingCount(+text);
+          const count = +text;
+          if (!count) throw Error('Zero or NaN');
+          setPlayingCount(count);
         })
         .catch((e) => {
           setPlayingCount(0);
