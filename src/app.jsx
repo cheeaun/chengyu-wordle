@@ -1180,77 +1180,86 @@ export function App() {
                   </a>
                 </small>
               </p>
-              <div class="results">{shareTextWithLink}</div>
-              <button
-                id="share"
-                onClick={async () => {
-                  try {
-                    if (
-                      // Edge/ or Edg/
-                      /edge?\//i.test(navigator.userAgent) ||
-                      // Windows
-                      /windows/.test(navigator.userAgent)
-                    ) {
-                      throw new Error('Web Share API not working well here');
-                    }
-                    copy(shareTextWithLink);
-                    await navigator.share({ text: shareTextWithLink });
-                  } catch (e) {
-                    copy(shareTextWithLink, () => {
-                      alert(t('ui.copiedResults'));
-                    });
-                  }
-                }}
-              >
-                {t('common.share')} <ShareIcon width="16" height="16" />
-              </button>
-              &nbsp;
-              <ShareImageButton
-                id={currentGame.id}
-                header={t('app.title')}
-                footer={`[${currentGame.id}]${
-                  HARD_MODE ? ' 🔥' : ''
-                } ${attemptsText}`}
-                boardStates={boardStates}
-              />
-              &nbsp;
-              <a
-                class="button facebook"
-                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                  permalink,
-                )}&hashtag=${encodeURIComponent('#chengyuwordle')}`}
-                target="_blank"
-                onClick={() => {
-                  copy(shareTextWithLink);
-                }}
-              >
-                <svg width="16" height="16" viewBox="0 0 96.1 96.1">
-                  <title>Facebook</title>
-                  <path
-                    fill="currentColor"
-                    d="M72 0H59.7c-14 0-23 9.3-23 23.7v10.9H24c-1 0-2 .8-2 2v15.7c0 1.1 1 2 2 2h12.6v39.9c0 1 .8 2 2 2h16.3c1 0 2-1 2-2v-40h14.6c1 0 2-.8 2-1.9V36.5a2 2 0 0 0-2-2H56.8v-9.2c0-4.4 1.1-6.7 6.9-6.7H72c1 0 2-.9 2-2V2c0-1.1-1-2-2-2z"
+              <div class="results-container">
+                <div class="results">{shareTextWithLink}</div>
+                <div>
+                  <button
+                    id="share"
+                    onClick={async () => {
+                      try {
+                        if (
+                          // Edge/ or Edg/
+                          /edge?\//i.test(navigator.userAgent) ||
+                          // Windows
+                          /windows/.test(navigator.userAgent)
+                        ) {
+                          throw new Error(
+                            'Web Share API not working well here',
+                          );
+                        }
+                        copy(shareTextWithLink);
+                        await navigator.share({ text: shareTextWithLink });
+                      } catch (e) {
+                        copy(shareTextWithLink, () => {
+                          alert(t('ui.copiedResults'));
+                        });
+                      }
+                    }}
+                  >
+                    {t('common.share')} <ShareIcon width="16" height="16" />
+                  </button>
+                  &nbsp;
+                  <ShareImageButton
+                    id={currentGame.id}
+                    header={t('app.title')}
+                    footer={`[${currentGame.id}]${
+                      HARD_MODE ? ' 🔥' : ''
+                    } ${attemptsText}`}
+                    boardStates={boardStates}
                   />
-                </svg>
-              </a>
-              &nbsp;
-              <a
-                class="button tweet"
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                  shareTextWithLink,
-                )}`}
-                target="_blank"
-              >
-                <svg height="16" width="16" viewBox="0 0 24 24">
-                  <title>{t('common.tweet')}</title>
-                  <path
-                    fill="currentColor"
-                    d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
-                  />
-                </svg>
-              </a>
-              &nbsp;
-              <CodeInput code={currentGame.id} url={permalink} />
+                  &nbsp;
+                  <a
+                    class="button facebook"
+                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                      permalink,
+                    )}&hashtag=${encodeURIComponent('#chengyuwordle')}`}
+                    target="_blank"
+                    onClick={() => {
+                      copy(shareTextWithLink);
+                    }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 96.1 96.1">
+                      <title>Facebook</title>
+                      <path
+                        fill="currentColor"
+                        d="M72 0H59.7c-14 0-23 9.3-23 23.7v10.9H24c-1 0-2 .8-2 2v15.7c0 1.1 1 2 2 2h12.6v39.9c0 1 .8 2 2 2h16.3c1 0 2-1 2-2v-40h14.6c1 0 2-.8 2-1.9V36.5a2 2 0 0 0-2-2H56.8v-9.2c0-4.4 1.1-6.7 6.9-6.7H72c1 0 2-.9 2-2V2c0-1.1-1-2-2-2z"
+                      />
+                    </svg>
+                  </a>
+                  &nbsp;
+                  <a
+                    class="button tweet"
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                      shareTextWithLink,
+                    )}`}
+                    target="_blank"
+                  >
+                    <svg height="16" width="16" viewBox="0 0 24 24">
+                      <title>{t('common.tweet')}</title>
+                      <path
+                        fill="currentColor"
+                        d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
+                      />
+                    </svg>
+                  </a>
+                  &nbsp;
+                  <CodeInput code={currentGame.id} url={permalink} />
+                </div>
+              </div>
             </>
+          )}
+          {gameState === 'won' && attempts <= 2 && !HARD_MODE && (
+            <p>{t('ui.easyEnableHardMode')}</p>
           )}
           <div class="footer">
             {/won|lost/i.test(gameState) &&

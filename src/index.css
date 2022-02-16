@@ -540,15 +540,22 @@ header h1 {
   font-size: 2em;
 }
 
-#modal .results {
-  white-space: pre-wrap;
-  padding: 1em;
-  margin-bottom: 0.5em;
+#modal .results-container {
   background-color: var(--results-bg-color);
-  border-radius: 0.2em;
+  padding: 1em 1em 0.5em;
+  border-radius: 0.5em;
+  display: inline-block;
+}
+#modal .results {
+  display: inline-block;
+  white-space: pre-wrap;
+  margin-bottom: 1em;
   line-height: 1.05em;
   text-align: left;
   font-size: 0.8em;
+  word-break: break-word;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 #modal a.button,
@@ -641,7 +648,7 @@ header h1 {
 #info-modal h2 {
   margin-top: 0;
   padding-top: 0;
-  font-size: 1em;
+  font-size: 1.2em;
 }
 #info-modal ul {
   margin-left: 0;
@@ -704,6 +711,7 @@ a.button.strong {
   border-top: 1px solid var(--primary-bg-color);
 }
 #config label {
+  font-weight: bold;
   display: block;
   cursor: pointer;
   display: flex;
