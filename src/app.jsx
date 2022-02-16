@@ -378,6 +378,7 @@ const CurrentPlaying = () => {
   const { t } = useTranslation();
   const [playingCount, setPlayingCount] = useState(0);
   useEffect(() => {
+    let fetchTimer, fetchRAF;
     const fetchPlayingCount = () => {
       fetch('https://chengyu-wordle-realtime-visitors.cheeaun.workers.dev/')
         .then((r) => {
@@ -390,11 +391,14 @@ const CurrentPlaying = () => {
         .catch((e) => {
           setPlayingCount(0);
         });
+      fetchTimer = setTimeout(() => {
+        fetchRAF = requestAnimationFrame(fetchPlayingCount);
+      }, 2 * 60 * 1000);
     };
-    const fetchInt = setInterval(fetchPlayingCount, 2 * 60 * 1000);
     fetchPlayingCount();
     return () => {
-      clearInterval(fetchInt);
+      clearTimeout(fetchTimer);
+      cancelAnimationFrame(fetchRAF);
     };
   }, []);
 
