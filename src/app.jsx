@@ -892,6 +892,19 @@ export function App() {
           });
         });
       }
+
+      const $board = document.getElementById('board');
+      if ($board?.querySelector) {
+        const $currentRow = $board.querySelector(
+          `.row:nth-child(${currentStep + 1})`,
+        );
+        if ($currentRow?.scrollIntoView) {
+          $currentRow.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }
+      }
     };
     document.addEventListener('keydown', handleKey);
     return () => {

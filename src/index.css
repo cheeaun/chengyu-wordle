@@ -221,6 +221,7 @@ header h1 {
   flex-direction: column;
   overflow: auto;
   animation: board-appear 0.5s ease-in-out both;
+  overflow-x: hidden;
 }
 @keyframes board-appear {
   0% {
