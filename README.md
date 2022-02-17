@@ -28,10 +28,9 @@ One day, I [tweeted](https://twitter.com/cheeaun/status/1484482726644183041):
 > **Wordle, but for Chinese idioms.**
 > 
 > #idea
+> 
 
-This is timely, because Chinese New Year is coming up.
-
-I looked up some data from the Googleverse and realised this is kind of doable. It's actually a bit difficult for me to build this because I can't actually read or write Chinese. But heck, who cares, buidling a game is fun.
+**👉👉 Continue reading: [Chengyu Wordle Is Not a Love Story](https://cheeaun.com/blog/2022/02/chengyu-wordle-is-not-a-love-story/) 👈👈**
 
 ## Media coverage
 
