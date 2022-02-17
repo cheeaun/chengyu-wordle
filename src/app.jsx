@@ -351,6 +351,11 @@ const CodeInput = ({ code, url }) => {
           copy(url || code, () => {
             alert(t('ui.copiedURL'));
           });
+          fireEvent('Click: Share', {
+            props: {
+              type: 'idiom-code',
+            },
+          });
         }}
       />
     )
@@ -569,6 +574,13 @@ const ShareImageButton = ({ header, footer, boardStates, id }) => {
           href={imageSrc}
           download={fileName}
           target="_blank"
+          onClick={() => {
+            fireEvent('Click: Share', {
+              props: {
+                type: 'image',
+              },
+            });
+          }}
         >
           {t('common.image')} <DownloadIcon width="12" height="12" />
         </a>
@@ -1259,6 +1271,11 @@ export function App() {
                           alert(t('ui.copiedResults'));
                         });
                       }
+                      fireEvent('Click: Share', {
+                        props: {
+                          type: 'share',
+                        },
+                      });
                     }}
                   >
                     {t('common.share')} <ShareIcon width="16" height="16" />
@@ -1281,6 +1298,11 @@ export function App() {
                     target="_blank"
                     onClick={() => {
                       copy(shareTextWithLink);
+                      fireEvent('Click: Share', {
+                        props: {
+                          type: 'facebook',
+                        },
+                      });
                     }}
                   >
                     <svg width="16" height="16" viewBox="0 0 96.1 96.1">
@@ -1298,6 +1320,13 @@ export function App() {
                       shareTextWithLink,
                     )}`}
                     target="_blank"
+                    onClick={() => {
+                      fireEvent('Click: Share', {
+                        props: {
+                          type: 'twitter',
+                        },
+                      });
+                    }}
                   >
                     <svg height="16" width="16" viewBox="0 0 24 24">
                       <title>{t('common.tweet')}</title>
