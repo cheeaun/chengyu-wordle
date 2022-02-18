@@ -409,6 +409,32 @@ header h1 {
   animation-delay: 0.3s;
 }
 
+#board.won .letter.🌈,
+#board.won .letter.🌈 > *,
+#board.lost .letter.🌈,
+#board.lost .letter.🌈 > * {
+  animation-name: none;
+}
+
+#board.won .🟩🟩🟩🟩 .letter.lettered {
+  animation-name: win;
+}
+#board.won .🟩🟩🟩🟩 .letter.lettered > * {
+  transform: rotateX(-180deg);
+  animation-name: none;
+}
+@keyframes win {
+  0% {
+    transform: rotateX(180deg) translateY(0);
+  }
+  50% {
+    transform: rotateX(180deg) translateY(10px);
+  }
+  100% {
+    transform: rotateX(180deg) translateY(0);
+  }
+}
+
 #keyboard {
   background-color: var(--keyboard-bg-color);
   border-top: 1px solid var(--keyboard-border-color);

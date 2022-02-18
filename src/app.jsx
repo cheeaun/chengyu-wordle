@@ -810,13 +810,19 @@ export function App() {
   }, [boardStates]);
 
   useEffect(() => {
+    let timeout;
     if (gameState === 'won') {
-      setShowModal('won');
+      timeout = setTimeout(() => {
+        setShowModal('won');
+      }, 600);
     } else if (gameState === 'lost') {
       setShowModal('lost');
     } else {
       setShowModal(false);
     }
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [gameState]);
 
   const handleBackspace = () => {
@@ -1110,7 +1116,9 @@ export function App() {
             <div
               className={`row ${
                 currentStep === index && showError ? 'error' : ''
-              } ${currentStep === index ? 'current' : ''}`}
+              } ${currentStep === index ? 'current' : ''} ${boardStates[
+                index
+              ].join('')}`}
               key={index}
             >
               {row.v.map((letter, i) => (
