@@ -1673,8 +1673,9 @@ export function App() {
                       // Construct URL
                       const data = exportGameData();
                       const str = JSON.stringify({
-                        data,
+                        version: 1,
                         exportDate: new Date(),
+                        data,
                       });
                       const bytes = new TextEncoder().encode(str);
                       const blob = new Blob([bytes], {
