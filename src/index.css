@@ -986,3 +986,14 @@ a.button.strong {
 #share-image .tile.🟧 {
   background-color: var(--present-color);
 }
+
+.input-file-button {
+  position: relative;
+  cursor: pointer;
+}
+.input-file-button *:not(input[type='file']) {
+  pointer-events: none;
+}
+.input-file-button input[type='file'] {
+  display: none;
+}

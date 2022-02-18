@@ -111,17 +111,21 @@ if (HARD_MODE) {
 // });
 
 window.clearGames = () => {
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key.startsWith(KEY_PREFIX)) {
-      localStorage.removeItem(key);
+  try {
+    const { length } = localStorage;
+    for (let i = 0; i < length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith(KEY_PREFIX)) {
+        localStorage.removeItem(key);
+      }
     }
-  }
+  } catch (e) {}
 };
 
 window.allGames = () => {
   const allGames = new Map();
-  for (let i = 0; i < localStorage.length; i++) {
+  const { length } = localStorage;
+  for (let i = 0; i < length; i++) {
     const key = localStorage.key(i);
     if (key.startsWith(KEY_PREFIX)) {
       const game = JSON.parse(localStorage.getItem(key));
@@ -129,6 +133,37 @@ window.allGames = () => {
     }
   }
   return allGames;
+};
+
+const exportGameData = () => {
+  try {
+    const gameData = Object.entries(localStorage)
+      .filter(([k, v]) => {
+        const isPrefixed = k.startsWith(KEY_PREFIX);
+        if (!isPrefixed) return false;
+        const gameID = k.slice(KEY_PREFIX.length);
+        return isPrefixed && games.find((g) => g.id === gameID);
+      })
+      .map(([k, v]) => {
+        const id = k.slice(KEY_PREFIX.length);
+        const data = JSON.parse(v);
+        return {
+          id,
+          ...data,
+        };
+      });
+    return gameData;
+  } catch (e) {}
+};
+const importGameData = (gameData, overrides = false) => {
+  try {
+    gameData.forEach((game) => {
+      const { id, ...data } = game;
+      if (overrides || !localStorage.getItem(`${KEY_PREFIX}${id}`)) {
+        LS.setItem(`${KEY_PREFIX}${id}`, JSON.stringify(data));
+      }
+    });
+  } catch (e) {}
 };
 
 const getBoardGameState = (boardStates) => {
@@ -1630,6 +1665,73 @@ export function App() {
                 <summary>
                   {t('debugging.heading')} ({__COMMIT_HASH__})
                 </summary>
+                <div>
+                  Game data:{' '}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      // Construct URL
+                      const data = exportGameData();
+                      const str = JSON.stringify({
+                        data,
+                        exportDate: new Date(),
+                      });
+                      const bytes = new TextEncoder().encode(str);
+                      const blob = new Blob([bytes], {
+                        type: 'application/json;charset=utf-8',
+                      });
+                      const url = URL.createObjectURL(blob);
+
+                      // Trigger download
+                      const $a = document.createElement('a');
+                      document.body.appendChild($a);
+                      $a.style = 'display: none';
+                      $a.href = url;
+                      $a.download = 'chengyu-wordle.gamedata.json';
+                      $a.click();
+
+                      // Clean up
+                      URL.revokeObjectURL(url);
+                      $a.remove();
+                    }}
+                  >
+                    Export
+                  </button>{' '}
+                  <label class="input-file-button">
+                    <input
+                      type="file"
+                      accept=".json"
+                      onChange={(event) => {
+                        if (window.FileReader) {
+                          if (confirm('Are you sure you want to import?')) {
+                            try {
+                              const fileList = event.target.files;
+                              const file = fileList[0];
+                              const reader = new FileReader();
+                              reader.addEventListener('load', (e) => {
+                                const gameData = JSON.parse(
+                                  e.target.result,
+                                ).data;
+                                const overrides = confirm(
+                                  'If there are conflicting games data, override them? (Cancel to keep them)',
+                                );
+                                importGameData(gameData, overrides);
+                              });
+                              reader.readAsText(file);
+                            } catch (e) {
+                              alert('Unable to import.');
+                            }
+                          }
+                        } else {
+                          alert(
+                            'Import feature is not supported by the current browser.',
+                          );
+                        }
+                      }}
+                    />
+                    <button type="button">Import</button>
+                  </label>
+                </div>
                 <button
                   type="button"
                   onClick={() => {
