@@ -1,7 +1,7 @@
 {
   "name": "chengyu-wordle",
   "description": "Wordle, for Chinese idioms - 成语 (chéngyǔ)",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
