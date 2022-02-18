@@ -546,7 +546,7 @@ header h1 {
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: all 1s;
+  transition: all 0.3s;
 }
 #modal.appear {
   pointer-events: auto;
@@ -573,7 +573,6 @@ header h1 {
   overflow-x: hidden;
 }
 #modal.appear .content {
-  transition-delay: 0.3s;
   transform: translateY(0vh);
 }
 
