@@ -721,6 +721,9 @@ export function App() {
         }
       });
     });
+    keysPinyin.forEach((pinyinSet, letter) => {
+      pinyinSet.add(py(letter)); // Add its own individual-letter pinyin
+    });
 
     // SPOILER inside console.log!
     const possibleIdioms = allPossibleIdioms
