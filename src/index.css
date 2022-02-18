@@ -193,14 +193,29 @@ header h1 {
 
 .color-scheme-selector {
   float: right;
+  display: flex;
 }
 .color-scheme-selector button {
-  padding: 0.25em 0.5em !important;
+  padding: 0.25em 0.75em !important;
   border: 2px solid var(--border-color) !important;
   background-color: rgba(255, 255, 255, 0.5) !important;
 }
 .color-scheme-selector button.active {
   border-color: var(--primary-color) !important;
+  z-index: 1;
+}
+.color-scheme-selector button:first-child {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+.color-scheme-selector button:nth-child(2) {
+  border-radius: 0 !important;
+  margin-left: -2px !important;
+  margin-right: -2px !important;
+}
+.color-scheme-selector button:last-child {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
 }
 
 #app {
