@@ -1354,7 +1354,16 @@ export function App() {
             </>
           )}
           {gameState === 'won' && attempts <= 2 && !HARD_MODE && (
-            <p>{t('ui.easyEnableHardMode')}</p>
+            <p
+              onClick={() => {
+                setShowModal(null);
+                setTimeout(() => {
+                  setShowInfoModal(true);
+                }, 300);
+              }}
+            >
+              {t('ui.easyEnableHardMode')}
+            </p>
           )}
           <div class="footer">
             {/won|lost/i.test(gameState) &&
