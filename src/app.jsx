@@ -1621,6 +1621,17 @@ export function App() {
                   ]}
                 />
               </p>
+              <p>
+                <Trans
+                  i18nKey="about.about2"
+                  components={[
+                    <a
+                      href="https://www.buymeacoffee.com/cheeaun"
+                      target="_blank"
+                    />,
+                  ]}
+                />
+              </p>
               <h2>{t('feedback.heading')}</h2>
               <ul>
                 <li>
