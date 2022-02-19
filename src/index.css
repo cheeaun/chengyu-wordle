@@ -123,7 +123,6 @@ label * {
 
 header {
   border-bottom: 1px solid var(--border-color);
-  padding: 0.4em 0.5em;
   margin-bottom: 2px;
   animation: header-appear 0.5s ease-in-out both;
 }
@@ -153,12 +152,12 @@ header .inner {
 header button {
   border: 0;
   padding: 0.3em 1em;
-  margin: 0;
   background-color: var(--primary-bg-color);
   color: var(--primary-color);
   font-weight: bold;
   border-radius: 0.5em;
   cursor: pointer;
+  margin: 0.4em 0.5em;
 }
 header button:active {
   background-color: var(--primary-active-bg-color);
@@ -178,7 +177,7 @@ header h1 {
 
 #current-playing {
   line-height: 1;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--text-insignificant-color);
 }
 
