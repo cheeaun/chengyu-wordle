@@ -75,7 +75,7 @@ const games = gameIdioms.slice(1).map((row) => ({
 
 const KEY_PREFIX = 'cywd-';
 const HARD_MODE = JSON.parse(LS.getItem(`${KEY_PREFIX}hardMode`) || false);
-const MAX_GAMES_BEFORE_SHOW_DASHBOARD = 7000;
+const MAX_GAMES_BEFORE_SHOW_DASHBOARD = 5000;
 const MAX_LETTERS = 4;
 const MAX_KEYS = HARD_MODE ? 40 : 20;
 const MAX_STEPS = 6;
