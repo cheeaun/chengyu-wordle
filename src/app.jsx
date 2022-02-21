@@ -30,7 +30,7 @@ const copy = (text, fn = () => {}) => {
   }
 };
 
-import getIdiomStates from './getIdiomStates';
+import compareWords from './compareWords';
 
 // Always need to wrap localStorage in a try/catch block because
 // it can throw an exception in some browsers (e.g. Safari)
@@ -703,7 +703,7 @@ export function App() {
   const boardStates = useMemo(() => {
     return board.map((row, i) => {
       if (row.s) {
-        return getIdiomStates(currentGame.idiom, row.v);
+        return compareWords(currentGame.idiom, row.v);
       }
       return [];
     });

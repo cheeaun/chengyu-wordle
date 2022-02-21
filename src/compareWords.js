@@ -1,12 +1,12 @@
-const getIdiomStates = (hiddenIdiom, testIdiom) => {
-  const letters1 =
-    typeof testIdiom === 'string' ? testIdiom.split('') : testIdiom;
+const compareWords = (hiddenWord, testWord) => {
+  if (hiddenWord == null || testWord == null) return [];
+  const letters1 = typeof testWord === 'string' ? testWord.split('') : testWord;
   const letters2 =
-    typeof hiddenIdiom === 'string' ? hiddenIdiom.split('') : hiddenIdiom;
+    typeof hiddenWord === 'string' ? hiddenWord.split('') : hiddenWord;
   const lettersLength = letters1.length;
   const states = Array.from({ length: lettersLength }, () => '⬜');
   if (lettersLength !== letters2.length) {
-    throw new Error('idioms must have the same length');
+    throw new Error('Words must have the same length');
   }
   const correctLetterIndices = [];
   for (let i = 0; i < lettersLength; i++) {
@@ -37,4 +37,4 @@ const getIdiomStates = (hiddenIdiom, testIdiom) => {
   return states;
 };
 
-export default getIdiomStates;
+export default compareWords;
