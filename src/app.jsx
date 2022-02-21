@@ -456,6 +456,7 @@ const CurrentPlaying = () => {
 import confetti from 'canvas-confetti';
 let confettiRAF;
 const blastConfetti = () => {
+  const end = Date.now() + 2 * 1000;
   const colors = ['#008000', '#FFA500'];
 
   (function frame() {
@@ -477,7 +478,9 @@ const blastConfetti = () => {
       shapes: ['square'],
       disableForReducedMotion: true,
     });
-    confettiRAF = requestAnimationFrame(frame);
+    if (Date.now() < end) {
+      confettiRAF = requestAnimationFrame(frame);
+    }
   })();
 };
 const stopConfetti = () => {
@@ -1400,6 +1403,10 @@ export function App() {
               {t('ui.easyEnableHardMode')}
             </p>
           )}
+          {showModal === 'won' &&
+            gameState === 'won' &&
+            attempts >= 5 &&
+            blastConfetti()}
           <div class="footer">
             {/won|lost/i.test(gameState) &&
               getTodayGame().id === currentGame.id && (
