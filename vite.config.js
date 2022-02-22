@@ -25,6 +25,10 @@ export default defineConfig({
   ],
   server: {
     port: 3030,
+    host: true,
+  },
+  preview: {
+    host: true,
   },
   build: {
     target: ['es2020', 'chrome61', 'safari11'],
