@@ -19,15 +19,19 @@ import keypressDeleteMp3 from '../sounds/keypress-delete.mp3';
 import keypressReturnMp3 from '../sounds/keypress-return.mp3';
 import keypressStandardMp3 from '../sounds/keypress-standard.mp3';
 
+import BackspaceIcon from './components/BackspaceIcon';
 import CloseIcon from './components/CloseIcon';
 import CodeInput from './components/CodeInput';
 import Countdown from './components/Countdown';
 import CurrentPlaying from './components/CurrentPlaying';
 import DownloadIcon from './components/DownloadIcon';
+import FacebookIcon from './components/FacebookIcon';
 import InfoIcon from './components/InfoIcon';
+import KebabIcon from './components/KebabIcon';
 import PlayIcon from './components/PlayIcon';
 import ShareIcon from './components/ShareIcon';
 import Tile from './components/Tile';
+import TwitterIcon from './components/TwitterIcon';
 import VolumeSlider from './components/VolumeSlider';
 import { KEY_PREFIX } from './constants';
 import LS from './utils/LS';
@@ -899,13 +903,7 @@ export function App() {
             {gameState ? (
               t('common.play')
             ) : (
-              <svg width="16" height="16" viewBox="0 0 290 290">
-                <title>...</title>
-                <path
-                  fill="currentColor"
-                  d="M255 110a35 35 0 1 0 0 70 35 35 0 0 0 0-70zM35 110a35 35 0 1 0 0 70 35 35 0 0 0 0-70zM145 110a35 35 0 1 0 0 70 35 35 0 0 0 0-70z"
-                />
-              </svg>
+              <KebabIcon width="16" height="16" />
             )}
           </button>
         </div>
@@ -990,12 +988,7 @@ export function App() {
               }}
               tabIndex={-1}
             >
-              <svg height="24" viewBox="0 0 24 24" width="24">
-                <path
-                  fill="currentColor"
-                  d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"
-                ></path>
-              </svg>
+              <BackspaceIcon width="24" height="24" />
             </button>
           </div>
         </div>
@@ -1132,13 +1125,7 @@ export function App() {
                       });
                     }}
                   >
-                    <svg width="16" height="16" viewBox="0 0 96.1 96.1">
-                      <title>Facebook</title>
-                      <path
-                        fill="currentColor"
-                        d="M72 0H59.7c-14 0-23 9.3-23 23.7v10.9H24c-1 0-2 .8-2 2v15.7c0 1.1 1 2 2 2h12.6v39.9c0 1 .8 2 2 2h16.3c1 0 2-1 2-2v-40h14.6c1 0 2-.8 2-1.9V36.5a2 2 0 0 0-2-2H56.8v-9.2c0-4.4 1.1-6.7 6.9-6.7H72c1 0 2-.9 2-2V2c0-1.1-1-2-2-2z"
-                      />
-                    </svg>
+                    <FacebookIcon width="16" height="16" />
                   </a>
                   &nbsp;
                   <a
@@ -1155,13 +1142,11 @@ export function App() {
                       });
                     }}
                   >
-                    <svg height="16" width="16" viewBox="0 0 24 24">
-                      <title>{t('common.tweet')}</title>
-                      <path
-                        fill="currentColor"
-                        d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"
-                      />
-                    </svg>
+                    <TwitterIcon
+                      width="16"
+                      height="16"
+                      title={t('common.tweet')}
+                    />
                   </a>
                   &nbsp;
                   <CodeInput code={currentGame.id} url={permalink} />
