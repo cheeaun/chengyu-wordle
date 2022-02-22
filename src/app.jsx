@@ -9,7 +9,7 @@ import {
   useState,
 } from 'preact/hooks';
 import Switch from 'rc-switch';
-import { Toaster, useToasterStore } from 'react-hot-toast';
+import { Toaster, toast, useToasterStore } from 'react-hot-toast';
 import { Trans, useTranslation } from 'react-i18next';
 
 import idiomsTxt from '../game-data/all-idioms.txt?raw';
