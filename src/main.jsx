@@ -1,16 +1,19 @@
 import '@fontsource/nunito/400.css';
 import '@fontsource/nunito/700.css';
 import 'rc-switch/assets/index.css';
+
 import './index.css';
 
+import i18n from 'i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
 import { render } from 'preact';
-import { App } from './app';
+import { initReactI18next } from 'react-i18next';
 
 import en from '../i18n/en.json';
 import zhCN from '../i18n/zh-CN.json';
-import i18n from 'i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import { initReactI18next } from 'react-i18next';
+
+import { App } from './app';
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)

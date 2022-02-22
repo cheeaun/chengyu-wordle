@@ -29,6 +29,7 @@
   "devDependencies": {
     "@originjs/vite-plugin-content": "~1.0.1",
     "@preact/preset-vite": "~2.1.7",
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "autoprefixer": "~10.4.2",
     "csv-stringify": "~6.0.5",
     "postcss-calc": "~8.2.4",

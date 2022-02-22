@@ -1,37 +1,45 @@
+import { Howl, Howler } from 'howler';
+import { toJpeg } from 'html-to-image';
+import { pinyin } from 'pinyin-pro';
 import {
-  useState,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
-  useCallback,
+  useState,
 } from 'preact/hooks';
-import { pinyin } from 'pinyin-pro';
+import Switch from 'rc-switch';
+import { Toaster, useToasterStore } from 'react-hot-toast';
+import { Trans, useTranslation } from 'react-i18next';
+
+import idiomsTxt from '../game-data/all-idioms.txt?raw';
+import gameIdioms from '../game-data/game-idioms.csv';
+
+import keypressDeleteMp3 from '../sounds/keypress-delete.mp3';
+import keypressReturnMp3 from '../sounds/keypress-return.mp3';
+import keypressStandardMp3 from '../sounds/keypress-standard.mp3';
+
+import CloseIcon from './components/CloseIcon';
+import CodeInput from './components/CodeInput';
+import Countdown from './components/Countdown';
+import CurrentPlaying from './components/CurrentPlaying';
+import DownloadIcon from './components/DownloadIcon';
+import InfoIcon from './components/InfoIcon';
+import PlayIcon from './components/PlayIcon';
+import ShareIcon from './components/ShareIcon';
+import Tile from './components/Tile';
+import VolumeSlider from './components/VolumeSlider';
+import { KEY_PREFIX } from './constants';
+import LS from './utils/LS';
+import alert from './utils/alert';
+import blastConfetti from './utils/blastConfetti';
+import compareWords from './utils/compareWords';
+import copy from './utils/copy';
+import fireEvent from './utils/fireEvent';
+import prefersColorSchemeSupported from './utils/prefersColorSchemeSupported';
+
 const py = pinyin;
 window.pinyin = pinyin;
-
-import { toJpeg } from 'html-to-image';
-import { useTranslation, Trans } from 'react-i18next';
-
-import toast, { Toaster, useToasterStore } from 'react-hot-toast';
-const alert = (text) => toast(text);
-
-import Switch from 'rc-switch';
-
-import { toClipboard } from 'copee';
-const copy = (text, fn = () => {}) => {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard
-      .writeText(text)
-      .then(fn)
-      .catch((e) => {});
-  } else {
-    toClipboard(text);
-    fn();
-  }
-};
-
-import LS from './utils/LS';
-import { KEY_PREFIX } from './constants';
 
 const HARD_MODE = JSON.parse(LS.getItem(`${KEY_PREFIX}hardMode`) || false);
 const MAX_GAMES_BEFORE_SHOW_DASHBOARD = 5000;
@@ -44,37 +52,22 @@ if (HARD_MODE) {
   fireEvent('Hard mode');
 }
 
-import { Howl, Howler } from 'howler';
-Howler.volume(JSON.parse(LS.getItem(`${KEY_PREFIX}volume`)) || 0.5);
-import keypressStandardMp3 from '../sounds/keypress-standard.mp3';
-const keypressStandard = new Howl({
-  src: [keypressStandardMp3],
-});
-import keypressDeleteMp3 from '../sounds/keypress-delete.mp3';
-const keypressDelete = new Howl({
-  src: [keypressDeleteMp3],
-});
-import keypressReturnMp3 from '../sounds/keypress-return.mp3';
-const keypressReturn = new Howl({
-  src: [keypressReturnMp3],
-});
-
-import compareWords from './compareWords';
-
-const fireEvent = (...props) => {
-  if (window.plausible) {
-    plausible(...props);
-  }
-};
-
-// Data
-import idiomsTxt from '../game-data/all-idioms.txt?raw';
 const idioms = idiomsTxt.split('\n');
-import gameIdioms from '../game-data/game-idioms.csv';
 const games = gameIdioms.slice(1).map((row) => ({
   id: row[0],
   idiom: row[1],
 }));
+
+Howler.volume(JSON.parse(LS.getItem(`${KEY_PREFIX}volume`)) || 0.5);
+const keypressStandard = new Howl({
+  src: [keypressStandardMp3],
+});
+const keypressDelete = new Howl({
+  src: [keypressDeleteMp3],
+});
+const keypressReturn = new Howl({
+  src: [keypressReturnMp3],
+});
 
 // Check letters with multiple pinyins
 // const letter2PY = new Map();
@@ -253,58 +246,6 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
   };
 };
 
-// Check if all idioms have enough keys/idioms
-// games.forEach((game) => {
-//   getIdiomsKeys(game.idiom);
-// });
-
-const ShareIcon = (props) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"></path>
-  </svg>
-);
-
-const DownloadIcon = (props) => (
-  <svg viewBox="0 0 330 330" fill="currentColor" {...props}>
-    <title>⬇️</title>
-    <path d="m154 256 1 1h2v1h1l1 1h2v1h8v-1h2l1-1h1v-1h2l1-1 70-70a15 15 0 0 0-22-22l-44 45V25a15 15 0 0 0-30 0v184l-44-45a15 15 0 1 0-22 22z" />
-    <path d="M315 160c-8 0-15 7-15 15v115H30V175a15 15 0 0 0-30 0v130c0 8 7 15 15 15h300c8 0 15-7 15-15V175c0-8-7-15-15-15z" />
-  </svg>
-);
-
-const PlayIcon = (props) => (
-  <svg viewBox="0 0 20 20" fill="currentColor" {...props}>
-    <title>▶️</title>
-    <path
-      fill-rule="evenodd"
-      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-      clip-rule="evenodd"
-    />
-  </svg>
-);
-
-const CloseIcon = (props) => (
-  <svg viewBox="0 0 24 24" {...props}>
-    <title>✖️</title>
-    <path
-      fill="currentColor"
-      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-    ></path>
-  </svg>
-);
-
-const InfoIcon = (props) => (
-  <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" {...props}>
-    <title>ℹ️</title>
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-    />
-  </svg>
-);
-
 const startDate = new Date(2022, 0, 27); // 27 January 2022
 const getTodayGame = () => {
   const today = new Date().setHours(0, 0, 0, 0);
@@ -313,170 +254,6 @@ const getTodayGame = () => {
   return games[Math.max(0, dayCount % games.length)];
 };
 
-// Component that shows hours, minutes and seconds counting down to start of next day
-const Countdown = () => {
-  const { t } = useTranslation();
-  let nextDay = new Date().setHours(0, 0, 0, 0) + 24 * 60 * 60 * 1000;
-  const nextStartDate = new Date(+startDate + 24 * 60 * 60 * 1000);
-  if (nextDay < nextStartDate) {
-    nextDay = nextStartDate;
-  }
-  const [hours, setHours] = useState('00');
-  const [minutes, setMinutes] = useState('00');
-  const [seconds, setSeconds] = useState('00');
-  const [isNow, setIsNow] = useState(false);
-  // update countdown every second
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const diff = nextDay - new Date();
-      if (diff <= 0) {
-        setIsNow(true);
-        clearInterval(timer);
-        return;
-      }
-      setHours(
-        Math.floor(diff / (1000 * 60 * 60))
-          .toString()
-          .padStart(2, '0'),
-      );
-      setMinutes(
-        Math.floor((diff / (1000 * 60)) % 60)
-          .toString()
-          .padStart(2, '0'),
-      );
-      setSeconds(
-        Math.floor((diff / 1000) % 60)
-          .toString()
-          .padStart(2, '0'),
-      );
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-  if (isNow) {
-    return <a href="./">{t('ui.countdownNow')}</a>;
-  }
-  return (
-    <time class="countdown">
-      {hours}:{minutes}:{seconds}
-    </time>
-  );
-};
-
-const CodeInput = ({ code, url }) => {
-  const { t } = useTranslation();
-  return (
-    code && (
-      <input
-        type="text"
-        readOnly
-        value={code}
-        class="idiom-code"
-        onClick={(e) => {
-          e.target.focus();
-          e.target.select();
-          copy(url || code, () => {
-            alert(t('ui.copiedURL'));
-          });
-          fireEvent('Click: Share', {
-            props: {
-              type: 'idiom-code',
-            },
-          });
-        }}
-      />
-    )
-  );
-};
-
-const Letter = ({ letter, pinyin, state }) => {
-  return (
-    <div
-      class={`letter ${letter ? 'lettered' : ''} ${state ?? ''} ${
-        state ? '🌈' : ''
-      }`}
-    >
-      <ruby>
-        {letter || <span style={{ opacity: 0 }}>一</span>}
-        <rp>(</rp>
-        <rt>{pinyin || py(letter) || <>&nbsp;</>}</rt>
-        <rp>)</rp>
-      </ruby>
-    </div>
-  );
-};
-
-const CurrentPlaying = () => {
-  const { t } = useTranslation();
-  const [playingCount, setPlayingCount] = useState(0);
-  useEffect(() => {
-    let fetchTimer, fetchRAF;
-    const fetchPlayingCount = () => {
-      fetch('https://chengyu-wordle-realtime-visitors.cheeaun.workers.dev/')
-        .then((r) => {
-          if (!r.ok) throw Error(r.statusText);
-          return r.text();
-        })
-        .then((text) => {
-          const count = +text;
-          if (!count) throw Error('Zero or NaN');
-          setPlayingCount(count);
-        })
-        .catch((e) => {
-          setPlayingCount(0);
-        });
-      fetchTimer = setTimeout(() => {
-        fetchRAF = requestAnimationFrame(fetchPlayingCount);
-      }, 2 * 60 * 1000);
-    };
-    fetchPlayingCount();
-    return () => {
-      clearTimeout(fetchTimer);
-      cancelAnimationFrame(fetchRAF);
-    };
-  }, []);
-
-  if (playingCount <= 1) return null;
-
-  return (
-    <div id="current-playing">
-      {t('ui.countPlaying', { count: playingCount })}
-    </div>
-  );
-};
-
-import confetti from 'canvas-confetti';
-let confettiRAF;
-const blastConfetti = () => {
-  const end = Date.now() + 2 * 1000;
-  const colors = ['#008000', '#FFA500'];
-
-  (function frame() {
-    confetti({
-      particleCount: 2,
-      angle: 60,
-      spread: 80,
-      origin: { x: 0, y: 1 },
-      colors: colors,
-      shapes: ['square'],
-      disableForReducedMotion: true,
-    });
-    confetti({
-      particleCount: 2,
-      angle: 120,
-      spread: 80,
-      origin: { x: 1, y: 1 },
-      colors: colors,
-      shapes: ['square'],
-      disableForReducedMotion: true,
-    });
-    if (Date.now() < end) {
-      confettiRAF = requestAnimationFrame(frame);
-    }
-  })();
-};
-const stopConfetti = () => {
-  cancelAnimationFrame(confettiRAF);
-};
 const IdiomsDashboard = () => {
   const { t } = useTranslation();
   let wonCount = 0;
@@ -511,7 +288,6 @@ const IdiomsDashboard = () => {
 
   useEffect(() => {
     blastConfetti();
-    return stopConfetti;
   }, []);
 
   return (
@@ -544,10 +320,6 @@ const IdiomsDashboard = () => {
     </>
   );
 };
-
-const prefersColorSchemeSupported =
-  'matchMedia' in window &&
-  window.matchMedia('(prefers-color-scheme: dark)').media !== 'not all';
 
 const ShareImageButton = ({ header, footer, boardStates, id }) => {
   const { t } = useTranslation();
@@ -636,8 +408,6 @@ const ShareImageButton = ({ header, footer, boardStates, id }) => {
     </>
   );
 };
-
-import VolumeSlider from './components/VolumeSlider';
 
 export function App() {
   const { t, i18n } = useTranslation();
@@ -1153,7 +923,7 @@ export function App() {
               key={index}
             >
               {row.v.map((letter, i) => (
-                <Letter
+                <Tile
                   key={i}
                   letter={letter}
                   pinyin={pinyins[i]}
@@ -1594,31 +1364,19 @@ export function App() {
           <p>{t('howToPlay.how3')}</p>
           <div class="example-idiom">
             {'九牛一毛'.split('').map((letter, i) => (
-              <Letter
-                key={letter}
-                letter={letter}
-                state={i === 0 ? '🟩' : ''}
-              />
+              <Tile key={letter} letter={letter} state={i === 0 ? '🟩' : ''} />
             ))}
           </div>
           <p>{t('howToPlay.spotCorrect')}</p>
           <div class="example-idiom">
             {'理所当然'.split('').map((letter, i) => (
-              <Letter
-                key={letter}
-                letter={letter}
-                state={i === 1 ? '🟧' : ''}
-              />
+              <Tile key={letter} letter={letter} state={i === 1 ? '🟧' : ''} />
             ))}
           </div>
           <p>{t('howToPlay.spotPresent')}</p>
           <div class="example-idiom">
             {'爱不释手'.split('').map((letter, i) => (
-              <Letter
-                key={letter}
-                letter={letter}
-                state={i === 2 ? '⬜' : ''}
-              />
+              <Tile key={letter} letter={letter} state={i === 2 ? '⬜' : ''} />
             ))}
           </div>
           <p>{t('howToPlay.spotAbsent')}</p>

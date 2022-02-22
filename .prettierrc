@@ -2,5 +2,16 @@
   "tabWidth": 2,
   "useTabs": false,
   "singleQuote": true,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "importOrder": [
+    "^[^.]+.css$",
+    ".css$",
+    "<THIRD_PARTY_MODULES>",
+    ".(txt|csv|json)",
+    ".(mp3)",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderGroupNamespaceSpecifiers": true
 }

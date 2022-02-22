@@ -1,7 +1,8 @@
-import { useState } from 'preact/hooks';
 import { Howler } from 'howler';
-import LS from '../utils/LS';
+import { useState } from 'preact/hooks';
+
 import { KEY_PREFIX } from '../constants';
+import LS from '../utils/LS';
 
 export default (props) => {
   const [volume, setVolume] = useState(Howler.volume());

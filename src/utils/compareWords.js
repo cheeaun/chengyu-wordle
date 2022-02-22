@@ -1,4 +1,4 @@
-const compareWords = (hiddenWord, testWord) => {
+export default (hiddenWord, testWord) => {
   if (hiddenWord == null || testWord == null) return [];
   const letters1 = typeof testWord === 'string' ? testWord.split('') : testWord;
   const letters2 =
@@ -36,5 +36,3 @@ const compareWords = (hiddenWord, testWord) => {
   }
   return states;
 };
-
-export default compareWords;

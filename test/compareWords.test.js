@@ -1,5 +1,6 @@
-import { expect, assert, test } from 'vitest';
-import compareWords from '../src/compareWords';
+import { assert, expect, test } from 'vitest';
+
+import compareWords from '../src/utils/compareWords';
 
 test('compareWords', () => {
   expect(compareWords()).toEqual([]);
