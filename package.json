@@ -15,6 +15,7 @@
     "@vitejs/plugin-legacy": "~1.7.1",
     "canvas-confetti": "~1.5.1",
     "copee": "~1.0.6",
+    "howler": "~2.2.3",
     "html-to-image": "~1.9.0",
     "i18next": "~21.6.11",
     "i18next-browser-languagedetector": "~6.1.3",

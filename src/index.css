@@ -471,6 +471,11 @@ header h1 {
   margin-left: env(safe-area-inset-left);
   margin-right: env(safe-area-inset-right);
 }
+#keyboard.won .inner,
+#keyboard.lost .inner {
+  pointer-events: none;
+  opacity: 0.9;
+}
 
 #keyboard button {
   font-size: 1.5em;
@@ -763,6 +768,9 @@ a.button.strong {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+}
+#config .config-slider {
+  width: 100px;
 }
 
 #dashboard-modal {

@@ -30,33 +30,36 @@ const copy = (text, fn = () => {}) => {
   }
 };
 
-import compareWords from './compareWords';
+import LS from './utils/LS';
+import { KEY_PREFIX } from './constants';
 
-// Always need to wrap localStorage in a try/catch block because
-// it can throw an exception in some browsers (e.g. Safari)
-const LS = {
-  getItem: (key) => {
-    try {
-      return localStorage.getItem(key);
-    } catch (e) {
-      return null;
-    }
-  },
-  setItem: (key, value) => {
-    try {
-      return localStorage.setItem(key, value);
-    } catch (e) {
-      return null;
-    }
-  },
-  removeItem: (key) => {
-    try {
-      return localStorage.removeItem(key);
-    } catch (e) {
-      return null;
-    }
-  },
-};
+const HARD_MODE = JSON.parse(LS.getItem(`${KEY_PREFIX}hardMode`) || false);
+const MAX_GAMES_BEFORE_SHOW_DASHBOARD = 5000;
+const MAX_LETTERS = 4;
+const MAX_KEYS = HARD_MODE ? 40 : 20;
+const MAX_STEPS = 6;
+const MIN_IDIOMS = HARD_MODE ? 10 : 6;
+
+if (HARD_MODE) {
+  fireEvent('Hard mode');
+}
+
+import { Howl, Howler } from 'howler';
+Howler.volume(JSON.parse(LS.getItem(`${KEY_PREFIX}volume`)) || 0.5);
+import keypressStandardMp3 from '../sounds/keypress-standard.mp3';
+const keypressStandard = new Howl({
+  src: [keypressStandardMp3],
+});
+import keypressDeleteMp3 from '../sounds/keypress-delete.mp3';
+const keypressDelete = new Howl({
+  src: [keypressDeleteMp3],
+});
+import keypressReturnMp3 from '../sounds/keypress-return.mp3';
+const keypressReturn = new Howl({
+  src: [keypressReturnMp3],
+});
+
+import compareWords from './compareWords';
 
 const fireEvent = (...props) => {
   if (window.plausible) {
@@ -72,18 +75,6 @@ const games = gameIdioms.slice(1).map((row) => ({
   id: row[0],
   idiom: row[1],
 }));
-
-const KEY_PREFIX = 'cywd-';
-const HARD_MODE = JSON.parse(LS.getItem(`${KEY_PREFIX}hardMode`) || false);
-const MAX_GAMES_BEFORE_SHOW_DASHBOARD = 5000;
-const MAX_LETTERS = 4;
-const MAX_KEYS = HARD_MODE ? 40 : 20;
-const MAX_STEPS = 6;
-const MIN_IDIOMS = HARD_MODE ? 10 : 6;
-
-if (HARD_MODE) {
-  fireEvent('Hard mode');
-}
 
 // Check letters with multiple pinyins
 // const letter2PY = new Map();
@@ -646,6 +637,8 @@ const ShareImageButton = ({ header, footer, boardStates, id }) => {
   );
 };
 
+import VolumeSlider from './components/VolumeSlider';
+
 export function App() {
   const { t, i18n } = useTranslation();
 
@@ -1182,6 +1175,7 @@ export function App() {
                 type="button"
                 tabIndex={-1}
                 onClick={() => {
+                  keypressStandard.play();
                   handleLetter(key);
                 }}
               >
@@ -1201,7 +1195,14 @@ export function App() {
             ))}
           </div>
           <div class="row">
-            <button type="button" onClick={handleEnter} tabIndex={-1}>
+            <button
+              type="button"
+              onClick={() => {
+                handleEnter();
+                keypressReturn.play();
+              }}
+              tabIndex={-1}
+            >
               {t('common.enter')}
             </button>
             {HARD_MODE ? (
@@ -1211,7 +1212,14 @@ export function App() {
                 {t('ui.hint')}
               </button>
             )}
-            <button type="button" onClick={handleBackspace} tabIndex={-1}>
+            <button
+              type="button"
+              onClick={() => {
+                handleBackspace();
+                keypressDelete.play();
+              }}
+              tabIndex={-1}
+            >
               <svg height="24" viewBox="0 0 24 24" width="24">
                 <path
                   fill="currentColor"
@@ -1569,6 +1577,12 @@ export function App() {
                         }, 310); // Wait for Switch to animate
                       }}
                     />
+                  </label>
+                </p>
+                <p>
+                  <label>
+                    {t('ui.soundEffects')}
+                    <VolumeSlider class="config-slider" />
                   </label>
                 </p>
               </div>
