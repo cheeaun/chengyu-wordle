@@ -577,7 +577,7 @@ header h1 {
   width: 100%;
   padding: 1em 0 0;
   margin: 2.5em 0 0;
-  margin-bottom: env(safe-area-inset-bottom);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 #modal.appear .content {
   transform: translateY(0vh);
