@@ -28,6 +28,7 @@
   --modal-backdrop-color: rgba(255, 255, 255, 0.7);
   --modal-bg-color: var(--bg-color);
   --modal-shadow-color: rgba(0, 0, 0, 0.2);
+  --block-border-color: rgba(0, 0, 0, 0.1);
   --results-bg-color: #eee;
   --button-text-color: var(--primary-color);
   --button-bg-color: var(--primary-bg-color);
@@ -60,6 +61,7 @@
     --key-active-bg-color: #333;
     --modal-backdrop-color: rgba(37, 37, 37, 0.7);
     --modal-shadow-color: var(--primary-bg-color);
+    --block-border-color: rgba(255, 255, 255, 0.1);
     --results-bg-color: #333;
     --text-field-bg-color: #222;
     --text-field-border-color: #999;
@@ -547,7 +549,7 @@ header h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   opacity: 0;
   pointer-events: none;
   transition: all 0.3s;
@@ -563,18 +565,19 @@ header h1 {
 }
 
 #modal .content {
-  border-radius: 8px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
   box-shadow: 0 4px 23px 0 var(--modal-shadow-color);
   background-color: var(--modal-bg-color);
-  margin: 1em;
-  padding: 1em;
   position: relative;
-  width: calc(100% - 2em);
-  max-width: 30em;
   transform: translateY(80vh);
   transition: transform 0.3s ease-in-out;
   overflow: auto;
   overflow-x: hidden;
+  width: 100%;
+  padding: 1em 0 0;
+  margin: 2.5em 0 0;
+  margin-bottom: env(safe-area-inset-bottom);
 }
 #modal.appear .content {
   transform: translateY(0vh);
@@ -588,17 +591,34 @@ header h1 {
   z-index: 1;
 }
 
+#modal .block {
+  padding: 1em;
+  margin: 0;
+  border-bottom: 1px solid var(--block-border-color);
+  background-clip: padding-box;
+}
+#modal .block.warning {
+  line-height: 1.05em;
+  font-size: 0.8em;
+  background-color: rgba(255, 255, 0, 0.1);
+}
+#modal .block.alert {
+  line-height: 1.05em;
+  font-size: 0.8em;
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
 #modal .answer {
   font-size: 2em;
 }
 
 #modal .results-container {
-  background-color: var(--results-bg-color);
-  padding: 1em 1em 0.5em;
-  border-radius: 0.5em;
-  display: inline-block;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 #modal .results {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
   display: inline-block;
   white-space: pre-wrap;
   margin-bottom: 1em;
@@ -659,10 +679,6 @@ header h1 {
   text-align: center;
   background-color: var(--text-field-bg-color);
   border: 1px solid var(--text-field-border-color);
-}
-
-#modal .footer {
-  margin-top: 1em;
 }
 
 .countdown {
@@ -915,10 +931,17 @@ a.button.strong {
     padding-bottom: 0.3em;
   }
 }
-@media (min-width: 500px) {
-  #modal .content {
-    padding: 2em;
+@media (min-width: 30em) {
+  #modal {
+    justify-content: center;
   }
+  #modal .content {
+    border-radius: 12px;
+    width: 30em;
+    margin: 1em;
+  }
+}
+@media (min-width: 500px) {
   #keyboard:not(.hard-mode) .inner {
     padding-left: 5px;
     padding-right: 5px;

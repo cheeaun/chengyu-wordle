@@ -58,6 +58,7 @@
     "spotPresent": "黄色 = 错误的位置"
   },
   "ui": {
+    "avoidSpoilers": "请勿分享答案以免剧透！",
     "confirmRandom": "您确定要开始新的随机游戏吗？",
     "copiedResults": "将结果复制到剪贴板",
     "copiedURL": "将 URL 复制到剪贴板",

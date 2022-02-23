@@ -58,6 +58,7 @@
     "spotPresent": "Yellow = wrong spot"
   },
   "ui": {
+    "avoidSpoilers": "Please don't share answers to avoid spoilers!",
     "confirmRandom": "Are you sure you want to start a new random game?",
     "copiedResults": "Copied results to clipboard",
     "copiedURL": "Copied URL to clipboard",

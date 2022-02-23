@@ -1017,14 +1017,14 @@ export function App() {
               : '🐯🐯🐯'}
           </h2>
           {showModal === 'play' && (
-            <p>
+            <p class="block">
               {t('ui.idiomId')}{' '}
               <CodeInput code={currentGame.id} url={permalink} />
             </p>
           )}
           {/(won|lost)/i.test(showModal) && (
             <>
-              <p>
+              <p class="block">
                 <b class="answer">
                   <ruby>
                     {currentGame.idiom}
@@ -1067,7 +1067,8 @@ export function App() {
                   </a>
                 </small>
               </p>
-              <div class="results-container">
+              <p class="block warning">{t('ui.avoidSpoilers')}</p>
+              <div class="block results-container">
                 <div class="results">{shareTextWithLink}</div>
                 <div>
                   <button
@@ -1156,6 +1157,7 @@ export function App() {
           )}
           {gameState === 'won' && attempts <= 2 && !HARD_MODE && (
             <p
+              class="block alert"
               onClick={() => {
                 setShowModal(null);
                 setTimeout(() => {
@@ -1170,7 +1172,7 @@ export function App() {
             gameState === 'won' &&
             attempts >= 5 &&
             blastConfetti()}
-          <div class="footer">
+          <div class="block">
             {/won|lost/i.test(gameState) &&
               getTodayGame().id === currentGame.id && (
                 <p>
