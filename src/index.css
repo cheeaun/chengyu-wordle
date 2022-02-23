@@ -607,27 +607,19 @@ header h1 {
   font-size: 0.8em;
   background-color: rgba(255, 0, 0, 0.1);
 }
+#modal .block p {
+  padding: 0;
+  margin: 0.5em 0;
+}
+#modal .block p:first-child {
+  margin-top: 0;
+}
+#modal .block p:last-child {
+  margin-bottom: 0;
+}
 
 #modal .answer {
   font-size: 2em;
-}
-
-#modal .results-container {
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-}
-#modal .results {
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  display: inline-block;
-  white-space: pre-wrap;
-  margin-bottom: 1em;
-  line-height: 1.05em;
-  text-align: left;
-  font-size: 0.8em;
-  word-break: break-word;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
 }
 
 #modal a.button,

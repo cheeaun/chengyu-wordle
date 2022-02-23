@@ -1068,8 +1068,7 @@ export function App() {
                 </small>
               </p>
               <p class="block warning">{t('ui.avoidSpoilers')}</p>
-              <div class="block results-container">
-                <div class="results">{shareTextWithLink}</div>
+              <div class="block">
                 <div>
                   <button
                     id="share"
@@ -1149,9 +1148,11 @@ export function App() {
                       title={t('common.tweet')}
                     />
                   </a>
-                  &nbsp;
-                  <CodeInput code={currentGame.id} url={permalink} />
                 </div>
+                <p>
+                  {t('ui.idiomId')}{' '}
+                  <CodeInput code={currentGame.id} url={permalink} />
+                </p>
               </div>
             </>
           )}
