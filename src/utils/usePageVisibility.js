@@ -1,33 +1,30 @@
-// https://github.com/amir4rab/useVisibility
 import { useEffect, useState } from 'preact/hooks';
 
-const getDocumentHiddenProp = () => {
-  if (typeof document.hidden !== 'undefined') return 'hidden';
-  if (typeof document.msHidden !== 'undefined') return 'msHidden';
-  if (typeof document.webkitHidden !== 'undefined') return 'webkitHidden';
-};
+export default () => {
+  let hidden, visibilityChange;
+  if ('hidden' in document) {
+    hidden = 'hidden';
+    visibilityChange = 'visibilitychange';
+  } else if ('mozHidden' in document) {
+    hidden = 'mozHidden';
+    visibilityChange = 'mozvisibilitychange';
+  } else if ('webkitHidden' in document) {
+    hidden = 'webkitHidden';
+    visibilityChange = 'webkitvisibilitychange';
+  }
 
-const getIsDocumentHidden = () => {
-  if (typeof document !== 'undefined')
-    return !document[getDocumentHiddenProp()];
-  return false;
-};
-
-const usePageVisibility = () => {
-  const [isVisible, setIsVisible] = useState(getIsDocumentHidden());
-
-  const toggleVisibility = () => {
-    setIsVisible(getIsDocumentHidden());
-  };
-
+  const [isVisible, setIsVisible] = useState(!document[hidden]);
   useEffect(() => {
-    document.addEventListener('visibilitychange', toggleVisibility);
+    const handleVisibilityChange = () => setIsVisible(!document[hidden]);
+    try {
+      document.addEventListener(visibilityChange, handleVisibilityChange);
+    } catch (e) {}
     return () => {
-      document.removeEventListener('visibilitychange', toggleVisibility);
+      try {
+        document.removeEventListener(visibilityChange, handleVisibilityChange);
+      } catch (e) {}
     };
   }, []);
 
   return isVisible;
 };
-
-export default usePageVisibility;
