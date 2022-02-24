@@ -358,14 +358,18 @@ const ShareImageButton = ({ header, footer, boardStates, id }) => {
   });
 
   useEffect(() => {
+    let isSubscribed = true;
     setImageSrc(null);
     toJpeg(imageRef.current, imageOpts)
       .then((dataURL) => {
-        setImageSrc(dataURL);
+        if (isSubscribed) setImageSrc(dataURL);
       })
       .catch((e) => {
-        setImageSrc(null);
+        if (isSubscribed) setImageSrc(null);
       });
+    return () => {
+      isSubscribed = false;
+    };
   }, [boardStates, id, mediaChanged]);
 
   const fileName = `chengyu-wordle-${id}.jpg`;
