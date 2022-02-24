@@ -41,6 +41,7 @@ import compareWords from './utils/compareWords';
 import copy from './utils/copy';
 import fireEvent from './utils/fireEvent';
 import prefersColorSchemeSupported from './utils/prefersColorSchemeSupported';
+import usePageVisibility from './utils/usePageVisibility';
 
 const py = pinyin;
 window.pinyin = pinyin;
@@ -633,6 +634,31 @@ export function App() {
       clearTimeout(timeout);
     };
   }, [gameState]);
+
+  const cachedTodayGame = useRef(getTodayGame());
+  const pageLoad = useRef(true);
+  const isPageVisible = usePageVisibility();
+  useEffect(() => {
+    let timeout;
+    if (isPageVisible) {
+      // Only show when NOT on first page load
+      if (!pageLoad.current) {
+        const todayGame = getTodayGame();
+        if (
+          todayGame.id !== cachedTodayGame.current?.id &&
+          /(won|lost)/i.test(gameState)
+        ) {
+          timeout = setTimeout(() => {
+            setShowModal(gameState);
+          }, 600);
+        }
+      }
+      pageLoad.current = false;
+    }
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [isPageVisible, gameState]);
 
   const handleBackspace = () => {
     if (gameState) return;
