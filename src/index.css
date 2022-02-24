@@ -105,6 +105,10 @@ ruby rt {
   font-family: 'Nunito', sans-serif;
 } */
 
+input {
+  accent-color: var(--green-color);
+}
+
 button,
 input[type='text'] {
   touch-action: manipulation;
