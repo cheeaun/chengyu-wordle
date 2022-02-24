@@ -57,8 +57,8 @@ if (HARD_MODE) {
   fireEvent('Hard mode');
 }
 
-const idioms = idiomsTxt.split('\n');
-const games = gameIdioms.slice(1).map((row) => ({
+const ALL_IDIOMS = idiomsTxt.split('\n');
+const GAMES = gameIdioms.slice(1).map((row) => ({
   id: row[0],
   idiom: row[1],
 }));
@@ -134,7 +134,7 @@ const exportGameData = () => {
         const isPrefixed = k.startsWith(KEY_PREFIX);
         if (!isPrefixed) return false;
         const gameID = k.slice(KEY_PREFIX.length);
-        return isPrefixed && games.find((g) => g.id === gameID);
+        return isPrefixed && GAMES.find((g) => g.id === gameID);
       })
       .map(([k, v]) => {
         const id = k.slice(KEY_PREFIX.length);
@@ -184,9 +184,9 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
   const idiomLetters = idiom.split('');
   idiomLetters.forEach((letter) => keys.add(letter));
   let consecutiveFailures = 0;
-  lettersCycle: for (let i = 0; i < games.length; i++) {
+  lettersCycle: for (let i = 0; i < GAMES.length; i++) {
     const letter = idiomLetters[(i + 1) % MAX_LETTERS];
-    const anotherIdiom = games.find(
+    const anotherIdiom = GAMES.find(
       ({ idiom }) => !passedIdioms.has(idiom) && idiom.includes(letter),
     );
     if (anotherIdiom) {
@@ -225,7 +225,7 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
 
   // Still not enough keys, choose a random idiom
   if (keys.size < MAX_KEYS || passedIdioms.size < MIN_IDIOMS) {
-    const randomIdiom = games[Math.floor(Math.random() * games.length)].idiom;
+    const randomIdiom = GAMES[Math.floor(Math.random() * GAMES.length)].idiom;
     if (randomIdiom) {
       const { passedIdioms: _passedIdioms, keys: _keys } = getIdiomsKeys(
         randomIdiom,
@@ -240,7 +240,7 @@ const getIdiomsKeys = (idiom, prevPassedIdioms, prevKeys, depth = 0) => {
 
   // Something very wrong happened
   if (keys.size < MAX_KEYS || passedIdioms.size < MIN_IDIOMS) {
-    const gameID = games.find((g) => g.idiom === idiom)?.id;
+    const gameID = GAMES.find((g) => g.idiom === idiom)?.id;
     console.error(gameID, {
       possibleIdioms: passedIdioms.size,
       keySize: keys.size,
@@ -259,14 +259,14 @@ const getTodayGame = () => {
   const today = new Date().setHours(0, 0, 0, 0);
   const diff = today - startDate;
   const dayCount = Math.floor(diff / (1000 * 60 * 60 * 24));
-  return games[Math.max(0, dayCount % games.length)];
+  return GAMES[Math.max(0, dayCount % GAMES.length)];
 };
 
 const IdiomsDashboard = () => {
   const { t } = useTranslation();
   let wonCount = 0;
   let lostCount = 0;
-  const idioms = games.map((game) => {
+  const idioms = GAMES.map((game) => {
     // Get board from localStorage
     const boardGame = JSON.parse(LS.getItem(`${KEY_PREFIX}${game.id}`));
     if (boardGame && boardGame.gameState) {
@@ -310,7 +310,7 @@ const IdiomsDashboard = () => {
         <Trans
           i18nKey="dashboard.totalGamesPlayed"
           values={{
-            gamesCountOverTotal: `${wonCount + lostCount} / ${games.length}`,
+            gamesCountOverTotal: `${wonCount + lostCount} / ${GAMES.length}`,
           }}
           components={[<b />]}
         />
@@ -451,12 +451,12 @@ export function App() {
   );
 
   const [currentGame, setCurrentGame] = useState(
-    games.find((g) => g.id === location.hash.slice(1)) || getTodayGame(),
+    GAMES.find((g) => g.id === location.hash.slice(1)) || getTodayGame(),
   );
   useEffect(() => {
     window.addEventListener('hashchange', () => {
       setCurrentGame(
-        games.find((g) => g.id === location.hash.slice(1)) || getTodayGame(),
+        GAMES.find((g) => g.id === location.hash.slice(1)) || getTodayGame(),
       );
       setShowDashboard(false);
     });
@@ -523,7 +523,7 @@ export function App() {
 
   const [currentGameKeys, currentGameKeysPinyin] = useMemo(() => {
     const { keys } = getIdiomsKeys(currentGame.idiom);
-    const allPossibleIdioms = idioms.filter((idiom) => {
+    const allPossibleIdioms = ALL_IDIOMS.filter((idiom) => {
       // check if idiom contains 4 letters from keys
       return idiom.split('').every((letter) => keys.has(letter));
     });
@@ -612,7 +612,7 @@ export function App() {
     const row = board[currentStep];
     if (!row) return;
     const currentIdiom = row.v.join('');
-    const valid = idioms.includes(currentIdiom);
+    const valid = ALL_IDIOMS.includes(currentIdiom);
     if (valid) {
       row.s = true;
       setBoard([...board]);
@@ -875,7 +875,7 @@ export function App() {
         const isPrefixed = k.startsWith(KEY_PREFIX);
         if (!isPrefixed) return false;
         const gameID = k.slice(KEY_PREFIX.length);
-        return isPrefixed && games.find((g) => g.id === gameID);
+        return isPrefixed && GAMES.find((g) => g.id === gameID);
       });
       return keys.length;
     } catch (e) {}
@@ -908,7 +908,7 @@ export function App() {
                 setShowDashboard(true);
               }}
             >
-              {games.length}
+              {GAMES.length}
             </a>
           </>
         )}
@@ -1239,8 +1239,8 @@ export function App() {
                   fireEvent('Click: Random');
                   const yes = confirm(t('ui.confirmRandom'));
                   if (yes) {
-                    const rand = Math.round(Math.random() * (games.length - 1));
-                    const randGame = games[rand];
+                    const rand = Math.round(Math.random() * (GAMES.length - 1));
+                    const randGame = GAMES[rand];
                     location.hash = `#${randGame.id}`;
                     setShowModal(null);
                     fireEvent('Game load: Random');
@@ -1259,7 +1259,7 @@ export function App() {
                     id = new URL(id).hash.slice(1);
                   } catch (e) {}
                   if (id) {
-                    const game = games.find((g) => g.id === id);
+                    const game = GAMES.find((g) => g.id === id);
                     if (game) {
                       location.hash = `#${game.id}`;
                       setShowModal(null);
