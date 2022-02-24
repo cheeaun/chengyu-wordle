@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite';
-import preact from '@preact/preset-vite';
 import content from '@originjs/vite-plugin-content';
+import preact from '@preact/preset-vite';
 import legacy from '@vitejs/plugin-legacy';
+import { defineConfig } from 'vite';
 
 const commitHash = require('child_process')
   .execSync('git rev-parse --short HEAD')
@@ -29,8 +29,10 @@ export default defineConfig({
   },
   preview: {
     host: true,
+    https: true,
   },
   build: {
+    assetsInlineLimit: 0,
     target: ['es2020', 'chrome61', 'safari11'],
     sourcemap: true,
     rollupOptions: {
