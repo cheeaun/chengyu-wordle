@@ -66,12 +66,15 @@ const games = gameIdioms.slice(1).map((row) => ({
 Howler.volume(JSON.parse(LS.getItem(`${KEY_PREFIX}volume`)) || 0.5);
 const keypressStandard = new Howl({
   src: [keypressStandardMp3],
+  preload: false,
 });
 const keypressDelete = new Howl({
   src: [keypressDeleteMp3],
+  preload: false,
 });
 const keypressReturn = new Howl({
   src: [keypressReturnMp3],
+  preload: false,
 });
 
 // Check letters with multiple pinyins
@@ -457,6 +460,12 @@ export function App() {
       );
       setShowDashboard(false);
     });
+  }, []);
+
+  useEffect(() => {
+    keypressStandard.load();
+    keypressDelete.load();
+    keypressReturn.load();
   }, []);
 
   const [board, setBoard] = useState(
