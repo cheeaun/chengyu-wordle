@@ -1,5 +1,4 @@
 import { Howl, Howler } from 'howler';
-import { toJpeg } from 'html-to-image';
 import { pinyin } from 'pinyin-pro/lib/pinyin';
 import {
   useCallback,
@@ -24,12 +23,12 @@ import CloseIcon from './components/CloseIcon';
 import CodeInput from './components/CodeInput';
 import Countdown from './components/Countdown';
 import CurrentPlaying from './components/CurrentPlaying';
-import DownloadIcon from './components/DownloadIcon';
 import FacebookIcon from './components/FacebookIcon';
 import InfoIcon from './components/InfoIcon';
 import KebabIcon from './components/KebabIcon';
 import PlayIcon from './components/PlayIcon';
 import ShareIcon from './components/ShareIcon';
+import ShareImageButton from './components/ShareImageButton';
 import Tile from './components/Tile';
 import TwitterIcon from './components/TwitterIcon';
 import VolumeSlider from './components/VolumeSlider';
@@ -325,98 +324,6 @@ const IdiomsDashboard = () => {
         />
       </p>
       <div class="boards">{idioms}</div>
-    </>
-  );
-};
-
-const ShareImageButton = ({ header, footer, boardStates, id }) => {
-  const { t } = useTranslation();
-  const imageRef = useRef(null);
-  const [imageSrc, setImageSrc] = useState(null);
-  const imageOpts = {
-    canvasWidth: 1080,
-    canvasHeight: 1080,
-    quality: 0.5,
-  };
-
-  // Update image when light/dark mode kicks in
-  const [mediaChanged, setMediaChanged] = useState();
-  useEffect(() => {
-    if (!prefersColorSchemeSupported) return;
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    const colorSchemeChange = (event) => {
-      setMediaChanged(event.matches);
-    };
-    try {
-      media.addEventListener('change', colorSchemeChange);
-    } catch (e) {
-      media.addListener(colorSchemeChange);
-    }
-    return () => {
-      try {
-        media.removeEventListener('change', colorSchemeChange);
-      } catch (e) {
-        media.removeListener(colorSchemeChange);
-      }
-    };
-  });
-
-  useEffect(() => {
-    let isSubscribed = true;
-    setImageSrc(null);
-    toJpeg(imageRef.current, imageOpts)
-      .then((dataURL) => {
-        if (isSubscribed) setImageSrc(dataURL);
-      })
-      .catch((e) => {
-        if (isSubscribed) setImageSrc(null);
-      });
-    return () => {
-      isSubscribed = false;
-    };
-  }, [boardStates, id, mediaChanged]);
-
-  const fileName = `chengyu-wordle-${id}.jpg`;
-
-  return (
-    <>
-      {!!imageSrc && (
-        <a
-          id="share-image-button"
-          class="button"
-          href={imageSrc}
-          download={fileName}
-          target="_blank"
-          onClick={() => {
-            fireEvent('Click: Share', {
-              props: {
-                type: 'image',
-              },
-            });
-          }}
-        >
-          {t('common.image')} <DownloadIcon width="12" height="12" />
-        </a>
-      )}
-      <div id="share-image-container">
-        <div id="share-image" ref={imageRef}>
-          <p class="header">
-            <b>{header}</b>
-          </p>
-          <div class="board">
-            {boardStates.map((row) => {
-              return (
-                <div>
-                  {row.map((letter) => {
-                    return <span class={`tile ${letter}`} />;
-                  })}
-                </div>
-              );
-            })}
-          </div>
-          <p class="footer">{footer}</p>
-        </div>
-      </div>
     </>
   );
 };
