@@ -138,7 +138,7 @@ const getBoardGameState = (boardStates) => {
   );
   if (won) return 'won';
   const lastRow = boardStates[boardStates.length - 1];
-  const lost = !!lastRow.length && lastRow.every((s) => s !== '🟩');
+  const lost = !!lastRow.length && !lastRow.every((s) => s === '🟩');
   if (lost) return 'lost';
   return null;
 };
