@@ -550,6 +550,7 @@ header h1 {
   right: 0;
   bottom: 0;
   background-color: var(--modal-backdrop-color);
+  backdrop-filter: blur(4px) saturate(180%);
   display: flex;
   flex-direction: column;
   align-items: center;
