@@ -863,8 +863,10 @@ export function App() {
                 } ${absentKeys.has(key) ? '⬜' : ''}`}
                 type="button"
                 tabIndex={-1}
-                onClick={() => {
+                onPointerDown={() => {
                   keypressStandard.play();
+                }}
+                onClick={() => {
                   handleLetter(key);
                 }}
               >
@@ -886,9 +888,11 @@ export function App() {
           <div class="row">
             <button
               type="button"
+              onPointerDown={() => {
+                keypressReturn.play();
+              }}
               onClick={() => {
                 handleEnter();
-                keypressReturn.play();
               }}
               tabIndex={-1}
             >
@@ -903,9 +907,11 @@ export function App() {
             )}
             <button
               type="button"
+              onPointerDown={() => {
+                keypressDelete.play();
+              }}
               onClick={() => {
                 handleBackspace();
-                keypressDelete.play();
               }}
               tabIndex={-1}
             >
