@@ -1,4 +1,4 @@
-import { pinyin } from 'pinyin-pro';
+import { pinyin } from 'pinyin-pro/lib/pinyin';
 
 const py = pinyin;
 

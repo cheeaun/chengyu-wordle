@@ -1,6 +1,6 @@
 import { Howl, Howler } from 'howler';
 import { toJpeg } from 'html-to-image';
-import { pinyin } from 'pinyin-pro';
+import { pinyin } from 'pinyin-pro/lib/pinyin';
 import {
   useCallback,
   useEffect,
