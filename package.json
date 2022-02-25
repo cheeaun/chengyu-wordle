@@ -38,5 +38,11 @@
     "shorthash2": "~1.0.3",
     "vite": "~2.8.4",
     "vitest": "~0.5.4"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "samsung >= 9",
+    "android >= 4",
+    "chrome >= 30"
+  ]
 }
