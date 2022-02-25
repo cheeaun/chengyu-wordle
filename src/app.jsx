@@ -76,31 +76,6 @@ const keypressReturn = new Howl({
   preload: false,
 });
 
-// Check letters with multiple pinyins
-// const letter2PY = new Map();
-// const differentPinyins = [];
-// games.forEach((game) => {
-//   const letters = game.idiom.split('');
-//   const pinyins = pinyin(game.idiom, { type: 'array' });
-//   letters.forEach((letter, i) => {
-//     if (!letter2PY.has(letter)) {
-//       letter2PY.set(letter, pinyins[i]);
-//     } else if (letter2PY.get(letter) !== pinyins[i]) {
-//       differentPinyins.push({
-//         id: game.id,
-//         idiom: game.idiom,
-//         letter,
-//         pinyins: [letter2PY.get(letter), pinyins[i]].join(' '),
-//       });
-//     }
-//   });
-// });
-// console.log({
-//   differentPinyins: `id,idiom,letter,pinyins\n${differentPinyins
-//     .map((row) => `${row.id},${row.idiom},${row.letter},${row.pinyins}`)
-//     .join('\n')}`,
-// });
-
 window.clearGames = () => {
   try {
     const { length } = localStorage;
