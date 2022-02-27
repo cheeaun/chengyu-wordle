@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "data": "node ./scripts/gen-data.mjs",
-    "test": "vitest"
+    "test": "vitest",
+    "e2e-test": "npx playwright test",
+    "e2e-test-watch": "npx playwright-watch test"
   },
   "dependencies": {
     "@fontsource/nunito": "~4.5.4",
@@ -28,6 +30,7 @@
   },
   "devDependencies": {
     "@originjs/vite-plugin-content": "~1.0.1",
+    "@playwright/test": "~1.19.2",
     "@preact/preset-vite": "~2.1.7",
     "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "autoprefixer": "~10.4.2",
