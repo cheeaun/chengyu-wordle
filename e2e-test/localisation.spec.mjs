@@ -8,12 +8,12 @@ test.describe('Localization', () => {
     const page = await context.newPage();
     await page.goto(baseURL);
     const selector = page.locator('.locale-selector');
-    expect(selector).toBeVisible();
+    await expect(selector).toBeVisible();
 
-    const enLink = page.locator('a[hreflang="en"]');
-    expect(enLink).toHaveClass(/selected/i);
-    const zhcnLink = page.locator('a[hreflang="zh-CN"]');
-    expect(zhcnLink).not.toHaveClass(/selected/i);
+    const enLink = selector.locator('a[hreflang="en"]');
+    await expect(enLink).toHaveClass(/selected/i);
+    const zhcnLink = selector.locator('a[hreflang="zh-CN"]');
+    await expect(zhcnLink).not.toHaveClass(/selected/i);
   });
 
   test('Load Chinese if Chinese locale', async ({ browser, baseURL }) => {
@@ -23,12 +23,12 @@ test.describe('Localization', () => {
     const page = await context.newPage();
     await page.goto(baseURL);
     const selector = page.locator('.locale-selector');
-    expect(selector).toBeVisible();
+    await expect(selector).toBeVisible();
 
-    const zhcnLink = page.locator('a[hreflang="zh-CN"]');
-    expect(zhcnLink).toHaveClass(/selected/i);
-    const enLink = page.locator('a[hreflang="en"]');
-    expect(enLink).not.toHaveClass(/selected/i);
+    const zhcnLink = selector.locator('a[hreflang="zh-CN"]');
+    await expect(zhcnLink).toHaveClass(/selected/i);
+    const enLink = selector.locator('a[hreflang="en"]');
+    await expect(enLink).not.toHaveClass(/selected/i);
   });
 
   test('Load English if for other locale', async ({ browser, baseURL }) => {
@@ -38,11 +38,11 @@ test.describe('Localization', () => {
     const page = await context.newPage();
     await page.goto(baseURL);
     const selector = page.locator('.locale-selector');
-    expect(selector).toBeVisible();
+    await expect(selector).toBeVisible();
 
-    const enLink = page.locator('a[hreflang="en"]');
-    expect(enLink).toHaveClass(/selected/i);
-    const zhcnLink = page.locator('a[hreflang="zh-CN"]');
-    expect(zhcnLink).not.toHaveClass(/selected/i);
+    const enLink = selector.locator('a[hreflang="en"]');
+    await expect(enLink).toHaveClass(/selected/i);
+    const zhcnLink = selector.locator('a[hreflang="zh-CN"]');
+    await expect(zhcnLink).not.toHaveClass(/selected/i);
   });
 });
