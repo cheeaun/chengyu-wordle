@@ -35,6 +35,8 @@ One day, I [tweeted](https://twitter.com/cheeaun/status/1484482726644183041):
 ## Media coverage
 
 - [Wikipedia: Wordle](https://zh.wikipedia.org/wiki/Wordle#cite_note-45)
+- 26 Feb 2022: **Little Day Out**: [11 Other “Wordle” Challenges to Try
+](https://www.littledayout.com/11-other-wordle-challenges-to-try/)
 - 19 Feb 2022: **Shopee Blog** [Can’t Get Enough Of Wordle? Here’s 17 Wordle Variants To Try
 ](https://shopee.sg/blog/best-wordle-games/)
 - 11 Feb 2022: **红蚂蚁** [连总理都推荐的爆红猜字游戏Wordle　为何在全球疯狂吸粉？](https://www.redants.sg/good-reads/story20220211-5941)
