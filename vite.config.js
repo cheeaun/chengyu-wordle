@@ -29,7 +29,7 @@ export default defineConfig({
   },
   preview: {
     host: true,
-    https: true,
+    // https: true,
   },
   build: {
     assetsInlineLimit: 0,
