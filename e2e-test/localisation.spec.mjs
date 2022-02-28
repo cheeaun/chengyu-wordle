@@ -31,7 +31,7 @@ test.describe('Localization', () => {
     await expect(enLink).not.toHaveClass(/selected/i);
   });
 
-  test('Load English if for other locale', async ({ browser, baseURL }) => {
+  test('Load English if other locale', async ({ browser, baseURL }) => {
     const context = await browser.newContext({
       locale: 'ms-MY', // Malay, Malaysia
     });
