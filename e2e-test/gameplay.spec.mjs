@@ -7,8 +7,6 @@ test.beforeEach(async ({ page, baseURL }) => {
 });
 
 test.describe('Gameplay', () => {
-  test.beforeEach(async ({ page }) => {});
-
   test('play valid idiom', async ({ page }) => {
     await page.click('#keyboard :text("层")');
     await page.click('#keyboard :text("出")');
