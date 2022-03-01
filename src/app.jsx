@@ -1,3 +1,5 @@
+import 'core-js/es/array/find-index';
+
 import { Howl, Howler } from 'howler';
 import { pinyin } from 'pinyin-pro/lib/pinyin';
 import {

@@ -6,6 +6,7 @@
   "importOrder": [
     "^[^.]+.css$",
     ".css$",
+    "^core-js",
     "<THIRD_PARTY_MODULES>",
     ".(txt|csv|json)",
     ".(mp3)",
