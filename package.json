@@ -40,8 +40,8 @@
     "postcss-custom-properties": "~12.1.4",
     "postcss-dark-theme-class": "~0.7.3",
     "shorthash2": "~1.0.3",
-    "vite": "~2.8.4",
-    "vitest": "~0.5.7"
+    "vite": "~2.8.5",
+    "vitest": "~0.5.9"
   },
   "browserslist": [
     "defaults",
