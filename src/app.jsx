@@ -651,7 +651,6 @@ export function App() {
         if ($currentRow?.scrollIntoView) {
           $currentRow.scrollIntoView({
             behavior: 'smooth',
-            block: 'nearest',
           });
         }
       }
