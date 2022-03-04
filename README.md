@@ -35,19 +35,21 @@ One day, I [tweeted](https://twitter.com/cheeaun/status/1484482726644183041):
 ## Media coverage
 
 - [Wikipedia: Wordle](https://zh.wikipedia.org/wiki/Wordle#cite_note-45)
-- 26 Feb 2022: **Little Day Out**: [11 Other “Wordle” Challenges to Try
+- 4 Mar 2022: **Week in China** - [More than mere words](https://www.weekinchina.com/2022/03/more-than-mere-words/)
+- 26 Feb 2022: **Little Day Out** - [11 Other “Wordle” Challenges to Try
 ](https://www.littledayout.com/11-other-wordle-challenges-to-try/)
-- 19 Feb 2022: **Shopee Blog** [Can’t Get Enough Of Wordle? Here’s 17 Wordle Variants To Try
+- 19 Feb 2022: **Shopee Blog** - [Can’t Get Enough Of Wordle? Here’s 17 Wordle Variants To Try
 ](https://shopee.sg/blog/best-wordle-games/)
-- 11 Feb 2022: **红蚂蚁** [连总理都推荐的爆红猜字游戏Wordle　为何在全球疯狂吸粉？](https://www.redants.sg/good-reads/story20220211-5941)
+- 11 Feb 2022: **红蚂蚁** - [连总理都推荐的爆红猜字游戏Wordle　为何在全球疯狂吸粉？](https://www.redants.sg/good-reads/story20220211-5941)
 - 10 Feb 2022: **AsiaOne** - [Want more Wordle? Here are 13 spin-offs to try, including a Singlish version](https://www.asiaone.com/lifestyle/want-more-wordle-here-are-13-spin-offs-try-including-singlish-version)
-- 6 Feb 2022: **新加坡眼** [这款小游戏风靡全球，让李显龙总理都“玩上瘾了”](https://www.yan.sg/lixinglongzholi/)
+- 6 Feb 2022: **新加坡眼** - [这款小游戏风靡全球，让李显龙总理都“玩上瘾了”](https://www.yan.sg/lixinglongzholi/)
 - 4 Feb 2022: **Mothership** - [PM Lee says Wordle a fun way to keep the mind engaged, recommends Chinese & Malay versions](https://mothership.sg/2022/02/pm-lee-says-wordle-a-fun-way-to-keep-the-mind-engaged-recommends-chinese-malay-versions/)
 - 4 Feb 2022: **8world Entertainment Lifestyle** - [全世界都在Wordle！快试试数字版Nerdle](https://entlife.8world.com/life/nerdle-nerdle-is-a-new-maths-based-wordle-clone-1718676)
 - 3 Feb 2022: **Lee Hsien Loong** - [...I was also pleasantly surprised to find out that there are Chinese and Malay versions of the game. Give it a go — a simple but fun way to keep the mind engaged. ](https://www.facebook.com/leehsienloong/posts/484183366401131)
 - 2 Feb 2022: **Kotaku** - [A Sensational Wordle Clone Without Any Actual Words](https://kotaku.com/games-like-wordle-subwaydle-nyct-mta-best-routes-1848461481)
 - 30 Jan 2022: **Sixth Tone** - [Wordle-Like Games Slowly Gain Traction on Chinese Social Media](https://www.sixthtone.com/news/1009586/wordle-like-games-slowly-gain-traction-on-chinese-social-media-)
 - 30 Jan 2022: [6種英文和中文的 Wordle 猜字遊戲 打發時間真好用](https://blog.user.today/wordle-games-gallery/)
+- 28 Jan 2022: **Ninchanese** - [Chinese Wordle: Play and Learn Chinese (chengyus)!](https://ninchanese.com/blog/2022/01/28/chinese-wordle-play-and-learn-chinese-chengyus/)
 
 ## Technicalities
 
