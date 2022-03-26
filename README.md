@@ -35,6 +35,7 @@ One day, I [tweeted](https://twitter.com/cheeaun/status/1484482726644183041):
 ## Media coverage
 
 - [Wikipedia: Wordle](https://zh.wikipedia.org/wiki/Wordle#cite_note-45)
+- 24 Mar 2022: **Chinoy TV 菲華電視台** - [5 Chinese Wordles for you to discover](https://www.chinoy.tv/5-chinese-wordles-for-you-to-discover/)
 - 4 Mar 2022: **Week in China** - [More than mere words](https://www.weekinchina.com/2022/03/more-than-mere-words/)
 - 26 Feb 2022: **Little Day Out** - [11 Other “Wordle” Challenges to Try
 ](https://www.littledayout.com/11-other-wordle-challenges-to-try/)
