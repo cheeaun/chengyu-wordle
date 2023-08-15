@@ -1,5 +1,5 @@
 export default (...props) => {
-  if (window.plausible) {
-    plausible(...props);
-  }
+  // if (window.plausible) {
+  //   plausible(...props);
+  // }
 };
